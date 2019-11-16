@@ -15,31 +15,23 @@ import javax.ws.rs.core.MediaType;
 // The browser requests per default the HTML MIME type.
 
 //Sets the path to base URL + /hello
-@Path("/hello")
+@Path("/employee")
 public class Helloworld {
 
   // This method is called if TEXT_PLAIN is request
   @GET
-  @Produces(MediaType.TEXT_PLAIN)
-  public String sayPlainTextHello() {
+  @Produces(MediaType.APPLICATION_JSON)
+  public String GetEmployee() {
+	  //DBaction db = new DBaction();
+	  
+	  String query = "SELECT * FROM EMPLOYEE";
+	  //db.execute_query(query);
+	  //on lit le result set et on créer le JSON
 	   System.out.println("coucou");
-    return "Hello Jersey";
+	   String JSON = "";
+	   //status
+	   return JSON;
  
-  }
-
-  // This method is called if XML is request
-  @GET
-  @Produces(MediaType.TEXT_XML)
-  public String sayXMLHello() {
-    return "<?xml version=\"1.0\"?>" + "<hello> Hello Jersey" + "</hello>";
-  }
-
-  // This method is called if HTML is request
-  @GET
-  @Produces(MediaType.TEXT_HTML)
-  public String sayHtmlHello() {
-    return "<html> " + "<title>" + "Hello Jersey" + "</title>"
-        + "<body><h1>" + "Hello Jersey" + "</body></h1>" + "</html> ";
   }
 
 } 
