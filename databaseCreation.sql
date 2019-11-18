@@ -35,12 +35,12 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `web_services`.`mutimedia`
+-- Table `web_services`.`multimedia`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `web_services`.`mutimedia` ;
+DROP TABLE IF EXISTS `web_services`.`multimedia` ;
 
-CREATE TABLE IF NOT EXISTS `web_services`.`mutimedia` (
-  `ID_mutimedia` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `web_services`.`multimedia` (
+  `ID_multimedia` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NOT NULL,
   `description` VARCHAR(500) NULL,
   `language` VARCHAR(2) NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `web_services`.`mutimedia` (
   `date_upload` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_release` DATE NULL,
   `ID_uploader` INT NOT NULL,
-  PRIMARY KEY (`ID_mutimedia`),
+  PRIMARY KEY (`ID_multimedia`),
     FOREIGN KEY (`ID_uploader`)
     REFERENCES `web_services`.`user` (`ID_user`)
     )
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `web_services`.`book` (
   `ID_multimedia` INT NOT NULL,
   PRIMARY KEY (`ID_book`),
     FOREIGN KEY (`ID_multimedia`)
-    REFERENCES `web_services`.`mutimedia` (`ID_mutimedia`)
+    REFERENCES `web_services`.`multimedia` (`ID_multimedia`)
     )
 ENGINE = InnoDB;
 
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `web_services`.`videoGame` (
   `ID_multimedia` INT NOT NULL,
   PRIMARY KEY (`ID_videoGame`),
     FOREIGN KEY (`ID_multimedia`)
-    REFERENCES `web_services`.`mutimedia` (`ID_mutimedia`)
+    REFERENCES `web_services`.`multimedia` (`ID_multimedia`)
     )
 ENGINE = InnoDB;
 
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `web_services`.`film` (
   `ID_multimedia` INT NOT NULL,
   PRIMARY KEY (`ID_film`),
     FOREIGN KEY (`ID_multimedia`)
-    REFERENCES `web_services`.`mutimedia` (`ID_mutimedia`)
+    REFERENCES `web_services`.`multimedia` (`ID_multimedia`)
     )
 ENGINE = InnoDB;
 
@@ -120,12 +120,12 @@ CREATE TABLE IF NOT EXISTS `web_services`.`rate` (
   `ID_rate` INT NOT NULL AUTO_INCREMENT,
   `value` INT(3) NOT NULL,
   `ID_user` INT NOT NULL,
-  `ID_multilmedia` INT NOT NULL,
+  `ID_multimedia` INT NOT NULL,
   PRIMARY KEY (`ID_rate`),
     FOREIGN KEY (`ID_user`)
     REFERENCES `web_services`.`user` (`ID_user`),
-    FOREIGN KEY (`ID_multilmedia`)
-    REFERENCES `web_services`.`mutimedia` (`ID_mutimedia`)
+    FOREIGN KEY (`ID_multimedia`)
+    REFERENCES `web_services`.`multimedia` (`ID_multimedia`)
     )
 ENGINE = InnoDB;
 
@@ -136,15 +136,15 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `web_services`.`comment` ;
 
 CREATE TABLE IF NOT EXISTS `web_services`.`comment` (
-  `ID_rate` INT NOT NULL AUTO_INCREMENT,
+  `ID_comment` INT NOT NULL AUTO_INCREMENT,
   `value` VARCHAR(300) NOT NULL,
   `ID_user` INT NOT NULL,
-  `ID_multilmedia` INT NOT NULL,
-  PRIMARY KEY (`ID_rate`),
+  `ID_multimedia` INT NOT NULL,
+  PRIMARY KEY (`ID_comment`),
     FOREIGN KEY (`ID_user`)
     REFERENCES `web_services`.`user` (`ID_user`),
-    FOREIGN KEY (`ID_multilmedia`)
-    REFERENCES `web_services`.`mutimedia` (`ID_mutimedia`)
+    FOREIGN KEY (`ID_multimedia`)
+    REFERENCES `web_services`.`multimedia` (`ID_multimedia`)
     )
 ENGINE = InnoDB;
 
