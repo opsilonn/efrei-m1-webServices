@@ -10,7 +10,7 @@ import java.util.Map;
 import rest.model.Multimedia;
 import rest.model.Rate;
 import rest.model.User;
-import rest.resources.util.Constants;
+import rest.resource.util.Constants;
 import rest.util.DB_web_services;
 
 public class RateService {
@@ -32,26 +32,39 @@ public class RateService {
     	ppsm.setLong(1, this.id_user);
     	
     	ResultSet rs = ppsm.executeQuery();
-    	rates.clear();
+    	this.rates.clear();
     	
     	while(rs.next()){
-    		rates.put(rs.getLong("ID_rate"), new Rate(rs.getLong("ID_rate"), rs.getInt("value"), users.get(rs.getLong("ID_user")), new Multimedia()));
+    		this.rates.put(rs.getLong("ID_rate"), new Rate(rs.getLong("ID_rate"), rs.getInt("value"), this.users.get(rs.getLong("ID_user")), new Multimedia()));
     	}
 	}
 
 	public List<Rate> getAllRates()
 	{
-    	return new ArrayList<Rate>(rates.values());
+    	return new ArrayList<Rate>(this.rates.values());
+	}
+
+	public List<Rate> getRatesByValue(int value)
+	{
+		List<Rate> return_rates = new ArrayList<Rate>();
+
+		for(Map.Entry<Long, Rate> entry : this.rates.entrySet()){
+			if(entry.getValue().getValue() == value){
+				return_rates.add(entry.getValue());
+			}
+		}
+		
+    	return return_rates;
 	}
 	
 
 	public Rate getRate(long id){
-		return rates.get(id);
+		return this.rates.get(id);
 	}
 	
 	
 	public int getRateCount(){
-		return rates.size();
+		return this.rates.size();
 	}
 	
 	
@@ -81,8 +94,8 @@ public class RateService {
     			ResultSet rs_rate = ppsm.executeQuery();
     	    	
     	    	if(rs_rate.next()){
-    	    		Rate rate = new Rate(rs_rate.getLong("ID_rate"), rs_rate.getInt("value"), users.get(rs_rate.getLong("ID_user")), new Multimedia());
-    	    		rates.put(rs_rate.getLong("ID_rate"), rate);
+    	    		Rate rate = new Rate(rs_rate.getLong("ID_rate"), rs_rate.getInt("value"), this.users.get(rs_rate.getLong("ID_user")), new Multimedia());
+    	    		this.rates.put(rs_rate.getLong("ID_rate"), rate);
     	    		
     	    		
     	    		return rate;
@@ -133,7 +146,7 @@ public class RateService {
     	int rs = ppsm.executeUpdate();
 
     	if(rs == 1){
-    		rates.remove(id);
+    		this.rates.remove(id);
     	}
     	
     	

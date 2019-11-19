@@ -1,8 +1,12 @@
 package rest.model;
 
 
+import javax.xml.bind.annotation.XmlRootElement;
 
 
+
+
+@XmlRootElement
 public class VideoGame extends Multimedia {
 
 	private long id_videoGame;

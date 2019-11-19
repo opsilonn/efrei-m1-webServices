@@ -1,14 +1,20 @@
 package rest.model;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import rest.model.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 
+
+@XmlRootElement
 public class User {
 	
 	private long id_user;
@@ -16,10 +22,12 @@ public class User {
 	private String pseudo;
 	private String email;
 	
+	private String password;
+	
 	private Date creation_date;
 
-	private List<Rate> rates;
-	private List<Comment> comments;
+	private Map<Long, Rate> rates = new HashMap<Long, Rate>();
+	private Map<Long, Comment> comments = new HashMap<Long, Comment>();
 	
 	
 
@@ -31,13 +39,11 @@ public class User {
 		this.pseudo = pseudo;
 		this.email = email;
 		this.creation_date = creation_date;
-		this.rates = new ArrayList<Rate>();
-		this.comments = new ArrayList<Comment>();
 	}
 	
 
-	public User(long id_user, String pseudo, String email, Date creation_date, List<Rate> rates,
-			List<Comment> comments) {
+	public User(long id_user, String pseudo, String email, Date creation_date, Map<Long, Rate> rates,
+			Map<Long, Comment> comments) {
 		this.id_user = id_user;
 		this.pseudo = pseudo;
 		this.email = email;
@@ -82,6 +88,23 @@ public class User {
 	}
 
 	/**
+	 * @return the password
+	 */
+    @XmlTransient
+	public String getPassword() {
+		return password;
+	}
+
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	/**
 	 * @return the creation_date
 	 */
 	public Date getCreation_date() {
@@ -91,14 +114,14 @@ public class User {
 	/**
 	 * @return the rates
 	 */
-	public List<Rate> getRates() {
+	public Map<Long, Rate> getRates() {
 		return rates;
 	}
 
 	/**
 	 * @return the comments
 	 */
-	public List<Comment> getComments() {
+	public Map<Long, Comment> getComments() {
 		return comments;
 	}
 

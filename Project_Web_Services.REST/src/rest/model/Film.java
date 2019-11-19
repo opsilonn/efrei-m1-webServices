@@ -1,8 +1,12 @@
 package rest.model;
 
 
+import javax.xml.bind.annotation.XmlRootElement;
 
 
+
+
+@XmlRootElement
 public class Film {
 	
 	private long id_film;

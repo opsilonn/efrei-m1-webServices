@@ -8,9 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.core.MediaType;
+
+import rest.exception.DataNotFoundException;
 import rest.model.User;
 import rest.model.util.Date;
-import rest.resources.util.Constants;
+import rest.resource.util.Constants;
 import rest.util.DB_web_services;
 
 public class UserService {
@@ -35,12 +39,24 @@ public class UserService {
 
 	public List<User> getAllUsers()
 	{
-    	return new ArrayList<User>(users.values());
+		List<User> return_users = new ArrayList<User>(users.values());
+		
+		if(return_users.isEmpty())
+			throw new DataNotFoundException("No users was found !");
+		
+		
+    	return return_users;
 	}
 	
 
 	public User getUser(long id){
-		return users.get(id);
+		User user = users.get(id);
+
+		if(user == null)
+			throw new DataNotFoundException("The user with the id `" + id + "` was not found !");
+		
+		
+		return user;
 	}
 	
 	
@@ -49,10 +65,10 @@ public class UserService {
 	}
 	
 	
-	public User addUser(String pseudo, String password, String email) 
-			throws Exception{
+	public User addUser(User user)
+			throws SQLException{
 		
-		if(password == null || password == ""){
+		if(user.getPassword() == null || user.getPassword() == ""){
 			throw new SQLIntegrityConstraintViolationException("Le champ 'password' ne peut être vide (null)");
 		}
 		
@@ -60,9 +76,9 @@ public class UserService {
     	
     	PreparedStatement ppsm = db.getPreparedStatement(Constants.User.post);
     	
-    	ppsm.setString(1, pseudo);
-    	ppsm.setString(2, password);
-    	ppsm.setString(3, email);
+    	ppsm.setString(1, user.getPseudo());
+    	ppsm.setString(2, user.getPassword());
+    	ppsm.setString(3, user.getEmail());
     	
     	int rs = ppsm.executeUpdate();
 
@@ -77,11 +93,11 @@ public class UserService {
     			ResultSet rs_user = ppsm.executeQuery();
     	    	
     	    	if(rs_user.next()){
-    	    		User user = new User(rs_user.getLong("ID_user"), rs_user.getString("pseudo"), rs_user.getString("email"), new Date(rs_user.getString("date_creation")));
-    	    		users.put(rs_user.getLong("ID_user"), user);
+    	    		User new_user = new User(rs_user.getLong("ID_user"), rs_user.getString("pseudo"), rs_user.getString("email"), new Date(rs_user.getString("date_creation")));
+    	    		users.put(rs_user.getLong("ID_user"), new_user);
     	    		
     	    		
-    	    		return user;
+    	    		return new_user;
     	    	}
     		}
     	}
@@ -92,7 +108,7 @@ public class UserService {
 	
 	
 	public boolean updateUser(long id, String existing_password, String new_password, String email) 
-			throws Exception{
+			throws SQLException{
 
 		DB_web_services db = new DB_web_services();
     	
@@ -130,7 +146,7 @@ public class UserService {
 	
 	
 	public boolean removeUser(long id) 
-			throws Exception{
+			throws SQLException{
 		DB_web_services db = new DB_web_services();
 
 		PreparedStatement ppsm = db.getPreparedStatement(Constants.User.deleteByID);
@@ -141,9 +157,12 @@ public class UserService {
 
     	if(rs == 1){
     		users.remove(id);
+    		
+    		
+    		return true;
     	}
     	
     	
-    	return (rs == 1) ? true : false;
+    	throw new DataNotFoundException("The user with the id `" + id + "` doesn't exist !");
 	}
 }

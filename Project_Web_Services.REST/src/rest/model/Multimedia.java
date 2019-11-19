@@ -3,6 +3,12 @@ package rest.model;
 
 import rest.model.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+
+
+
+@XmlRootElement
 public class Multimedia {
 
 	private long id_multimedia;
