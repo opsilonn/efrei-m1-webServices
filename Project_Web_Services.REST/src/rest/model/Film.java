@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @XmlRootElement
-public class Film {
+public class Film extends Multimedia{
 	
 	private long id_film;
 	

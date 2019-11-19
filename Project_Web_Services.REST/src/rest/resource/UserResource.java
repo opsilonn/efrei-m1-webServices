@@ -68,7 +68,7 @@ public class UserResource {
 
 
     @GET
-    @Path("count")
+    @Path("/count")
     public Response getCount() 
     		throws SQLException {
 		this.userService = new UserService();
