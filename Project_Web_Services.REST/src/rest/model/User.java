@@ -9,8 +9,6 @@ import rest.model.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 
 
 
