@@ -112,7 +112,7 @@ INSERT INTO `comment` (ID_comment, value, ID_user, ID_multimedia) VALUES
 -- -----------------------------------------------------
 -- Filling Table web_services.rate
 -- -----------------------------------------------------
-INSERT INTO `rate` (ID_rate, value, ID_user, ID_multimedia) VALUES
+INSERT INTO `rate` (ID_rate, ID_user, ID_multimedia, value) VALUES
 ('1', '1', '1', '17'),
 ('2', '1', '2', '15'),
 ('3', '1', '3', '03'),
