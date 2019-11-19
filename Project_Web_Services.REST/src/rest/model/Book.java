@@ -10,9 +10,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Book extends Multimedia{
 
 	private long id_book;
-	
 	private String author;
 	private String publisher;
+	
+	
+	public Book(long id_book, String author, String publisher)
+	{
+		this.id_book = id_book;
+		this.author = author;
+		this.publisher = publisher;	
+	}
 	
 	/**
 	 * @return the id_book

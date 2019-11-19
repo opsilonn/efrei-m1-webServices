@@ -21,7 +21,6 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import rest.service.UserService;
-import rest.exception.DataNotFoundException;
 import rest.model.User;
 
 
@@ -38,8 +37,6 @@ public class UserResource {
     Request request;
     
     UserService userService;
-    
-    
     
 
     @GET
