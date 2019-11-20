@@ -22,7 +22,7 @@ import rest.service.RateService;
 
 
 
-@Path("/")
+
 @Produces(MediaType.APPLICATION_JSON)
 public class RateResource {
 
@@ -79,7 +79,7 @@ public class RateResource {
 
 
     @GET
-    @Path("count")
+    @Path("/count")
     public JSON_response getCount(@PathParam("id_user")long id_user) {
     	try{
     		this.rateService = new RateService(id_user);

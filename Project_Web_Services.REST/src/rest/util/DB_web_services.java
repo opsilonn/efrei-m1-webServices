@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+import rest.model.Book;
 import rest.model.Multimedia;
 import rest.model.Rate;
 import rest.model.User;
@@ -37,7 +38,6 @@ public class DB_web_services {
     
     
     
-    
     /** Try to prepare a Statement from the database
      * 
      * @param query SQL query to execute
@@ -50,13 +50,11 @@ public class DB_web_services {
     }
     
     
-    
-
     private static Map<Long, User> users = new HashMap<Long, User>();
     private static Map<Long, Rate> rates = new HashMap<Long, Rate>();
 
     private static Map<Long, Multimedia> multimedias = new HashMap<Long, Multimedia>();
-    
+    private static Map<Long, Book> books = new HashMap<Long, Book>();
     
 
     
@@ -73,4 +71,13 @@ public class DB_web_services {
     public static Map<Long, Multimedia> getMultimedias(){
     	return DB_web_services.multimedias;
     }
+
+    public static Map<Long, Book> getBooks(){
+    	return DB_web_services.books;
+    }
+    
+    
+    
+    
+    
 }

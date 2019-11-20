@@ -35,7 +35,9 @@ public class RateService {
     	this.rates.clear();
     	
     	while(rs.next()){
-    		this.rates.put(rs.getLong("ID_rate"), new Rate(rs.getLong("ID_rate"), rs.getInt("value"), this.users.get(rs.getLong("ID_user")), new Multimedia()));
+    		//add in the hash maps a new rate that created with constructor
+    		this.rates.put(rs.getLong("ID_rate"), 
+    				new Rate(rs.getLong("ID_rate"), rs.getInt("value"), this.users.get(rs.getLong("ID_user")), new Multimedia()));
     	}
 	}
 

@@ -29,4 +29,28 @@ public class Constants {
 		public static final String deleteByID = "DELETE FROM Rate WHERE (id_rate = ? AND id_user = ?)";
 
 	}
+	
+
+	public class Film{
+		public static final String getAll = "SELECT * FROM film";
+	}
+
+
+	public class Book{
+
+		
+		public static final String getAll = "SELECT * FROM Book";
+		public static final String getByID = "SELECT * FROM Book WHERE id_book = ?";
+		public static final String deleteByID = "DELETE FROM Book WHERE id_book = ?";
+	
+		
+		
+		
+	}
+	
+
+	public class Multimedia{
+		public static final String getByID = "SELECT * FROM Multimedia WHERE ID_multimedia = ? ";
+	}
+	
 }
