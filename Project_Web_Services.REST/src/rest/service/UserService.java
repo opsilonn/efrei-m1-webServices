@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.core.MediaType;
 
 import rest.exception.DataNotFoundException;
 import rest.model.User;
@@ -63,7 +65,8 @@ public class UserService {
 	}
 	
 	
-	public User addUser(User user)throws SQLException{
+	public User addUser(User user)
+			throws SQLException{
 		
 		if(user.getPassword() == null || user.getPassword() == ""){
 			throw new SQLIntegrityConstraintViolationException("Le champ 'password' ne peut être vide (null)");

@@ -26,6 +26,14 @@ public class FilmResource {
 	
 	 FilmService films;
 	 
+	 @GET
+	 public Response getFilms() 
+			 throws SQLException{
+		 this.films = new FilmService();
+		 
+		 return Response.status(Status.OK).entity(films.getFilm()).build();
+	 }
+	 
 	 @Path("/{film_id}")
 	 @GET
 	 public Response getFilm(@PathParam("film_id") long id) 

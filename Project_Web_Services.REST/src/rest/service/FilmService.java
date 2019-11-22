@@ -3,7 +3,9 @@ package rest.service;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.mysql.cj.protocol.Resultset;
@@ -37,11 +39,12 @@ public class FilmService {
 			f.setMainCast(rs.getString("mainCast"));
 			//f.setDuration(rs.getInt("Duration"));
 			
-			stmt2 = dba.getPreparedStatement(Constants.media.getByid);
+			stmt2 = dba.getPreparedStatement(Constants.Multimedia.getByID);
 			stmt2.setLong(1, rs.getLong("ID_multimedia"));
 			
 			ResultSet rs2 = stmt2.executeQuery();
 			if(rs2.next()){
+				f.setId_multimedia(rs.getLong("ID_multimedia"));
 				f.setTitle(rs2.getString("title"));
 				f.setDescription(rs2.getString("description"));
 				//f.setRelease_date(new Date(rs.getString()));
@@ -67,7 +70,18 @@ public class FilmService {
 		return f;
 	}
 	
+	public List<Film> getFilm(){
+		List<Film> lf = new ArrayList<Film>(this.films.values());
+		return lf;
+	}
 	
+	public Film addFilm(Film film){
+		Film f = film;
+		
+		
+		
+		return f;
+	}
 	
 	
 	

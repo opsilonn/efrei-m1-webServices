@@ -63,7 +63,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `web_services`.`book` ;
 
 CREATE TABLE IF NOT EXISTS `web_services`.`book` (
-  `ID_book` INT NOT NULL,
+  `ID_book` INT NOT NULL AUTO_INCREMENT,
   `author` VARCHAR(65) NOT NULL,
   `publisher` VARCHAR(65) NULL,
   `ID_multimedia` INT NOT NULL,
@@ -80,7 +80,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `web_services`.`videoGame` ;
 
 CREATE TABLE IF NOT EXISTS `web_services`.`videoGame` (
-  `ID_videoGame` INT NOT NULL,
+  `ID_videoGame` INT NOT NULL AUTO_INCREMENT,
   `developper` VARCHAR(65) NOT NULL,
   `publisher` VARCHAR(65) NULL,
   `ID_multimedia` INT NOT NULL,
@@ -97,7 +97,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `web_services`.`film` ;
 
 CREATE TABLE IF NOT EXISTS `web_services`.`film` (
-  `ID_film` INT NOT NULL,
+  `ID_film` INT NOT NULL AUTO_INCREMENT,
   `director` VARCHAR(65) NOT NULL,
   `productor` VARCHAR(65) NULL,
   `mainCast` VARCHAR(65) NULL,

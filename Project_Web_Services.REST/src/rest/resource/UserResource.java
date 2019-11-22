@@ -3,6 +3,7 @@ package rest.resource;
 
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import rest.service.UserService;
+import rest.exception.DataNotFoundException;
 import rest.model.User;
 
 
@@ -39,14 +41,58 @@ public class UserResource {
     UserService userService;
     
 
+
+
+	private URI getUriForSelf(User user) {
+		return uriInfo.getBaseUriBuilder()
+				.path(UserResource.class)
+				.path(String.valueOf(user.getId_user()))
+				.build();
+	}
+    
+    
+	private URI getUriForRates(User user) {		
+		return uriInfo.getBaseUriBuilder()
+				.path(UserResource.class)
+				.path(UserResource.class, "getRateResource")
+				.resolveTemplate("id_user", user.getId_user())
+				.build();
+	}
+    
+    
+	private URI getUriForComments(User user) {		
+		return uriInfo.getBaseUriBuilder()
+				.path(UserResource.class)
+				.path(UserResource.class, "getCommentResource")
+				.resolveTemplate("id_user", user.getId_user())
+				.build();
+	}
+
+
+	private void addLinks(User user) {
+		user.addLink("self", getUriForSelf(user).toString());
+		user.addLink("rates", getUriForRates(user).toString());
+		user.addLink("comments", getUriForComments(user).toString());
+	}
+    
+    
+    
+
     @GET
     public Response getUsers()
     		throws SQLException {
 		this.userService = new UserService();
 		
+		List<User> users = userService.getAllUsers();
 		
-		return Response.status(Status.OK)
-				.entity((userService.getAllUsers()))
+		for(User user : users){
+			addLinks(user);
+		}
+		
+		
+		return Response
+				.status(Status.OK)
+				.entity(users)
 				.build();
     }
 
@@ -57,21 +103,26 @@ public class UserResource {
     		throws SQLException {
 		this.userService = new UserService();
 		
+		User user = userService.getUser(id);
+
+		addLinks(user);
 		
-        return Response.status(Status.OK)
-				.entity(userService.getUser(id))
+        return Response
+        		.status(Status.OK)
+				.entity(user)
 				.build();
     }
 
 
     @GET
-    @Path("/count")
+    @Path("count")
     public Response getCount() 
     		throws SQLException {
 		this.userService = new UserService();
 		
 		
-        return Response.status(Status.OK)
+        return Response
+        		.status(Status.OK)
         		.entity(userService.getUserCount())
         		.build();
     }
@@ -84,10 +135,11 @@ public class UserResource {
 		this.userService = new UserService();
 		
 		User new_user = userService.addUser(user);
-		URI location = uriInfo.getAbsolutePathBuilder().path(String.valueOf(new_user.getId_user())).build();
+		URI location = getUriForSelf(new_user);
 		
 		
-		return Response.created(location)
+		return Response
+				.created(location)
 				.entity(new_user)
 				.build();
     }
@@ -101,7 +153,8 @@ public class UserResource {
 		this.userService = new UserService();
 		
 		
-		return Response.status(Status.OK) 
+		return Response
+				.status(Status.OK) 
 				.entity(userService.updateUser(id, existing_password, new_password, email))
 				.build();
     }
@@ -115,17 +168,24 @@ public class UserResource {
 		this.userService = new UserService();
 		
 		
-		return Response.status(Status.OK) 
+		return Response.
+				status(Status.OK) 
 				.entity(userService.removeUser(id))
 				.build();
     }
 
-    
+
     
     
     @Path("/{id_user}/rates")
     public RateResource getRateResource() {
     	return new RateResource();
+    }
+    
+    
+    @Path("/{id_user}/comments")
+    public CommentResource getCommentResource() {
+    	return new CommentResource();
     }
 
 }

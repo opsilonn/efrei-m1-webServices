@@ -30,9 +30,23 @@ public class Constants {
 
 	}
 	
+	public class Comment{
+		
+		public static final String getAll = "SELECT * FROM Comment WHERE id_user = ?";
+		public static final String getByID = "SELECT * FROM Comment WHERE (id_comment = ? AND id_user = ?)";
+		
+		public static final String post = "INSERT INTO Comment(value, id_user, id_multimedia) VALUES(?, ?, ?)";
+		
+		public static final String putByID = "UPDATE Comment SET value = ? WHERE (id_comment = ? AND id_user = ?)";
+
+		public static final String deleteByID = "DELETE FROM Comment WHERE (id_comment = ? AND id_user = ?)";
+
+	}
+	
 
 	public class Film{
 		public static final String getAll = "SELECT * FROM film";
+		public static final String post ="INSERT INTO `film` (director, productor, mainCast, duration, ID_multimedia) VALUES(?,?,?,?,?)";
 	}
 
 
@@ -51,6 +65,7 @@ public class Constants {
 
 	public class Multimedia{
 		public static final String getByID = "SELECT * FROM Multimedia WHERE ID_multimedia = ? ";
+		public static final String post = "INSERT INTO multimedia (title, language, genre, category, status, ID_uploader, description) VALUES(?,?,?,?,?,?,?)";
 	}
 	
 }
