@@ -2,9 +2,12 @@ package rest.model;
 
 
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import rest.model.util.Date;
+import rest.model.util.Link;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -26,6 +29,8 @@ public class User {
 
 	private Map<Long, Rate> rates = new HashMap<Long, Rate>();
 	private Map<Long, Comment> comments = new HashMap<Long, Comment>();
+	
+	private List<Link> links = new ArrayList<Link>();
 	
 	
 
@@ -112,6 +117,7 @@ public class User {
 	/**
 	 * @return the rates
 	 */
+    @XmlTransient
 	public Map<Long, Rate> getRates() {
 		return rates;
 	}
@@ -119,9 +125,35 @@ public class User {
 	/**
 	 * @return the comments
 	 */
+    @XmlTransient
 	public Map<Long, Comment> getComments() {
 		return comments;
 	}
+
+	/**
+	 * @return the links
+	 */
+	public List<Link> getLinks() {
+		return links;
+	}
+
+
+	/**
+	 * @param links the links to set
+	 */
+	public void setLinks(List<Link> links) {
+		this.links = links;
+	}
+
+
+	/**
+	 * @param link the link to add
+	 */
+	public void addLink(String rel, String href) {
+		Link link = new Link(rel, href);
+		this.links.add(link);
+	}
+
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

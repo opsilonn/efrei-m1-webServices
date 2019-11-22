@@ -1,6 +1,10 @@
 package rest.resource;
 
 
+import java.net.URI;
+import java.sql.SQLException;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -14,11 +18,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
-import rest.resource.util.JSON_response;
+import rest.model.Rate;
+import rest.model.User;
 import rest.service.RateService;
-
 
 
 
@@ -36,106 +42,163 @@ public class RateResource {
     RateService rateService;
     
 
+
+
+	private String getUriForSelf(Rate rate) {
+		return uriInfo.getBaseUriBuilder()
+				.path(UserResource.class)
+				.path(UserResource.class, "getRateResource")
+				.path(String.valueOf(rate.getId_rate()))
+				.resolveTemplate("id_user", rate.getUser().getId_user())
+				.build()
+				.toString();
+	}
+    
+    
+	private String getUriForUserParent(Rate rate) {	
+		return uriInfo.getBaseUriBuilder()
+				.path(UserResource.class)
+				.path(String.valueOf(rate.getUser().getId_user()))
+				.build()
+				.toString();
+	}
+    
+    
+	/*private String getUriForMultimedia(Rate rate) {	
+		return uriInfo.getBaseUriBuilder()
+				.path(MultimediaResource.class)
+				.path(String.valueOf(rate.getMultimedia().getId_multimedia()))
+				.build()
+				.toString();
+	}*/
+
+
+	private void addLinks(Rate rate) {
+		rate.addLink("self", getUriForSelf(rate));
+		//rate.addLink("rates", getUriForUserParent(rate));
+		//rate.addLink("comments", getUriForMultimedia(rate));
+	}
+    
+
     
     
     @GET
-    public JSON_response getRates(@PathParam("id_user")long id_user, @QueryParam("value")String value) {
-    	try{
-    		this.rateService = new RateService(id_user);
+    public Response getRates(@PathParam("id_user")long id_user, @QueryParam("value")String value) 
+    		throws SQLException{
+   		this.rateService = new RateService(id_user);
+		
+		if(value != null){
     		
-    		if(value != null){
-        		
-        		int valueInt = Integer.valueOf(value);
-
-        		return new JSON_response(rateService.getRatesByValue(valueInt));
-    			
+    		int valueInt = Integer.valueOf(value);
+    		List<Rate> rates = rateService.getRatesByValue(valueInt);
+    		
+    		for(Rate rate : rates){
+    			addLinks(rate);
     		}
     		
-    		return new JSON_response(rateService.getAllRates());
-	   	}
-	   	catch(NumberFormatException e){
+    		
+    		return Response
+    				.status(Status.OK)
+    				.entity(rates)
+    				.build();
+			
+		}
+		
+		List<Rate> rates = rateService.getAllRates();
 
-    		return new JSON_response(rateService.getAllRates());
-	   	}
-	   	catch(Exception e){
-	   		System.out.println("ERROR WHILE GETTING ALL THE RATES\n");
-    		return new JSON_response(e);
-	   	}
+		for(Rate rate : rates){
+			addLinks(rate);
+		}
+		
+		
+		return Response
+				.status(Status.OK)
+				.entity(rates)
+				.build();
     }
 
 
     @Path("{rate_id}")
     @GET
-    public JSON_response getRate(@PathParam("id_user")long id_user, @PathParam("rate_id") long id) {
-    	try{
-    		this.rateService = new RateService(id_user);
-            return new JSON_response(rateService.getRate(id));
-	   	}
-	   	catch(Exception e){
-	   		System.out.println("ERROR WHILE GETTING THE RATE " + id + "\n");
-    		return new JSON_response(e);
-	   	}
+    public Response getRate(@PathParam("id_user")long id_user, @PathParam("rate_id") long id) 
+    		throws SQLException{
+		this.rateService = new RateService(id_user);
+		
+		Rate rate = rateService.getRate(id);
+		
+		addLinks(rate);
+		
+		
+        return Response
+				.status(Status.OK)
+				.entity(rate)
+				.build();
     }
 
 
     @GET
-    @Path("/count")
-    public JSON_response getCount(@PathParam("id_user")long id_user) {
-    	try{
-    		this.rateService = new RateService(id_user);
-            return new JSON_response(rateService.getRateCount());
-	   	}
-	   	catch(Exception e){
-	   		System.out.println("ERROR WHILE GETTING THE RATE COUNT\n");
-    		return new JSON_response(e);
-	   	}
+    @Path("count")
+    public Response getCount(@PathParam("id_user")long id_user) 
+    		throws SQLException{
+		this.rateService = new RateService(id_user);
+		
+		
+        return Response
+				.status(Status.OK)
+				.entity(rateService.getRateCount())
+				.build();
+	   	
     }
 
     
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public JSON_response postRate(@PathParam("id_user")long id_user, @FormParam("value")int value, @FormParam("id_m")long id_multimedia) {
-    	try {
-    		this.rateService = new RateService(id_user);
-			return new JSON_response(rateService.addRate(value, id_multimedia));
+    public Response postRate(@PathParam("id_user")long id_user, @FormParam("value")int value, @FormParam("id_m")long id_multimedia) 
+    		throws SQLException{
+		this.rateService = new RateService(id_user);
+		
+		Rate new_rate = rateService.addRate(value, id_multimedia);
+		URI location = uriInfo
+				.getAbsolutePathBuilder()
+				.path(String.valueOf(new_rate.getId_rate()))
+				.build();
+
+		
+        return Response
+        		.created(location)
+				.entity(new_rate)
+				.build();
 			
-		} catch (Exception e) {
-    		System.out.println("ERROR WHILE ADDING NEW RATE\n");
-    		
-    		return new JSON_response(e);
-		}
     }
 
     
     @Path("/{id_rate}")
     @PUT
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public JSON_response putRate(@PathParam("id_user")long id_user, @PathParam("id_rate")long id, @FormParam("value")int value) {
-    	try {
-    		this.rateService = new RateService(id_user);
-    		return new JSON_response(rateService.updateRate(id, value));
+    public Response putRate(@PathParam("id_user")long id_user, @PathParam("id_rate")long id, @FormParam("value")int value) 
+    		throws SQLException{
+		this.rateService = new RateService(id_user);
+		
+        return Response
+				.status(Status.OK)
+				.entity(rateService.updateRate(id, value))
+				.build();
 			
-		} catch (Exception e) {
-    		System.out.println("ERROR WHILE UPDATING NEW RATE\n");
-    		
-    		return new JSON_response(e);
-		}
     }
 
     
     @Path("/{id_rate}")
     @DELETE
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public JSON_response deleteRate(@PathParam("id_user")long id_user, @PathParam("id_rate")Long id) {
-    	try {
-    		this.rateService = new RateService(id_user);
-    		return new JSON_response(rateService.removeRate(id));
+    public Response deleteRate(@PathParam("id_user")long id_user, @PathParam("id_rate")Long id) 
+    		throws SQLException{
+		this.rateService = new RateService(id_user);
+		
+        return Response
+				.status(Status.OK)
+				.entity(rateService.removeRate(id))
+				.build();
 			
-		} catch (Exception e) {
-    		System.out.println("ERROR WHILE DELETING NEW RATE\n");
-    		
-    		return new JSON_response(e);
-		}
     }
 
 }

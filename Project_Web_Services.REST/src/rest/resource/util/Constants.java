@@ -30,6 +30,19 @@ public class Constants {
 
 	}
 	
+	public class Comment{
+		
+		public static final String getAll = "SELECT * FROM Comment WHERE id_user = ?";
+		public static final String getByID = "SELECT * FROM Comment WHERE (id_comment = ? AND id_user = ?)";
+		
+		public static final String post = "INSERT INTO Comment(value, id_user, id_multimedia) VALUES(?, ?, ?)";
+		
+		public static final String putByID = "UPDATE Comment SET value = ? WHERE (id_comment = ? AND id_user = ?)";
+
+		public static final String deleteByID = "DELETE FROM Comment WHERE (id_comment = ? AND id_user = ?)";
+
+	}
+	
 
 	public class Film{
 		public static final String getAll = "SELECT * FROM film";

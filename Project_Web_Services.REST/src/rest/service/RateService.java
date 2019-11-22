@@ -35,9 +35,7 @@ public class RateService {
     	this.rates.clear();
     	
     	while(rs.next()){
-    		//add in the hash maps a new rate that created with constructor
-    		this.rates.put(rs.getLong("ID_rate"), 
-    				new Rate(rs.getLong("ID_rate"), rs.getInt("value"), this.users.get(rs.getLong("ID_user")), new Multimedia()));
+    		this.rates.put(rs.getLong("ID_rate"), new Rate(rs.getLong("ID_rate"), rs.getInt("value"), this.users.get(rs.getLong("ID_user")), new Multimedia()));
     	}
 	}
 
@@ -71,7 +69,7 @@ public class RateService {
 	
 	
 	public Rate addRate(int value, long id_multimedia) 
-			throws Exception{
+			throws SQLException{
 		
 		DB_web_services db = new DB_web_services();
     	
@@ -111,7 +109,7 @@ public class RateService {
 	
 	
 	public boolean updateRate(long id, int value) 
-			throws Exception{
+			throws SQLException{
 
 		DB_web_services db = new DB_web_services();
     	
@@ -137,7 +135,7 @@ public class RateService {
 	
 	
 	public boolean removeRate(long id) 
-			throws Exception{
+			throws SQLException{
 		DB_web_services db = new DB_web_services();
 
 		PreparedStatement ppsm = db.getPreparedStatement(Constants.Rate.deleteByID);
