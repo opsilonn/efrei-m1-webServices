@@ -16,6 +16,19 @@ public class Comment {
 	private User user;
 	private Multimedia multimedia;
 	
+	
+	
+	
+	public Comment() { }
+	
+	
+	public Comment(long id_comment, String value, User use, Multimedia multimedia){
+		this.id_comment = id_comment;
+		this.value = value;
+		this.user = user;
+		this.multimedia = multimedia;
+	}
+	
 	/**
 	 * @return the id_comment
 	 */

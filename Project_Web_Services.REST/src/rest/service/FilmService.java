@@ -37,7 +37,7 @@ public class FilmService {
 			f.setMainCast(rs.getString("mainCast"));
 			//f.setDuration(rs.getInt("Duration"));
 			
-			stmt2 = dba.getPreparedStatement(Constants.media.getByid);
+			stmt2 = dba.getPreparedStatement(Constants.Multimedia.getByID);
 			stmt2.setLong(1, rs.getLong("ID_multimedia"));
 			
 			ResultSet rs2 = stmt2.executeQuery();

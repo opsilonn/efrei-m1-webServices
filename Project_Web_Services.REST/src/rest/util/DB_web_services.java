@@ -12,6 +12,7 @@ import java.util.Map;
 import rest.model.Book;
 import rest.model.Multimedia;
 import rest.model.Rate;
+import rest.model.Comment;
 import rest.model.User;
 
 
@@ -52,6 +53,7 @@ public class DB_web_services {
     
     private static Map<Long, User> users = new HashMap<Long, User>();
     private static Map<Long, Rate> rates = new HashMap<Long, Rate>();
+    private static Map<Long, Comment> comments = new HashMap<Long, Comment>();
 
     private static Map<Long, Multimedia> multimedias = new HashMap<Long, Multimedia>();
     private static Map<Long, Book> books = new HashMap<Long, Book>();
@@ -65,6 +67,11 @@ public class DB_web_services {
     
     public static Map<Long, Rate> getRates(){
     	return DB_web_services.rates;
+    }
+    
+    
+    public static Map<Long, Comment> getComments(){
+    	return DB_web_services.comments;
     }
     
     

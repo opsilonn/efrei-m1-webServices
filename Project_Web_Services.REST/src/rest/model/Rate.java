@@ -1,7 +1,13 @@
 package rest.model;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import rest.model.util.Link;
 
 
 
@@ -15,6 +21,8 @@ public class Rate {
 	
 	private User user;
 	private Multimedia multimedia;
+	
+	private List<Link> links = new ArrayList<Link>();
 	
 	
 	
@@ -53,6 +61,7 @@ public class Rate {
 	/**
 	 * @return the user
 	 */
+    @XmlTransient
 	public User getUser() {
 		return user;
 	}
@@ -60,8 +69,33 @@ public class Rate {
 	/**
 	 * @return the multimedia
 	 */
+    @XmlTransient
 	public Multimedia getMultimedia() {
 		return multimedia;
+	}
+
+	/**
+	 * @return the links
+	 */
+	public List<Link> getLinks() {
+		return links;
+	}
+
+
+	/**
+	 * @param links the links to set
+	 */
+	public void setLinks(List<Link> links) {
+		this.links = links;
+	}
+
+
+	/**
+	 * @param link the link to add
+	 */
+	public void addLink(String rel, String href) {
+		Link link = new Link(rel, href);
+		this.links.add(link);
 	}
 	
 }
