@@ -11,6 +11,9 @@ public class Date {
 	
 	private String value;
 	
+	public Date(){
+		
+	}
 	
 	public Date(String date_string){
 		this.value = date_string;
@@ -28,6 +31,7 @@ public class Date {
 		this.year = year;
 		this.month = month;
 		this.day = day;
+		setValue();
 	}
 	
 	
@@ -76,6 +80,7 @@ public class Date {
 	 * @return the value
 	 */
 	public String getValue() {
+		setValue();
 		return value;
 	}
 
@@ -91,6 +96,7 @@ public class Date {
 	 */
 	@Override
 	public String toString() {
+		setValue();
 		return value;
 	}
 	

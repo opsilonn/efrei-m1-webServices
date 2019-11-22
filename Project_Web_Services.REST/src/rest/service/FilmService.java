@@ -90,7 +90,7 @@ public class FilmService {
 		psmt.setInt(5, f.getStatus());
 		psmt.setLong(6, u.getId_user());
 		psmt.setString(7, f.getDescription());
-		psmt.setString(8, f.getRelease_date().toDate());
+		psmt.setString(8, f.getRelease_date().toString());
 		int success = psmt.executeUpdate();
 		if(success == 1){
 			ResultSet id = psmt.getGeneratedKeys();

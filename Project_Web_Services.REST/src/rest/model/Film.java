@@ -6,6 +6,7 @@ import java.sql.Time;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import rest.model.util.Date;
+import rest.model.util.Timestamp;
 
 
 
