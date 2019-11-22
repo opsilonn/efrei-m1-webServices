@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 
 import rest.exception.DataNotFoundException;
 import rest.model.User;
-import rest.model.util.Date;
+import rest.model.util.Timestamp;
 import rest.resource.util.Constants;
 import rest.util.DB_web_services;
 
@@ -33,7 +33,7 @@ public class UserService {
     	users.clear();
     	
     	while(rs.next()){
-    		users.put(rs.getLong("ID_user"), new User(rs.getLong("ID_user"), rs.getString("pseudo"), rs.getString("email"), new Date(rs.getString("date_creation"))));
+    		users.put(rs.getLong("ID_user"), new User(rs.getLong("ID_user"), rs.getString("pseudo"), rs.getString("email"), new Timestamp(rs.getString("date_creation"))));
     	}
 	}
 
@@ -93,7 +93,7 @@ public class UserService {
     			ResultSet rs_user = ppsm.executeQuery();
     	    	
     	    	if(rs_user.next()){
-    	    		User new_user = new User(rs_user.getLong("ID_user"), rs_user.getString("pseudo"), rs_user.getString("email"), new Date(rs_user.getString("date_creation")));
+    	    		User new_user = new User(rs_user.getLong("ID_user"), rs_user.getString("pseudo"), rs_user.getString("email"), new Timestamp(rs_user.getString("date_creation")));
     	    		users.put(rs_user.getLong("ID_user"), new_user);
     	    		
     	    		

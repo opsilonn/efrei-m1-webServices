@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import rest.model.util.Date;
+import rest.model.util.Timestamp;
 import rest.model.util.Link;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,7 +25,7 @@ public class User {
 	
 	private String password;
 	
-	private Date creation_date;
+	private Timestamp creation_date;
 
 	private Map<Long, Rate> rates = new HashMap<Long, Rate>();
 	private Map<Long, Comment> comments = new HashMap<Long, Comment>();
@@ -37,7 +37,7 @@ public class User {
 	public User() {	}
 	
 	
-	public User(long id_user, String pseudo, String email, Date creation_date) {
+	public User(long id_user, String pseudo, String email, Timestamp creation_date) {
 		this.id_user = id_user;
 		this.pseudo = pseudo;
 		this.email = email;
@@ -45,7 +45,7 @@ public class User {
 	}
 	
 
-	public User(long id_user, String pseudo, String email, Date creation_date, Map<Long, Rate> rates,
+	public User(long id_user, String pseudo, String email, Timestamp creation_date, Map<Long, Rate> rates,
 			Map<Long, Comment> comments) {
 		this.id_user = id_user;
 		this.pseudo = pseudo;
@@ -110,7 +110,7 @@ public class User {
 	/**
 	 * @return the creation_date
 	 */
-	public Date getCreation_date() {
+	public Timestamp getCreation_date() {
 		return creation_date;
 	}
 

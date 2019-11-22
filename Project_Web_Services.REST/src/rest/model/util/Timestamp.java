@@ -3,7 +3,7 @@ package rest.model.util;
 
 
 
-public class Date {
+public class Timestamp {
 
 	private int year;
 	private int month;
@@ -15,7 +15,7 @@ public class Date {
 	private String value;
 	
 	
-	public Date(String date_string){
+	public Timestamp(String date_string){
 		this.value = date_string;
 		
 		
@@ -35,6 +35,16 @@ public class Date {
 		this.second = Integer.valueOf(spliter[2]);
 	}
 	
+	
+	public Timestamp(int year, int month, int day, int hour, int minute, int second){
+		this.year = year;
+		this.month = month;
+		this.day = day;
+		this.hour = hour;
+		this.minute = minute;
+		this.second = second;
+	}
+	
 	/**
 	 * @return the year
 	 */
@@ -45,8 +55,8 @@ public class Date {
 	 * @param year the year to set
 	 */
 	public void setYear(int year) {
-		this.setValue();
 		this.year = year;
+		this.setValue();
 	}
 	/**
 	 * @return the month
@@ -58,8 +68,8 @@ public class Date {
 	 * @param month the month to set
 	 */
 	public void setMonth(int month) {
-		this.setValue();
 		this.month = month;
+		this.setValue();
 	}
 	/**
 	 * @return the day
@@ -71,8 +81,8 @@ public class Date {
 	 * @param day the day to set
 	 */
 	public void setDay(int day) {
-		this.setValue();
 		this.day = day;
+		this.setValue();
 	}
 	/**
 	 * @return the hour
@@ -84,8 +94,8 @@ public class Date {
 	 * @param hour the hour to set
 	 */
 	public void setHour(int hour) {
-		this.setValue();
 		this.hour = hour;
+		this.setValue();
 	}
 	/**
 	 * @return the minute
@@ -97,8 +107,8 @@ public class Date {
 	 * @param minute the minute to set
 	 */
 	public void setMinute(int minute) {
-		this.setValue();
 		this.minute = minute;
+		this.setValue();
 	}
 	/**
 	 * @return the second
@@ -110,8 +120,8 @@ public class Date {
 	 * @param second the second to set
 	 */
 	public void setSecond(int second) {
-		this.setValue();
 		this.second = second;
+		this.setValue();
 	}
 
 	/**

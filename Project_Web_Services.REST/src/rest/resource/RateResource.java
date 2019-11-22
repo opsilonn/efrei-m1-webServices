@@ -27,8 +27,6 @@ import rest.model.User;
 import rest.service.RateService;
 
 
-
-
 @Produces(MediaType.APPLICATION_JSON)
 public class RateResource {
 
@@ -44,47 +42,49 @@ public class RateResource {
 
 
 
-	private String getUriForSelf(Rate rate) {
-		return uriInfo.getBaseUriBuilder()
+	private URI getUriForSelf(Rate rate, UriInfo uriInfo) {		
+		return this.uriInfo.getBaseUriBuilder()
 				.path(UserResource.class)
 				.path(UserResource.class, "getRateResource")
 				.path(String.valueOf(rate.getId_rate()))
 				.resolveTemplate("id_user", rate.getUser().getId_user())
-				.build()
-				.toString();
+				.build();
 	}
     
     
-	private String getUriForUserParent(Rate rate) {	
-		return uriInfo.getBaseUriBuilder()
+	private URI getUriForUserParent(Rate rate) {	
+		return this.uriInfo.getBaseUriBuilder()
 				.path(UserResource.class)
 				.path(String.valueOf(rate.getUser().getId_user()))
-				.build()
-				.toString();
+				.build();
 	}
     
     
-	/*private String getUriForMultimedia(Rate rate) {	
+	/*private URI getUriForMultimedia(Rate rate) {	
 		return uriInfo.getBaseUriBuilder()
 				.path(MultimediaResource.class)
 				.path(String.valueOf(rate.getMultimedia().getId_multimedia()))
-				.build()
-				.toString();
+				.build();
 	}*/
 
 
-	private void addLinks(Rate rate) {
-		rate.addLink("self", getUriForSelf(rate));
-		//rate.addLink("rates", getUriForUserParent(rate));
-		//rate.addLink("comments", getUriForMultimedia(rate));
+	private void addLinks(Rate rate, UriInfo uriInfo) {
+		rate.addLink("self", getUriForSelf(rate, uriInfo).toString());
+		//rate.addLink("rates", getUriForUserParent(rate).toString());
+		//rate.addLink("comments", getUriForMultimedia(rate).toString());
 	}
     
 
     
     
     @GET
-    public Response getRates(@PathParam("id_user")long id_user, @QueryParam("value")String value) 
+    public Response getRates(@PathParam("id_user")long id_user, @QueryParam("value")String value, @Context UriInfo uriInfo) 
     		throws SQLException{
+    	if(uriInfo == null){
+    		System.out.println("MAIS TU Y CROIS A SA ?");
+    	}else{
+    		System.out.println("THIS IS MAGIC ? YES IT IS");    		
+    	}
    		this.rateService = new RateService(id_user);
 		
 		if(value != null){
@@ -93,7 +93,7 @@ public class RateResource {
     		List<Rate> rates = rateService.getRatesByValue(valueInt);
     		
     		for(Rate rate : rates){
-    			addLinks(rate);
+    			addLinks(rate, uriInfo);
     		}
     		
     		
@@ -107,7 +107,7 @@ public class RateResource {
 		List<Rate> rates = rateService.getAllRates();
 
 		for(Rate rate : rates){
-			addLinks(rate);
+			addLinks(rate, uriInfo);
 		}
 		
 		
@@ -126,7 +126,7 @@ public class RateResource {
 		
 		Rate rate = rateService.getRate(id);
 		
-		addLinks(rate);
+		//addLinks(rate);
 		
 		
         return Response
@@ -151,17 +151,14 @@ public class RateResource {
     }
 
     
-    @POST
+    /*@POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response postRate(@PathParam("id_user")long id_user, @FormParam("value")int value, @FormParam("id_m")long id_multimedia) 
     		throws SQLException{
 		this.rateService = new RateService(id_user);
 		
 		Rate new_rate = rateService.addRate(value, id_multimedia);
-		URI location = uriInfo
-				.getAbsolutePathBuilder()
-				.path(String.valueOf(new_rate.getId_rate()))
-				.build();
+		URI location = getUriForSelf(new_rate);
 
 		
         return Response
@@ -169,7 +166,7 @@ public class RateResource {
 				.entity(new_rate)
 				.build();
 			
-    }
+    }*/
 
     
     @Path("/{id_rate}")

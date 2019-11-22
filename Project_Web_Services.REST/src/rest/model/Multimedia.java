@@ -1,7 +1,7 @@
 package rest.model;
 
 
-import rest.model.util.Date;
+import rest.model.util.Timestamp;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -20,10 +20,10 @@ public class Multimedia {
 	private int category;
 	
 	private int status;
-	private Date status_date;
+	private Timestamp status_date;
 	
-	private Date upload_date;
-	private Date release_date;
+	private Timestamp upload_date;
+	private Timestamp release_date;
 	
 	private User uploader;
 	
@@ -34,7 +34,7 @@ public class Multimedia {
 	
 
 	public Multimedia(long id_multimedia, String title, String description, String language, String genre, int category,
-			int status, Date status_date, Date upload_date, Date release_date, User uploader) {
+			int status, Timestamp status_date, Timestamp upload_date, Timestamp release_date, User uploader) {
 		super();
 		this.id_multimedia = id_multimedia;
 		this.title = title;
@@ -154,42 +154,42 @@ public class Multimedia {
 	/**
 	 * @return the status_date
 	 */
-	public Date getStatus_date() {
+	public Timestamp getStatus_date() {
 		return status_date;
 	}
 
 	/**
 	 * @param status_date the status_date to set
 	 */
-	public void setStatus_date(Date status_date) {
+	public void setStatus_date(Timestamp status_date) {
 		this.status_date = status_date;
 	}
 
 	/**
 	 * @return the upload_date
 	 */
-	public Date getUpload_date() {
+	public Timestamp getUpload_date() {
 		return upload_date;
 	}
 
 	/**
 	 * @param upload_date the upload_date to set
 	 */
-	public void setUpload_date(Date upload_date) {
+	public void setUpload_date(Timestamp upload_date) {
 		this.upload_date = upload_date;
 	}
 
 	/**
 	 * @return the release_date
 	 */
-	public Date getRelease_date() {
+	public Timestamp getRelease_date() {
 		return release_date;
 	}
 
 	/**
 	 * @param release_date the release_date to set
 	 */
-	public void setRelease_date(Date release_date) {
+	public void setRelease_date(Timestamp release_date) {
 		this.release_date = release_date;
 	}
 

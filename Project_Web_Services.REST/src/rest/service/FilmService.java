@@ -12,7 +12,7 @@ import com.mysql.cj.protocol.Resultset;
 
 import rest.model.Film;
 import rest.model.User;
-import rest.model.util.Date;
+import rest.model.util.Timestamp;
 import rest.resource.util.Constants;
 import rest.util.DB_web_services;
 
@@ -52,8 +52,8 @@ public class FilmService {
 				f.setGenre(rs2.getString("genre"));
 				f.setCategory(rs2.getInt("category"));
 				f.setStatus(rs2.getInt("status"));
-				f.setStatus_date(new Date(rs2.getString("date_status")));
-				f.setUpload_date(new Date(rs2.getString("date_upload")));
+				f.setStatus_date(new Timestamp(rs2.getString("date_status")));
+				f.setUpload_date(new Timestamp(rs2.getString("date_upload")));
 			}
 			
 			films.put(f.getId_film(), f);
