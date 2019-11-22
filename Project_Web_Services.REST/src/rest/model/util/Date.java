@@ -35,6 +35,12 @@ public class Date {
 		this.second = Integer.valueOf(spliter[2]);
 	}
 	
+	public Date(int annee, int mois, int jour){
+		year = annee;
+		month = mois;
+		day = jour;
+	}
+	
 	/**
 	 * @return the year
 	 */
@@ -127,6 +133,12 @@ public class Date {
 	public void setValue() {
 		this.value = year + "-" + month + "-" + day + " " + hour + ":" + minute
 				+ ":" + second;;
+	}
+	
+	public String toDate(){
+		String s= year + "-" + month + "-" + day;
+		
+		return s;
 	}
 
 	/* (non-Javadoc)

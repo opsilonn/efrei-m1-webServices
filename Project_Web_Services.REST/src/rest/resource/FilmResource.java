@@ -2,7 +2,9 @@ package rest.resource;
 
 import java.sql.SQLException;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -13,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
+import rest.model.Film;
 import rest.service.FilmService;
 
 @Path("/films")
@@ -45,6 +48,19 @@ public class FilmResource {
 		 return Response.status(Status.OK)
 	        		.entity(films.getFilmByValue(id))
 	        		.build();
+	 }
+	 
+	 @POST
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 public Response PostFilm(Film film)
+			 throws SQLException{
+		 
+		 
+		 Film f;
+		 this.films = new FilmService();
+		 f = films.addFilm(film);
+		 
+		 return Response.status(Status.OK).entity(f).build();
 	 }
 	 
 }
