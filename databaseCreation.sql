@@ -40,7 +40,7 @@ DROP TABLE IF EXISTS `web_services`.`multimedia` ;
 
 CREATE TABLE IF NOT EXISTS `web_services`.`multimedia` (
   `ID_multimedia` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(45) NOT NULL,
+  `title` VARCHAR(100) NOT NULL,
   `description` VARCHAR(500) NULL,
   `language` VARCHAR(2) NOT NULL,
   `genre` VARCHAR(45) NULL,
