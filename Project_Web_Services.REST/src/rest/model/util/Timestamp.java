@@ -138,6 +138,12 @@ public class Timestamp {
 		this.value = year + "-" + month + "-" + day + " " + hour + ":" + minute
 				+ ":" + second;;
 	}
+	
+	public String toDate(){
+		String s= year + "-" + month + "-" + day;
+		
+		return s;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

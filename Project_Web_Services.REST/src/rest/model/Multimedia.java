@@ -49,7 +49,18 @@ public class Multimedia {
 		this.uploader = uploader;
 	}
 
-
+	public Multimedia(String title, String description, String language, String genre, int category,
+			int status, User upp, Date Realease){
+		
+		this.title = title;
+		this.description = description;
+		this.language = language;
+		this.genre = genre;
+		this.category = category;
+		this.status = status;
+		this.uploader = upp;
+		
+	}
 
 
 

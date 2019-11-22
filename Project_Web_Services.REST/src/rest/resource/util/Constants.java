@@ -65,7 +65,7 @@ public class Constants {
 
 	public class Multimedia{
 		public static final String getByID = "SELECT * FROM Multimedia WHERE ID_multimedia = ? ";
-		public static final String post = "INSERT INTO multimedia (title, language, genre, category, status, ID_uploader, description) VALUES(?,?,?,?,?,?,?)";
+		public static final String post = "INSERT INTO multimedia (title, language, genre, category, status, ID_uploader, description, date_release) VALUES(?,?,?,?,?,?,?,?)";
 	}
 	
 }

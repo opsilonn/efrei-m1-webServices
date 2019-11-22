@@ -36,6 +36,9 @@ public class User {
 
 	public User() {	}
 	
+	public User(long id){
+		id_user = id;
+	}
 	
 	public User(long id_user, String pseudo, String email, Timestamp creation_date) {
 		this.id_user = id_user;
