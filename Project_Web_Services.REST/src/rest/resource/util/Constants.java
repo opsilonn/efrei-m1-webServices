@@ -33,6 +33,7 @@ public class Constants {
 
 	public class Film{
 		public static final String getAll = "SELECT * FROM film";
+		public static final String post ="INSERT INTO `film` (director, productor, mainCast, duration, ID_multimedia) VALUES(?,?,?,?,?)";
 	}
 
 
@@ -51,6 +52,7 @@ public class Constants {
 
 	public class Multimedia{
 		public static final String getByID = "SELECT * FROM Multimedia WHERE ID_multimedia = ? ";
+		public static final String post = "INSERT INTO multimedia (title, language, genre, category, status, ID_uploader, description) VALUES(?,?,?,?,?,?,?)";
 	}
 	
 }
