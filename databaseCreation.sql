@@ -151,22 +151,3 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
-
-
-
-
--- -----------------------------------------------------
--- FILLING TABLES
--- -----------------------------------------------------
-
-
-
--- -----------------------------------------------------
--- Filling Table `web_services`.`user`
--- -----------------------------------------------------
-INSERT INTO `user` (`ID_user`, `pseudo`, `password`, `email`, `date_creation`) VALUES
-('1', 'Jean-mi', 'azerty', 'jeanMi@gmail.com', CURRENT_TIMESTAMP),
-('2', 'JeanneDou', 'qwerty', 'Jojo@efrei.net', CURRENT_TIMESTAMP),
-('3', 'Siphona', 'aqzszde', 'adibou@efrei.net', '2019-11-12 00:00:00');
