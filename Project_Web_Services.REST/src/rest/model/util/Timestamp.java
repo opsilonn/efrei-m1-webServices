@@ -1,7 +1,6 @@
 package rest.model.util;
 
-
-
+import javax.xml.bind.annotation.XmlTransient;
 
 public class Timestamp {
 
@@ -50,6 +49,7 @@ public class Timestamp {
 	/**
 	 * @return the year
 	 */
+    @XmlTransient
 	public int getYear() {
 		return year;
 	}
@@ -63,6 +63,7 @@ public class Timestamp {
 	/**
 	 * @return the month
 	 */
+    @XmlTransient
 	public int getMonth() {
 		return month;
 	}
@@ -76,6 +77,7 @@ public class Timestamp {
 	/**
 	 * @return the day
 	 */
+    @XmlTransient
 	public int getDay() {
 		return day;
 	}
@@ -89,6 +91,7 @@ public class Timestamp {
 	/**
 	 * @return the hour
 	 */
+    @XmlTransient
 	public int getHour() {
 		return hour;
 	}
@@ -105,6 +108,7 @@ public class Timestamp {
 	public int getMinute() {
 		return minute;
 	}
+    @XmlTransient
 	/**
 	 * @param minute the minute to set
 	 */
@@ -115,6 +119,7 @@ public class Timestamp {
 	/**
 	 * @return the second
 	 */
+    @XmlTransient
 	public int getSecond() {
 		return second;
 	}

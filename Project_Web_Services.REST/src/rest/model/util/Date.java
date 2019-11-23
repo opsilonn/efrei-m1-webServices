@@ -1,7 +1,6 @@
 package rest.model.util;
 
-
-
+import javax.xml.bind.annotation.XmlTransient;
 
 public class Date {
 
@@ -39,6 +38,7 @@ public class Date {
 	/**
 	 * @return the year
 	 */
+    @XmlTransient
 	public int getYear() {
 		return year;
 	}
@@ -52,6 +52,7 @@ public class Date {
 	/**
 	 * @return the month
 	 */
+    @XmlTransient
 	public int getMonth() {
 		return month;
 	}
@@ -65,6 +66,7 @@ public class Date {
 	/**
 	 * @return the day
 	 */
+    @XmlTransient
 	public int getDay() {
 		return day;
 	}

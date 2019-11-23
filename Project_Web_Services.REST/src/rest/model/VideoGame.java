@@ -14,6 +14,17 @@ public class VideoGame extends Multimedia {
 	private String developper;
 	private String publisher;
 	
+	
+	public VideoGame() { }
+	
+	
+	public VideoGame(long id_videoGame, String developper, String publisher)
+	{
+		this.id_videoGame = id_videoGame;
+		this.developper = developper;
+		this.publisher = publisher;	
+	}
+	
 	/**
 	 * @return the id_videoGame
 	 */

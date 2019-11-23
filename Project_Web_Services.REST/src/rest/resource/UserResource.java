@@ -44,7 +44,7 @@ public class UserResource {
 
 
 	private URI getUriForSelf(User user) {
-		return uriInfo.getBaseUriBuilder()
+		return this.uriInfo.getBaseUriBuilder()
 				.path(UserResource.class)
 				.path(String.valueOf(user.getId_user()))
 				.build();
@@ -52,7 +52,7 @@ public class UserResource {
     
     
 	private URI getUriForRates(User user) {		
-		return uriInfo.getBaseUriBuilder()
+		return this.uriInfo.getBaseUriBuilder()
 				.path(UserResource.class)
 				.path(UserResource.class, "getRateResource")
 				.resolveTemplate("id_user", user.getId_user())
@@ -61,7 +61,7 @@ public class UserResource {
     
     
 	private URI getUriForComments(User user) {		
-		return uriInfo.getBaseUriBuilder()
+		return this.uriInfo.getBaseUriBuilder()
 				.path(UserResource.class)
 				.path(UserResource.class, "getCommentResource")
 				.resolveTemplate("id_user", user.getId_user())
@@ -134,7 +134,10 @@ public class UserResource {
     		throws SQLException {
 		this.userService = new UserService();
 		
-		User new_user = userService.addUser(user);
+		System.out.println(user);
+		
+		User new_user = userService.addUser(user.getPseudo(), user.getPassword(), user.getEmail());
+		addLinks(new_user);
 		URI location = getUriForSelf(new_user);
 		
 		
@@ -148,21 +151,20 @@ public class UserResource {
     @Path("/{user_id}")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response putUser(@PathParam("user_id")Long id, @FormParam("e_psw")String existing_password, @FormParam("n_psw")String new_password, @FormParam("mail")String email)
+    public Response putUser(@PathParam("user_id")Long id, User user)
     		throws SQLException {
 		this.userService = new UserService();
 		
 		
 		return Response
 				.status(Status.OK) 
-				.entity(userService.updateUser(id, existing_password, new_password, email))
+				.entity(userService.updateUser(id, user.getPassword(), user.getNew_password(), user.getEmail()))
 				.build();
     }
 
     
     @Path("/{id_user}")
     @DELETE
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response deleteUser(@PathParam("id_user")Long id)
     		throws SQLException {
 		this.userService = new UserService();

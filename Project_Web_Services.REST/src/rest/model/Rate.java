@@ -7,6 +7,9 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import rest.model.util.Link;
 
 
@@ -19,8 +22,9 @@ public class Rate {
 	
 	private int value;
 	
-	private User user;
-	private Multimedia multimedia;
+	private long id_user;
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private long id_multimedia;
 	
 	private List<Link> links = new ArrayList<Link>();
 	
@@ -30,11 +34,11 @@ public class Rate {
 	public Rate() { }
 	
 	
-	public Rate(long id_rate, int value, User user, Multimedia multimedia){
+	public Rate(long id_rate, int value, long id_user, long id_multimedia){
 		this.id_rate = id_rate;
 		this.value = value;
-		this.user = user;
-		this.multimedia = multimedia;
+		this.id_user = id_user;
+		this.id_multimedia = id_multimedia;
 	}
 	
 	/**
@@ -62,16 +66,15 @@ public class Rate {
 	 * @return the user
 	 */
     @XmlTransient
-	public User getUser() {
-		return user;
+	public long getId_user() {
+		return this.id_user;
 	}
 	
 	/**
 	 * @return the multimedia
 	 */
-    @XmlTransient
-	public Multimedia getMultimedia() {
-		return multimedia;
+	public long getId_multimedia() {
+		return this.id_multimedia;
 	}
 
 	/**

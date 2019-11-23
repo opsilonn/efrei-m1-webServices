@@ -13,7 +13,7 @@ import com.mysql.cj.protocol.Resultset;
 import rest.model.Film;
 import rest.model.User;
 import rest.model.util.Timestamp;
-import rest.resource.util.Constants;
+import rest.service.util.Constants;
 import rest.util.DB_web_services;
 
 public class FilmService {

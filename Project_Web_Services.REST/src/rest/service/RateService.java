@@ -7,17 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import rest.model.Multimedia;
+import rest.exception.DataNotFoundException;
 import rest.model.Rate;
-import rest.model.User;
-import rest.resource.util.Constants;
+import rest.service.util.Constants;
 import rest.util.DB_web_services;
 
 public class RateService {
 	
 	private long id_user;
 	
-	private Map<Long, User> users = DB_web_services.getUsers();
 	private Map<Long, Rate> rates = DB_web_services.getRates();
 	
 	
@@ -35,14 +33,21 @@ public class RateService {
     	this.rates.clear();
     	
     	while(rs.next()){
-    		this.rates.put(rs.getLong("ID_rate"), new Rate(rs.getLong("ID_rate"), rs.getInt("value"), this.users.get(rs.getLong("ID_user")), new Multimedia()));
+    		this.rates.put(rs.getLong("ID_rate"), new Rate(rs.getLong("ID_rate"), rs.getInt("value"), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
     	}
 	}
 
 	public List<Rate> getAllRates()
 	{
-    	return new ArrayList<Rate>(this.rates.values());
+		List<Rate> return_rates = new ArrayList<Rate>(this.rates.values());
+		
+		if(return_rates.isEmpty())
+			throw new DataNotFoundException("No rates was found for the user `" + this.id_user + "` !");
+		
+		
+    	return return_rates;		
 	}
+	
 
 	public List<Rate> getRatesByValue(int value)
 	{
@@ -59,7 +64,13 @@ public class RateService {
 	
 
 	public Rate getRate(long id){
-		return this.rates.get(id);
+		Rate rate = rates.get(id);
+
+		if(rate == null)
+			throw new DataNotFoundException("The rate with the id `" + id + "` was not found for the user `" + this.id_user + "` !");
+		
+		
+		return rate;
 	}
 	
 	
@@ -74,6 +85,8 @@ public class RateService {
 		DB_web_services db = new DB_web_services();
     	
     	PreparedStatement ppsm = db.getPreparedStatement(Constants.Rate.post);
+    	
+    	System.out.printf("INSERT INTO Rate(value, id_user, id_multimedia) VALUES(%d, %d, %d)", value, this.id_user, id_multimedia);
     	
     	ppsm.setInt(1, value);
     	ppsm.setLong(2, this.id_user);
@@ -94,7 +107,7 @@ public class RateService {
     			ResultSet rs_rate = ppsm.executeQuery();
     	    	
     	    	if(rs_rate.next()){
-    	    		Rate rate = new Rate(rs_rate.getLong("ID_rate"), rs_rate.getInt("value"), this.users.get(rs_rate.getLong("ID_user")), new Multimedia());
+    	    		Rate rate = new Rate(rs_rate.getLong("ID_rate"), rs_rate.getInt("value"), rs_rate.getLong("ID_user"), rs_rate.getLong("ID_multimedia"));
     	    		this.rates.put(rs_rate.getLong("ID_rate"), rate);
     	    		
     	    		

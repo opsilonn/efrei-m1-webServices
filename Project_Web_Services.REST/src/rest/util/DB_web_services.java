@@ -14,6 +14,7 @@ import rest.model.Multimedia;
 import rest.model.Rate;
 import rest.model.Comment;
 import rest.model.User;
+import rest.model.VideoGame;
 
 
 
@@ -57,6 +58,7 @@ public class DB_web_services {
 
     private static Map<Long, Multimedia> multimedias = new HashMap<Long, Multimedia>();
     private static Map<Long, Book> books = new HashMap<Long, Book>();
+    private static Map<Long, VideoGame> videoGames = new HashMap<Long, VideoGame>();
     
 
     
@@ -81,6 +83,10 @@ public class DB_web_services {
 
     public static Map<Long, Book> getBooks(){
     	return DB_web_services.books;
+    }
+
+    public static Map<Long, VideoGame> getVideoGames(){
+    	return DB_web_services.videoGames;
     }
     
     

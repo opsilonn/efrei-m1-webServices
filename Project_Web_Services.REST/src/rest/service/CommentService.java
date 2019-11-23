@@ -7,17 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import rest.model.Multimedia;
+import rest.exception.DataNotFoundException;
 import rest.model.Comment;
-import rest.model.User;
-import rest.resource.util.Constants;
+import rest.service.util.Constants;
 import rest.util.DB_web_services;
 
 public class CommentService {
 	
 	private long id_user;
 	
-	private Map<Long, User> users = DB_web_services.getUsers();
 	private Map<Long, Comment> comments = DB_web_services.getComments();
 	
 	
@@ -35,31 +33,30 @@ public class CommentService {
     	this.comments.clear();
     	
     	while(rs.next()){
-    		this.comments.put(rs.getLong("ID_comment"), new Comment(rs.getLong("ID_comment"), rs.getString("value"), this.users.get(rs.getLong("ID_user")), new Multimedia()));
+    		this.comments.put(rs.getLong("ID_comment"), new Comment(rs.getLong("ID_comment"), rs.getString("value"), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
     	}
 	}
 
 	public List<Comment> getAllComments()
 	{
-    	return new ArrayList<Comment>(this.comments.values());
-	}
-
-	public List<Comment> getCommentsByValue(String value)
-	{
-		List<Comment> return_comments = new ArrayList<Comment>();
-
-		for(Map.Entry<Long, Comment> entry : this.comments.entrySet()){
-			if(entry.getValue().getValue() == value){
-				return_comments.add(entry.getValue());
-			}
-		}
+		List<Comment> return_comments = new ArrayList<Comment>(this.comments.values());
 		
-    	return return_comments;
+		if(return_comments.isEmpty())
+			throw new DataNotFoundException("No comments was found for the user `" + this.id_user + "` !");
+		
+		
+    	return return_comments;	
 	}
 	
 
 	public Comment getComment(long id){
-		return this.comments.get(id);
+		Comment comment = comments.get(id);
+
+		if(comment == null)
+			throw new DataNotFoundException("The comment with the id `" + id + "` was not found for the user `" + this.id_user + "` !");
+		
+		
+		return comment;
 	}
 	
 	
@@ -69,7 +66,7 @@ public class CommentService {
 	
 	
 	public Comment addComment(String value, long id_multimedia) 
-			throws Exception{
+			throws SQLException{
 		
 		DB_web_services db = new DB_web_services();
     	
@@ -94,7 +91,7 @@ public class CommentService {
     			ResultSet rs_comment = ppsm.executeQuery();
     	    	
     	    	if(rs_comment.next()){
-    	    		Comment comment = new Comment(rs_comment.getLong("ID_comment"), rs_comment.getString("value"), this.users.get(rs_comment.getLong("ID_user")), new Multimedia());
+    	    		Comment comment = new Comment(rs_comment.getLong("ID_comment"), rs_comment.getString("value"), rs_comment.getLong("ID_user"), rs_comment.getLong("ID_multimedia"));
     	    		this.comments.put(rs_comment.getLong("ID_comment"), comment);
     	    		
     	    		
@@ -109,7 +106,7 @@ public class CommentService {
 	
 	
 	public boolean updateComment(long id, String value) 
-			throws Exception{
+			throws SQLException{
 
 		DB_web_services db = new DB_web_services();
     	
@@ -135,7 +132,7 @@ public class CommentService {
 	
 	
 	public boolean removeComment(long id) 
-			throws Exception{
+			throws SQLException{
 		DB_web_services db = new DB_web_services();
 
 		PreparedStatement ppsm = db.getPreparedStatement(Constants.Comment.deleteByID);

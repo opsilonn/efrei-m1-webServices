@@ -1,3 +1,0 @@
-127.0.0.1 - - [16/Nov/2019:12:44:45 +0100] "GET / HTTP/1.1" 404 1005
-0:0:0:0:0:0:0:1 - - [16/Nov/2019:12:44:45 +0100] "GET /Project_WebServices/ HTTP/1.1" 404 1045
-0:0:0:0:0:0:0:1 - - [16/Nov/2019:12:45:01 +0100] "GET /Project_WebServices/rest/employee HTTP/1.1" 200 -

@@ -3,6 +3,15 @@ package rest.model;
 
 import rest.model.util.Date;
 import rest.model.util.Timestamp;
+import rest.resource.BookResource;
+import rest.resource.FilmResource;
+import rest.resource.VideoGameResource;
+import rest.service.util.Constants;
+import rest.util.DB_web_services;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -62,6 +71,34 @@ public class Multimedia {
 		this.uploader = upp;
 		this.release_date = Realease;
 		
+	}
+	
+	
+	public static Class getChildClass(long id_multimedia) throws SQLException{
+		
+		DB_web_services db = new DB_web_services();
+    	
+    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.getTypeByID);
+    	    	
+    	ppsm.setLong(1, id_multimedia);
+    	
+    	ResultSet rs = ppsm.executeQuery();
+    	
+    	if(rs.next()){
+    		int type = rs.getInt(1);
+    		
+    		switch(type){
+    		case 1:
+    			return BookResource.class;
+    		case 2:
+    			return FilmResource.class;
+    		case 3:
+    			return VideoGameResource.class;
+    		}
+    	}
+    	
+    	
+    	return null;
 	}
 
 

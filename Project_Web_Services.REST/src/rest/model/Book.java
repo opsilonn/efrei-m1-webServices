@@ -14,6 +14,9 @@ public class Book extends Multimedia{
 	private String publisher;
 	
 	
+	public Book() { }
+	
+	
 	public Book(long id_book, String author, String publisher)
 	{
 		this.id_book = id_book;

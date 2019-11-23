@@ -1,6 +1,10 @@
 package rest.resource;
 
 
+import java.net.URI;
+import java.sql.SQLException;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -14,12 +18,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
-import rest.resource.util.JSON_response;
+import rest.model.Comment;
+import rest.model.User;
 import rest.service.CommentService;
-
-
 
 
 @Produces(MediaType.APPLICATION_JSON)
@@ -28,111 +33,148 @@ public class CommentResource {
     // Allows to insert contextual objects into the class,
     // e.g. ServletContext, Request, Response, UriInfo
     @Context
-    UriInfo uriInfo;
-    @Context
     Request request;
     
     CommentService commentService;
     
 
+
+
+	private URI getUriForSelf(Comment comment, UriInfo uriInfo) {	
+		return uriInfo.getBaseUriBuilder()
+				.path(UserResource.class)
+				.path(UserResource.class, "getCommentResource")
+				.path(String.valueOf(comment.getId_comment()))
+				.resolveTemplate("id_user", comment.getId_user())
+				.build();
+	}
+    
+    
+	private URI getUriForParentUser(Comment comment, UriInfo uriInfo) {	
+		return uriInfo.getBaseUriBuilder()
+				.path(UserResource.class)
+				.path(String.valueOf(comment.getId_user()))
+				.build();
+	}
+    
+    
+	/*private URI getUriForMultimedia(Comment comment, UriInfo uriInfo) {	
+		return uriInfo.getBaseUriBuilder()
+				.path(MultimediaResource.class)
+				.path(String.valueOf(comment.getMultimedia().getId_multimedia()))
+				.build();
+	}*/
+
+
+	private void addLinks(Comment comment, UriInfo uriInfo) {
+		comment.addLink("self", getUriForSelf(comment, uriInfo).toString());
+		comment.addLink("author", getUriForParentUser(comment, uriInfo).toString());
+		//comment.addLink("multimedia", getUriForMultimedia(comment, uriInfo).toString());
+	}
+    
+
     
     
     @GET
-    public JSON_response getComments(@PathParam("id_user")long id_user, @QueryParam("value")String value) {
-    	try{
-    		this.commentService = new CommentService(id_user);
-    		
-    		if(value != null){
+    public Response getComments(@PathParam("id_user")long id_user,
+    		@Context UriInfo uriInfo) 
+    		throws SQLException{
+   		this.commentService = new CommentService(id_user);
+		
+		List<Comment> comments = commentService.getAllComments();
 
-        		return new JSON_response(commentService.getCommentsByValue(value));
-    			
-    		}
-    		
-    		return new JSON_response(commentService.getAllComments());
-	   	}
-	   	catch(NumberFormatException e){
-
-    		return new JSON_response(commentService.getAllComments());
-	   	}
-	   	catch(Exception e){
-	   		System.out.println("ERROR WHILE GETTING ALL THE RATES\n");
-    		return new JSON_response(e);
-	   	}
+		for(Comment comment : comments){
+			addLinks(comment, uriInfo);
+		}
+		
+		
+		return Response
+				.status(Status.OK)
+				.entity(comments)
+				.build();
     }
 
 
     @Path("{comment_id}")
     @GET
-    public JSON_response getComment(@PathParam("id_user")long id_user, @PathParam("comment_id") long id) {
-    	try{
-    		this.commentService = new CommentService(id_user);
-            return new JSON_response(commentService.getComment(id));
-	   	}
-	   	catch(Exception e){
-	   		System.out.println("ERROR WHILE GETTING THE RATE " + id + "\n");
-    		return new JSON_response(e);
-	   	}
+    public Response getComment(@PathParam("id_user")long id_user, @PathParam("comment_id") long id,
+    		@Context UriInfo uriInfo) 
+    		throws SQLException{
+		this.commentService = new CommentService(id_user);
+		
+		Comment comment = commentService.getComment(id);
+		
+		addLinks(comment, uriInfo);
+		
+		
+        return Response
+				.status(Status.OK)
+				.entity(comment)
+				.build();
     }
 
 
     @GET
     @Path("count")
-    public JSON_response getCount(@PathParam("id_user")long id_user) {
-    	try{
-    		this.commentService = new CommentService(id_user);
-            return new JSON_response(commentService.getCommentCount());
-	   	}
-	   	catch(Exception e){
-	   		System.out.println("ERROR WHILE GETTING THE RATE COUNT\n");
-    		return new JSON_response(e);
-	   	}
+    public Response getCount(@PathParam("id_user")long id_user) 
+    		throws SQLException{
+		this.commentService = new CommentService(id_user);
+		
+		
+        return Response
+				.status(Status.OK)
+				.entity(commentService.getCommentCount())
+				.build();
+	   	
     }
 
     
     @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public JSON_response postComment(@PathParam("id_user")long id_user, @FormParam("value")String value, @FormParam("id_m")long id_multimedia) {
-    	try {
-    		this.commentService = new CommentService(id_user);
-			return new JSON_response(commentService.addComment(value, id_multimedia));
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response postComment(@PathParam("id_user")long id_user, Comment comment,
+    		@Context UriInfo uriInfo) 
+    		throws SQLException{
+		this.commentService = new CommentService(id_user);
+		
+		Comment new_comment = commentService.addComment(comment.getValue(), comment.getId_multimedia());
+		addLinks(new_comment, uriInfo);
+		URI location = getUriForSelf(new_comment, uriInfo);
+
+		
+        return Response
+        		.created(location)
+				.entity(new_comment)
+				.build();
 			
-		} catch (Exception e) {
-    		System.out.println("ERROR WHILE ADDING NEW RATE\n");
-    		
-    		return new JSON_response(e);
-		}
     }
 
     
     @Path("/{id_comment}")
     @PUT
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public JSON_response putComment(@PathParam("id_user")long id_user, @PathParam("id_comment")long id, @FormParam("value")String value) {
-    	try {
-    		this.commentService = new CommentService(id_user);
-    		return new JSON_response(commentService.updateComment(id, value));
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response putComment(@PathParam("id_user")long id_user, @PathParam("id_comment")long id_comment, Comment comment) 
+    		throws SQLException{
+		this.commentService = new CommentService(id_user);
+		
+        return Response
+				.status(Status.OK)
+				.entity(commentService.updateComment(id_comment, comment.getValue()))
+				.build();
 			
-		} catch (Exception e) {
-    		System.out.println("ERROR WHILE UPDATING NEW RATE\n");
-    		
-    		return new JSON_response(e);
-		}
     }
 
     
     @Path("/{id_comment}")
     @DELETE
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public JSON_response deleteComment(@PathParam("id_user")long id_user, @PathParam("id_comment")Long id) {
-    	try {
-    		this.commentService = new CommentService(id_user);
-    		return new JSON_response(commentService.removeComment(id));
+    public Response deleteComment(@PathParam("id_user")long id_user, @PathParam("id_comment")Long id) 
+    		throws SQLException{
+		this.commentService = new CommentService(id_user);
+		
+        return Response
+				.status(Status.OK)
+				.entity(commentService.removeComment(id))
+				.build();
 			
-		} catch (Exception e) {
-    		System.out.println("ERROR WHILE DELETING NEW RATE\n");
-    		
-    		return new JSON_response(e);
-		}
     }
 
 }

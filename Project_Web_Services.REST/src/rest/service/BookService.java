@@ -9,7 +9,7 @@ import java.util.Map;
 
 import rest.exception.DataNotFoundException;
 import rest.model.Book;
-import rest.resource.util.Constants;
+import rest.service.util.Constants;
 import rest.util.DB_web_services;
 
 public class BookService {

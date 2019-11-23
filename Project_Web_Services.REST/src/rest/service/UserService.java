@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.core.MediaType;
-
 import rest.exception.DataNotFoundException;
+import rest.exception.InvalidPasswordException;
 import rest.model.User;
 import rest.model.util.Timestamp;
-import rest.resource.util.Constants;
+import rest.service.util.Constants;
 import rest.util.DB_web_services;
 
 public class UserService {
@@ -39,7 +37,7 @@ public class UserService {
 
 	public List<User> getAllUsers()
 	{
-		List<User> return_users = new ArrayList<User>(users.values());
+		List<User> return_users = new ArrayList<User>(this.users.values());
 		
 		if(return_users.isEmpty())
 			throw new DataNotFoundException("No users was found !");
@@ -65,10 +63,10 @@ public class UserService {
 	}
 	
 	
-	public User addUser(User user)
+	public User addUser(String pseudo, String password, String email)
 			throws SQLException{
 		
-		if(user.getPassword() == null || user.getPassword() == ""){
+		if(password == null || password == ""){
 			throw new SQLIntegrityConstraintViolationException("Le champ 'password' ne peut être vide (null)");
 		}
 		
@@ -76,9 +74,9 @@ public class UserService {
     	
     	PreparedStatement ppsm = db.getPreparedStatement(Constants.User.post);
     	
-    	ppsm.setString(1, user.getPseudo());
-    	ppsm.setString(2, user.getPassword());
-    	ppsm.setString(3, user.getEmail());
+    	ppsm.setString(1, pseudo);
+    	ppsm.setString(2, password);
+    	ppsm.setString(3, email);
     	
     	int rs = ppsm.executeUpdate();
 
@@ -94,7 +92,8 @@ public class UserService {
     	    	
     	    	if(rs_user.next()){
     	    		User new_user = new User(rs_user.getLong("ID_user"), rs_user.getString("pseudo"), rs_user.getString("email"), new Timestamp(rs_user.getString("date_creation")));
-    	    		users.put(rs_user.getLong("ID_user"), new_user);
+    	    		
+    	    		this.users.put(rs_user.getLong("ID_user"), new_user);
     	    		
     	    		
     	    		return new_user;
@@ -107,41 +106,84 @@ public class UserService {
 	}
 	
 	
-	public boolean updateUser(long id, String existing_password, String new_password, String email) 
-			throws SQLException{
-
-		DB_web_services db = new DB_web_services();
-    	
-
-    	PreparedStatement ppsm = db.getPreparedStatement(Constants.User.checkPasswordByID);
-
-    	ppsm.setString(1, existing_password);
-    	ppsm.setLong(2, id);
+	public boolean updateUser(long id, String password, String new_password, String email) 
+			throws SQLException, InvalidPasswordException{
+		boolean change = false;
+		boolean return_value = true;
 		
-		ResultSet rs_check = ppsm.executeQuery();
-    	
-    	if(rs_check.next()){
-    		
-        	ppsm = db.getPreparedStatement(Constants.User.putByID);
-        	
-        	ppsm.setString(1, new_password);
-        	ppsm.setString(2, email);
-        	ppsm.setLong(3, id);
+		if(password != null){
+
+			if(new_password == null){
+				throw new SQLException("Le champ 'new_password' ne peut être vide (null)");
+			}
+
+			DB_web_services db = new DB_web_services();
+	    	
+
+	    	PreparedStatement ppsm = db.getPreparedStatement(Constants.User.checkPasswordByID);
+
+	    	ppsm.setString(1, password);
+	    	ppsm.setLong(2, id);
+			
+			ResultSet rs_check = ppsm.executeQuery();
+			
+			if(rs_check.next() && rs_check.getInt(1) == 1){
+	    		
+	        	ppsm = db.getPreparedStatement(Constants.User.putPasswordByID);
+	        	
+	        	ppsm.setString(1, new_password);
+	        	ppsm.setLong(2, id);
+	        	
+	        	int rs = ppsm.executeUpdate();
+
+	        	if(rs == 1){
+	        		User user = this.users.get(id);
+
+	        		user.setPassword(new_password);
+	        	}
+	        	
+
+	        	System.out.println("password");
+	        	System.out.println(return_value + " " + change);
+	        	return_value = (rs == 1 && return_value == true) ? true : false;
+	        	change = return_value;
+	        	System.out.println(return_value + " " + change);
+	    	}
+			
+			else
+				throw new InvalidPasswordException();
+		}
+		
+		
+		if(email != null){
+
+			DB_web_services db = new DB_web_services();
+	    	
+
+	    	PreparedStatement ppsm = db.getPreparedStatement(Constants.User.putEmailByID);
+	        	
+        	ppsm.setString(1, email);
+        	ppsm.setLong(2, id);
         	
         	int rs = ppsm.executeUpdate();
 
         	if(rs == 1){
-        		User user = getUser(id);
-        		
+        		User user = this.users.get(id);
+
         		user.setEmail(email);
         	}
         	
-        	
-        	return (rs == 1) ? true : false;
-    	}
+
+        	System.out.println("email");
+        	System.out.println(return_value + " " + change);
+        	return_value = (rs == 1 && return_value == true) ? true : false;
+        	change = return_value;
+        	System.out.println(return_value + " " + change);
+		}
+
     	
     	
-    	return false;
+    	return (return_value && change);
 	}
 	
 	

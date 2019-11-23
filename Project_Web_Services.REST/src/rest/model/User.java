@@ -12,6 +12,9 @@ import rest.model.util.Link;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 
 
 
@@ -23,12 +26,12 @@ public class User {
 	private String pseudo;
 	private String email;
 	
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private String new_password;
 	
 	private Timestamp creation_date;
-
-	private Map<Long, Rate> rates = new HashMap<Long, Rate>();
-	private Map<Long, Comment> comments = new HashMap<Long, Comment>();
 	
 	private List<Link> links = new ArrayList<Link>();
 	
@@ -36,33 +39,25 @@ public class User {
 
 	public User() {	}
 	
-	public User(long id){
-		id_user = id;
-	}
-	
 	public User(long id_user, String pseudo, String email, Timestamp creation_date) {
 		this.id_user = id_user;
 		this.pseudo = pseudo;
 		this.email = email;
 		this.creation_date = creation_date;
 	}
-	
-
-	public User(long id_user, String pseudo, String email, Timestamp creation_date, Map<Long, Rate> rates,
-			Map<Long, Comment> comments) {
-		this.id_user = id_user;
-		this.pseudo = pseudo;
-		this.email = email;
-		this.creation_date = creation_date;
-		this.rates = rates;
-		this.comments = comments;
-	}
 
 	/**
-	 * @return the id
+	 * @return the id_user
 	 */
 	public long getId_user() {
 		return id_user;
+	}
+
+	/**
+	 * @param id_user the id_user to set
+	 */
+	public void setId_user(long id_user) {
+		this.id_user = id_user;
 	}
 
 	/**
@@ -96,9 +91,8 @@ public class User {
 	/**
 	 * @return the password
 	 */
-    @XmlTransient
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 
@@ -109,28 +103,27 @@ public class User {
 		this.password = password;
 	}
 
+	/**
+	 * @return the new_password
+	 */
+	public String getNew_password() {
+		return this.new_password;
+	}
+
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setNew_password(String new_password) {
+		this.new_password = new_password;
+	}
+
 
 	/**
 	 * @return the creation_date
 	 */
 	public Timestamp getCreation_date() {
 		return creation_date;
-	}
-
-	/**
-	 * @return the rates
-	 */
-    @XmlTransient
-	public Map<Long, Rate> getRates() {
-		return rates;
-	}
-
-	/**
-	 * @return the comments
-	 */
-    @XmlTransient
-	public Map<Long, Comment> getComments() {
-		return comments;
 	}
 
 	/**
@@ -164,7 +157,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id_user=" + this.id_user + ", pseudo=" + this.pseudo + ", email=" + this.email + ", creation_date="
-				+ this.creation_date + ", rates=" + this.rates + ", comments=" + this.comments + "]";
+				+ this.creation_date + "]";
 	}
 	
 	

@@ -1,7 +1,6 @@
 package rest.model.util;
 
-
-
+import javax.xml.bind.annotation.XmlTransient;
 
 public class Time {
 
@@ -36,6 +35,7 @@ public class Time {
 	/**
 	 * @return the hour
 	 */
+    @XmlTransient
 	public int getHour() {
 		return hour;
 	}
@@ -49,6 +49,7 @@ public class Time {
 	/**
 	 * @return the minute
 	 */
+    @XmlTransient
 	public int getMinute() {
 		return minute;
 	}
@@ -62,6 +63,7 @@ public class Time {
 	/**
 	 * @return the second
 	 */
+    @XmlTransient
 	public int getSecond() {
 		return second;
 	}
