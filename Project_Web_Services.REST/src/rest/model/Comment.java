@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import rest.model.util.Link;
+import rest.model.util.Timestamp;
 
 
 
@@ -21,6 +22,7 @@ public class Comment {
 	private long id_comment;
 	
 	private String value;
+	private Timestamp creation_date;
 	
 	private long id_user;
 	@JsonProperty(access = Access.WRITE_ONLY)
@@ -34,9 +36,10 @@ public class Comment {
 	public Comment() { }
 	
 	
-	public Comment(long id_comment, String value, long id_user, long id_multimedia){
+	public Comment(long id_comment, String value, Timestamp creation_date, long id_user, long id_multimedia){
 		this.id_comment = id_comment;
 		this.value = value;
+		this.creation_date = creation_date;
 		this.id_user = id_user;
 		this.id_multimedia = id_multimedia;
 	}
@@ -62,6 +65,22 @@ public class Comment {
 		this.value = value;
 	}
 	
+	/**
+	 * @return the creation_date
+	 */
+	public Timestamp getCreation_date() {
+		return creation_date;
+	}
+
+
+	/**
+	 * @param creation_date the creation_date to set
+	 */
+	public void setCreation_date(Timestamp creation_date) {
+		this.creation_date = creation_date;
+	}
+
+
 	/**
 	 * @return the user
 	 */

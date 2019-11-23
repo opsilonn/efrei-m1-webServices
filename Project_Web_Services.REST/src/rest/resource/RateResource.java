@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -20,13 +19,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.UriBuilderException;
 import javax.ws.rs.core.UriInfo;
 
 import rest.model.Rate;
-import rest.model.User;
 import rest.service.RateService;
-import rest.service.util.Constants.Multimedia;
 
 
 @Produces(MediaType.APPLICATION_JSON)
@@ -69,7 +65,8 @@ public class RateResource {
 	}
 
 
-	private void addLinks(Rate rate, UriInfo uriInfo) throws SQLException {
+	private void addLinks(Rate rate, UriInfo uriInfo)
+			throws SQLException {
 		rate.addLink("self", getUriForSelf(rate, uriInfo).toString());
 		rate.addLink("author", getUriForParentUser(rate, uriInfo).toString());
 		rate.addLink("multimedia", getUriForMultimedia(rate, uriInfo).toString());

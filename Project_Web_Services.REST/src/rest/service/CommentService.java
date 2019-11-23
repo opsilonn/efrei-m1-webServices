@@ -9,6 +9,7 @@ import java.util.Map;
 
 import rest.exception.DataNotFoundException;
 import rest.model.Comment;
+import rest.model.util.Timestamp;
 import rest.service.util.Constants;
 import rest.util.DB_web_services;
 
@@ -33,7 +34,7 @@ public class CommentService {
     	this.comments.clear();
     	
     	while(rs.next()){
-    		this.comments.put(rs.getLong("ID_comment"), new Comment(rs.getLong("ID_comment"), rs.getString("value"), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
+    		this.comments.put(rs.getLong("ID_comment"), new Comment(rs.getLong("ID_comment"), rs.getString("value"), new Timestamp(rs.getString("date_creation")), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
     	}
 	}
 
@@ -91,7 +92,7 @@ public class CommentService {
     			ResultSet rs_comment = ppsm.executeQuery();
     	    	
     	    	if(rs_comment.next()){
-    	    		Comment comment = new Comment(rs_comment.getLong("ID_comment"), rs_comment.getString("value"), rs_comment.getLong("ID_user"), rs_comment.getLong("ID_multimedia"));
+    	    		Comment comment = new Comment(rs_comment.getLong("ID_comment"), rs_comment.getString("value"), new Timestamp(rs_comment.getString("date_creation")), rs_comment.getLong("ID_user"), rs_comment.getLong("ID_multimedia"));
     	    		this.comments.put(rs_comment.getLong("ID_comment"), comment);
     	    		
     	    		

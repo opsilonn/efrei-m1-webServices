@@ -9,6 +9,7 @@ import java.util.Map;
 
 import rest.exception.DataNotFoundException;
 import rest.model.Rate;
+import rest.model.util.Timestamp;
 import rest.service.util.Constants;
 import rest.util.DB_web_services;
 
@@ -33,7 +34,7 @@ public class RateService {
     	this.rates.clear();
     	
     	while(rs.next()){
-    		this.rates.put(rs.getLong("ID_rate"), new Rate(rs.getLong("ID_rate"), rs.getInt("value"), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
+    		this.rates.put(rs.getLong("ID_rate"), new Rate(rs.getLong("ID_rate"), rs.getInt("value"), new Timestamp(rs.getString("date_creation")), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
     	}
 	}
 
@@ -107,7 +108,7 @@ public class RateService {
     			ResultSet rs_rate = ppsm.executeQuery();
     	    	
     	    	if(rs_rate.next()){
-    	    		Rate rate = new Rate(rs_rate.getLong("ID_rate"), rs_rate.getInt("value"), rs_rate.getLong("ID_user"), rs_rate.getLong("ID_multimedia"));
+    	    		Rate rate = new Rate(rs_rate.getLong("ID_rate"), rs_rate.getInt("value"), new Timestamp(rs_rate.getString("date_creation")), rs_rate.getLong("ID_user"), rs_rate.getLong("ID_multimedia"));
     	    		this.rates.put(rs_rate.getLong("ID_rate"), rate);
     	    		
     	    		

@@ -1,16 +1,13 @@
 package rest.model;
 
 
-import java.util.Map;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import rest.model.util.Timestamp;
 import rest.model.util.Link;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
