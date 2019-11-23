@@ -48,6 +48,9 @@ public class Constants {
 	public class Multimedia{
 		public static final String getByID = "SELECT * FROM Multimedia WHERE ID_multimedia = ?";
 		public static final String getTypeByID = "SELECT category FROM Multimedia WHERE ID_multimedia = ?";
+		public static final String getBookChildID = "SELECT id_book FROM book WHERE ID_multimedia = ?";
+		public static final String getFilmChildID = "SELECT id_film FROM film WHERE ID_multimedia = ?";
+		public static final String getVideoGameChildID = "SELECT id_videoGame FROM videoGame WHERE ID_multimedia = ?";
 		
 		public static final String post = "INSERT INTO multimedia (title, language, genre, category, status, ID_uploader, description, date_release) VALUES(?,?,?,?,?,?,?,?)";
 	}

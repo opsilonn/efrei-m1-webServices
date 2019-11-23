@@ -38,6 +38,13 @@ public class Multimedia {
 	private User uploader;
 	
 	
+	public enum Category{
+		BOOK,
+		FILM,
+		VIDEO_GAME
+	}
+	
+	
 	
 	
 	public Multimedia() { }
@@ -74,7 +81,7 @@ public class Multimedia {
 	}
 	
 	
-	public static Class getChildClass(long id_multimedia) throws SQLException{
+	public static Category getChildCategory(long id_multimedia) throws SQLException{
 		
 		DB_web_services db = new DB_web_services();
     	
@@ -89,16 +96,69 @@ public class Multimedia {
     		
     		switch(type){
     		case 1:
-    			return BookResource.class;
+    			return Category.BOOK;
     		case 2:
-    			return FilmResource.class;
+    			return Category.FILM;
     		case 3:
-    			return VideoGameResource.class;
+    			return Category.VIDEO_GAME;
     		}
     	}
     	
     	
     	return null;
+	}
+	
+	
+	public static Class getChildClass(long id_multimedia)
+			throws SQLException{
+		Category category = getChildCategory(id_multimedia);
+		
+		switch(category){
+		case BOOK:
+			return BookResource.class;
+		case FILM:
+			return FilmResource.class;
+		case VIDEO_GAME:
+			return VideoGameResource.class;
+		}
+		
+		return null;
+	}
+	
+	
+	public static long getChildID(long id_multimedia)
+			throws SQLException{
+		Category category = getChildCategory(id_multimedia);
+		String query;
+		
+		switch(category){
+		case BOOK:
+			query = Constants.Multimedia.getBookChildID;
+			break;
+		case FILM:
+			query = Constants.Multimedia.getFilmChildID;
+			break;
+		case VIDEO_GAME:
+			query = Constants.Multimedia.getVideoGameChildID;
+			break;
+		default:
+			return 0;
+		}
+		
+		DB_web_services db = new DB_web_services();
+    	
+    	PreparedStatement ppsm = db.getPreparedStatement(query);
+    	
+    	ppsm.setLong(1, id_multimedia);
+    	
+    	ResultSet rs = ppsm.executeQuery();
+    	
+    	if(rs.next()){
+    		return rs.getInt(1);
+    	}
+    	
+    	
+    	return 0;
 	}
 
 
