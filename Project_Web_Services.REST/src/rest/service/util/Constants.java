@@ -76,6 +76,8 @@ public class Constants {
 		public static final String getByID = "SELECT * FROM VideoGame WHERE id_videoGame = ?";
 		
 		public static final String deleteByID = "DELETE FROM VideoGame WHERE id_videoGame = ?";
+		
+		public static final String post ="INSERT INTO `videogame` (developer, publisher, ID_multimedia) VALUES(?,?,?)";
 	}
 	
 }

@@ -1,7 +1,11 @@
 package rest.resource;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.net.URI;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -11,7 +15,10 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
+
+import rest.model.User;
 import rest.model.VideoGame;
+import rest.model.util.Date;
 import rest.service.VideoGameService;
 
 
@@ -29,10 +36,41 @@ public class VideoGameResource {
     VideoGameService videoGameService;
     
     
+    
+	private URI getUriForSelf(VideoGame videoGame)
+	{
+		return this.uriInfo.getBaseUriBuilder()
+				.path(VideoGameResource.class)
+				.path(String.valueOf(videoGame.getId_videoGame()))
+				.build();
+	}    
+	
+	
+	/*
+	private URI getUriForUploader(VideoGame videoGame)
+	{
+		URI uri = this.uriInfo.getBaseUriBuilder().build();
+		uri += "users/".build();
+		return (this.uriInfo.getBaseUriBuilder() + "users/" + Long.toString( videoGame.getID_uploader() ).build();
+	}
+	*/
+    
+	
+	/** We add links related to the {@VideoGame}
+	 * 
+	 * @param videoGame Current {@VideoGame} of which we want to give the associated links
+	 */
 	private void addLinks(VideoGame videoGame)
 	{
 		this.uriInfo.getBaseUriBuilder();
 		
+		// We add a link to the page of this very {@VideoGame}
+		videoGame.addLink(
+				"self",
+				getUriForSelf(videoGame).toString()
+				);
+
+		// We add a link to the page of the {@User} that uploaded this {@VideoGame}
 		videoGame.addLink(
 				"uploader",
 				this.uriInfo.getBaseUriBuilder().toString()
@@ -42,6 +80,8 @@ public class VideoGameResource {
 	}
     
     
+	
+	
     /** Returns all the videoGame rows from the database
      * 
      * @return All the videoGame rows from the database
@@ -51,6 +91,13 @@ public class VideoGameResource {
     public Response getVideoGames()throws SQLException
     {
 		this.videoGameService = new VideoGameService();
+
+		// We add the links to all foreign references
+		List<VideoGame> videoGames = videoGameService.getAllVideoGames();
+		for(VideoGame videoGame : videoGames)
+		{
+			addLinks(videoGame);
+		}
 		
 		return Response.status(Status.OK)
 				.entity((videoGameService.getAllVideoGames()))
@@ -58,6 +105,8 @@ public class VideoGameResource {
 
     }
 
+    
+    
 
     /** Returns a given videoGame from the database
      * 
@@ -81,6 +130,8 @@ public class VideoGameResource {
 				.build();
     }
 
+    
+    
 
     /** Displays the number of rows inside the table videoGame
      * 
@@ -101,22 +152,38 @@ public class VideoGameResource {
     }
 
     
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response postUser(User user) 
-//    		throws SQLException {
-//		this.userService = new UserService();
-//		
-//		User new_user = userService.addUser(user);
-//		URI location = uriInfo.getAbsolutePathBuilder().path(String.valueOf(new_user.getId_user())).build();
-//		
-//		
-//		return Response.created(location)
-//				.entity(new_user)
-//				.build();
-//    }
-//
-//
+    
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response postVideoGame(VideoGame videoGame) 
+    		throws SQLException
+    {
+		this.videoGameService = new VideoGameService();
+		
+		VideoGame new_videoGame = new VideoGame();
+		/*
+		VideoGame new_videoGame = videoGameService.addVideoGame(
+				videoGame.getTitle(),
+				videoGame.getDescription(),
+				videoGame.getGenre(),
+				videoGame.getCategory(),
+				videoGame.getStatus(),
+				videoGame.getID_uploader(),
+				videoGame.getDate_release(),
+				videoGame.getDeveloper(),
+				videoGame.getPublisher()
+				);
+		*/
+		URI location = uriInfo.getAbsolutePathBuilder().path(String.valueOf(new_videoGame.getId_videoGame())).build();
+		
+		
+		return Response.created(location)
+				.entity(new_videoGame)
+				.build();
+    }
+
+
 //    @Path("/{user_id}")
 //    @PUT
 //    @Consumes(MediaType.APPLICATION_JSON)
