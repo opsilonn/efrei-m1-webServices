@@ -30,12 +30,12 @@ public class Multimedia {
 	private int category;
 	
 	private int status;
-	private Timestamp status_date;
+	private Timestamp date_status;
 	
-	private Timestamp upload_date;
-	private Date release_date;
+	private Timestamp date_upload;
+	private Date date_release;
 	
-	private User uploader;
+	private long ID_uploader;
 	
 	
 	public enum Category{
@@ -51,8 +51,8 @@ public class Multimedia {
 	
 
 	public Multimedia(long id_multimedia, String title, String description, String language, String genre, int category,
-			int status, Timestamp status_date, Timestamp upload_date, Date release_date, User uploader) {
-		super();
+			int status, Timestamp status_date, Timestamp upload_date, Date release_date, long ID_uploader)
+	{
 		this.id_multimedia = id_multimedia;
 		this.title = title;
 		this.description = description;
@@ -60,14 +60,14 @@ public class Multimedia {
 		this.genre = genre;
 		this.category = category;
 		this.status = status;
-		this.status_date = status_date;
-		this.upload_date = upload_date;
-		this.release_date = release_date;
-		this.uploader = uploader;
+		this.date_status = status_date;
+		this.date_upload = upload_date;
+		this.date_release = release_date;
+		this.ID_uploader = ID_uploader;
 	}
 
 	public Multimedia(String title, String description, String language, String genre, int category,
-			int status, User upp, Date Realease){
+			int status, long ID_uploader, Date release){
 		
 		this.title = title;
 		this.description = description;
@@ -75,9 +75,8 @@ public class Multimedia {
 		this.genre = genre;
 		this.category = category;
 		this.status = status;
-		this.uploader = upp;
-		this.release_date = Realease;
-		
+		this.ID_uploader = ID_uploader;
+		this.date_release = release;
 	}
 	
 	
@@ -264,56 +263,56 @@ public class Multimedia {
 	/**
 	 * @return the status_date
 	 */
-	public Timestamp getStatus_date() {
-		return status_date;
+	public Timestamp getDate_Status() {
+		return date_status;
 	}
 
 	/**
-	 * @param status_date the status_date to set
+	 * @param date_status the status_date to set
 	 */
-	public void setStatus_date(Timestamp status_date) {
-		this.status_date = status_date;
+	public void setDate_status(Timestamp date_status) {
+		this.date_status = date_status;
 	}
 
 	/**
 	 * @return the upload_date
 	 */
-	public Timestamp getUpload_date() {
-		return upload_date;
+	public Timestamp getDate_upload() {
+		return date_upload;
 	}
 
 	/**
-	 * @param upload_date the upload_date to set
+	 * @param date_upload the upload_date to set
 	 */
-	public void setUpload_date(Timestamp upload_date) {
-		this.upload_date = upload_date;
+	public void setDate_upload(Timestamp date_upload) {
+		this.date_upload = date_upload;
 	}
 
 	/**
 	 * @return the release_date
 	 */
-	public Date getRelease_date() {
-		return release_date;
+	public Date getDate_release() {
+		return date_release;
 	}
 
 	/**
-	 * @param release_date the release_date to set
+	 * @param date_release the release_date to set
 	 */
-	public void setRelease_date(Date release_date) {
-		this.release_date = release_date;
+	public void setDate_release(Date date_release) {
+		this.date_release = date_release;
 	}
 
 	/**
-	 * @return the uploader
+	 * @return the uploader's ID
 	 */
-	public User getUploader() {
-		return uploader;
+	public long getID_uploader() {
+		return ID_uploader;
 	}
 
 	/**
-	 * @param uploader the uploader to set
+	 * @param ID_uploader the uploader's ID to set
 	 */
-	public void setUploader(User uploader) {
-		this.uploader = uploader;
+	public void setID_uploader(long ID_uploader) {
+		this.ID_uploader = ID_uploader;
 	}
 }

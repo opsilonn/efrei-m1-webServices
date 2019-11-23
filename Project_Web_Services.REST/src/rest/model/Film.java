@@ -27,8 +27,8 @@ public class Film extends Multimedia{
 	}
 
 	public Film(String title, String description, String language, String genre, int category,
-			int status, User upp, String dir, String prod, String cast, Time dur, Date release){
-		super(title, description, language, genre, category, status, upp, release);
+			int status, long ID_upp, String dir, String prod, String cast, Time dur, Date release){
+		super(title, description, language, genre, category, status, ID_upp, release);
 		director = dir;
 		productor = prod;
 		mainCast = cast;
