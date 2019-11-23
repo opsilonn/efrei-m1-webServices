@@ -32,12 +32,12 @@ public class VideoGameService
     	while( rs.next() )
 		{
     		// We create our map values (Key & Value)
-    		long id_multimedia = rs.getLong("ID_multimedia");
+    		long mapKey = rs.getLong("ID_videoGame");
     		VideoGame mapValue = new VideoGame();
 
     		// We search for the corresponding Multimedia row
         	PreparedStatement stmt2 = db.getPreparedStatement(Constants.Multimedia.getByID);
-			stmt2.setLong(1, id_multimedia);
+			stmt2.setLong(1, rs.getLong("ID_multimedia"));
 			ResultSet rs2 = stmt2.executeQuery();
 			
 			// If the said row exist :
@@ -63,7 +63,7 @@ public class VideoGameService
     		
 
     		// We put our values in the map
-    		videoGames.put(rs.getLong("ID_videoGame"), mapValue);
+    		videoGames.put(mapKey, mapValue);
     	}
 	}
 	

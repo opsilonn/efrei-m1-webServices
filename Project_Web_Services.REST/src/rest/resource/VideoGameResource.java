@@ -15,7 +15,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
+import rest.model.VideoGame;
 import rest.service.VideoGameService;
+
 
 @Path("/videoGames")
 @Produces(MediaType.APPLICATION_JSON)
@@ -44,9 +46,13 @@ public class VideoGameResource {
     @Path("/{videoGame_id}")
     @GET
     public Response getVideoGame(@PathParam("videoGame_id") long id) 
-    		throws SQLException {
+    		throws SQLException
+    {
 		this.videoGameService = new VideoGameService();
 		
+		VideoGame videoGame = videoGameService.getVideoGame(id);
+		
+		// addLinks(videoGame);
 		
         return Response.status(Status.OK)
 				.entity(videoGameService.getVideoGame(id))
