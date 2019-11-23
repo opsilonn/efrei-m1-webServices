@@ -31,7 +31,8 @@ public class FilmService {
 		PreparedStatement stmt2 ;
 		
 		ResultSet rs = stmt.executeQuery();
-		while(rs.next()){
+		while(rs.next())
+		{
 			f = new Film();
 			f.setId_film(rs.getInt("ID_film"));
 			f.setDirector(rs.getString("director"));
@@ -43,7 +44,8 @@ public class FilmService {
 			stmt2.setLong(1, rs.getLong("ID_multimedia"));
 			
 			ResultSet rs2 = stmt2.executeQuery();
-			if(rs2.next()){
+			if(rs2.next())
+			{
 				f.setId_multimedia(rs.getLong("ID_multimedia"));
 				f.setTitle(rs2.getString("title"));
 				f.setDescription(rs2.getString("description"));
@@ -77,7 +79,7 @@ public class FilmService {
 	
 	public Film addFilm(Film film) throws SQLException{
 		Film f = film;
-		User u = film.getUploader();
+		long ID_user = film.getID_uploader();
 		
 		DB_web_services dba = new DB_web_services();
 		
@@ -88,11 +90,13 @@ public class FilmService {
 		psmt.setString(3, f.getGenre());
 		psmt.setInt(4, f.getCategory());
 		psmt.setInt(5, f.getStatus());
-		psmt.setLong(6, u.getId_user());
+		psmt.setLong(6, ID_user);
 		psmt.setString(7, f.getDescription());
 		psmt.setString(8, f.getRelease_date().toString());
 		int success = psmt.executeUpdate();
-		if(success == 1){
+		
+		if(success == 1)
+		{
 			ResultSet id = psmt.getGeneratedKeys();
 			if(id.next()){
 				psmt = dba.getPreparedStatement(Constants.Film.post);
@@ -104,9 +108,7 @@ public class FilmService {
 				psmt.executeUpdate();
 			}
 		}
+		
 		return f;
 	}
-	
-	
-	
 }

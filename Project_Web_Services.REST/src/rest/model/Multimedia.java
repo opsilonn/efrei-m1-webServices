@@ -35,7 +35,7 @@ public class Multimedia {
 	private Timestamp upload_date;
 	private Date release_date;
 	
-	private User uploader;
+	private long ID_uploader;
 	
 	
 	
@@ -44,8 +44,8 @@ public class Multimedia {
 	
 
 	public Multimedia(long id_multimedia, String title, String description, String language, String genre, int category,
-			int status, Timestamp status_date, Timestamp upload_date, Date release_date, User uploader) {
-		super();
+			int status, Timestamp status_date, Timestamp upload_date, Date release_date, long ID_uploader)
+	{
 		this.id_multimedia = id_multimedia;
 		this.title = title;
 		this.description = description;
@@ -56,11 +56,11 @@ public class Multimedia {
 		this.status_date = status_date;
 		this.upload_date = upload_date;
 		this.release_date = release_date;
-		this.uploader = uploader;
+		this.ID_uploader = ID_uploader;
 	}
 
 	public Multimedia(String title, String description, String language, String genre, int category,
-			int status, User upp, Date Realease){
+			int status, long ID_uploader, Date release){
 		
 		this.title = title;
 		this.description = description;
@@ -68,9 +68,8 @@ public class Multimedia {
 		this.genre = genre;
 		this.category = category;
 		this.status = status;
-		this.uploader = upp;
-		this.release_date = Realease;
-		
+		this.ID_uploader = ID_uploader;
+		this.release_date = release;
 	}
 	
 	
@@ -244,16 +243,16 @@ public class Multimedia {
 	}
 
 	/**
-	 * @return the uploader
+	 * @return the uploader's ID
 	 */
-	public User getUploader() {
-		return uploader;
+	public long getID_uploader() {
+		return ID_uploader;
 	}
 
 	/**
-	 * @param uploader the uploader to set
+	 * @param ID_uploader the uploader's ID to set
 	 */
-	public void setUploader(User uploader) {
-		this.uploader = uploader;
+	public void setID_uploader(long ID_uploader) {
+		this.ID_uploader = ID_uploader;
 	}
 }
