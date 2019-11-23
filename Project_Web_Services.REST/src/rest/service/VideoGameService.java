@@ -20,12 +20,12 @@ public class VideoGameService
 	
 	public VideoGameService() throws SQLException
 	{
-		DB_web_services db = new DB_web_services();
-		
+		// We initialize some helpful variables
+		DB_web_services db = new DB_web_services();	
 		PreparedStatement ppsm = db.getPreparedStatement(Constants.VideoGame.getAll);
-    
-		
     	ResultSet rs = ppsm.executeQuery();
+    	
+    	// We empty our current map
     	videoGames.clear();
 
     	// As long as the database returns a row, we fill the map
@@ -35,10 +35,12 @@ public class VideoGameService
     		long mapKey = rs.getLong("ID_multimedia");
     		VideoGame mapValue = new VideoGame();
 
+    		// We search for the corresponding Multimedia row
         	PreparedStatement stmt2 = db.getPreparedStatement(Constants.Multimedia.getByID);
 			stmt2.setLong(1, mapKey);
 			ResultSet rs2 = stmt2.executeQuery();
 			
+			// If the said row exist :
 			if(rs2.next())
 			{
 	    		 mapValue = new VideoGame(

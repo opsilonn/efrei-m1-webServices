@@ -23,14 +23,20 @@ public class FilmService {
 	
 	private Map<Long, Film> films ;
 	
-	public FilmService() throws SQLException{
+	public FilmService() throws SQLException
+	{
+		// We initialize some helpful variables
 		DB_web_services dba = new DB_web_services();
-		films = new HashMap<Long, Film>();
 		Film f;
 		PreparedStatement stmt = dba.getPreparedStatement(Constants.Film.getAll);
 		PreparedStatement stmt2 ;
-		
 		ResultSet rs = stmt.executeQuery();
+		
+
+    	// We empty our current map
+		films = new HashMap<Long, Film>();
+
+    	// As long as the database returns a row, we fill the map
 		while(rs.next())
 		{
 			f = new Film();
@@ -39,11 +45,13 @@ public class FilmService {
 			f.setProductor(rs.getString("productor"));
 			f.setMainCast(rs.getString("mainCast"));
 			f.setDuration(rs.getTime("duration"));
-			
+
+    		// We search for the corresponding Multimedia row
 			stmt2 = dba.getPreparedStatement(Constants.Multimedia.getByID);
 			stmt2.setLong(1, rs.getLong("ID_multimedia"));
-			
 			ResultSet rs2 = stmt2.executeQuery();
+			
+			// If the said row exist :
 			if(rs2.next())
 			{
 				f.setId_multimedia(rs.getLong("ID_multimedia"));
@@ -57,12 +65,12 @@ public class FilmService {
 				f.setDate_status(new Timestamp(rs2.getString("date_status")));
 				f.setDate_upload(new Timestamp(rs2.getString("date_upload")));
 			}
-			
+
+    		// We put our values in the map
 			films.put(f.getId_film(), f);
-		}
-		
-		
+		}	
 	}
+	
 	
 	public Film getFilmByValue(long id){
 		Film f;
