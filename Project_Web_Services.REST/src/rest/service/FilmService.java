@@ -54,8 +54,8 @@ public class FilmService {
 				f.setGenre(rs2.getString("genre"));
 				f.setCategory(rs2.getInt("category"));
 				f.setStatus(rs2.getInt("status"));
-				f.setStatus_date(new Timestamp(rs2.getString("date_status")));
-				f.setUpload_date(new Timestamp(rs2.getString("date_upload")));
+				f.setDate_status(new Timestamp(rs2.getString("date_status")));
+				f.setDate_upload(new Timestamp(rs2.getString("date_upload")));
 			}
 			
 			films.put(f.getId_film(), f);
@@ -92,7 +92,7 @@ public class FilmService {
 		psmt.setInt(5, f.getStatus());
 		psmt.setLong(6, ID_user);
 		psmt.setString(7, f.getDescription());
-		psmt.setString(8, f.getRelease_date().toString());
+		psmt.setString(8, f.getDate_release().toString());
 		int success = psmt.executeUpdate();
 		
 		if(success == 1)
