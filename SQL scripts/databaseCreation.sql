@@ -118,6 +118,7 @@ DROP TABLE IF EXISTS `web_services`.`rate` ;
 CREATE TABLE IF NOT EXISTS `web_services`.`rate` (
   `ID_rate` INT NOT NULL AUTO_INCREMENT,
   `value` INT(3) NOT NULL,
+  `date_creation` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ID_user` INT NOT NULL,
   `ID_multimedia` INT NOT NULL,
   PRIMARY KEY (`ID_rate`),
@@ -137,6 +138,7 @@ DROP TABLE IF EXISTS `web_services`.`comment` ;
 CREATE TABLE IF NOT EXISTS `web_services`.`comment` (
   `ID_comment` INT NOT NULL AUTO_INCREMENT,
   `value` VARCHAR(300) NOT NULL,
+  `date_creation` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ID_user` INT NOT NULL,
   `ID_multimedia` INT NOT NULL,
   PRIMARY KEY (`ID_comment`),
