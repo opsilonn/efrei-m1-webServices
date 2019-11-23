@@ -81,7 +81,7 @@ DROP TABLE IF EXISTS `web_services`.`videoGame` ;
 
 CREATE TABLE IF NOT EXISTS `web_services`.`videoGame` (
   `ID_videoGame` INT NOT NULL AUTO_INCREMENT,
-  `developper` VARCHAR(65) NOT NULL,
+  `developer` VARCHAR(65) NOT NULL,
   `publisher` VARCHAR(65) NULL,
   `ID_multimedia` INT NOT NULL,
   PRIMARY KEY (`ID_videoGame`),
