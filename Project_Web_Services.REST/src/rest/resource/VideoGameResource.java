@@ -1,9 +1,6 @@
 package rest.resource;
 
 import java.sql.SQLException;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -14,7 +11,6 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
-
 import rest.model.VideoGame;
 import rest.service.VideoGameService;
 
@@ -32,8 +28,28 @@ public class VideoGameResource {
     
     VideoGameService videoGameService;
     
+    
+	private void addLinks(VideoGame videoGame)
+	{
+		this.uriInfo.getBaseUriBuilder();
+		
+		videoGame.addLink(
+				"uploader",
+				this.uriInfo.getBaseUriBuilder().toString()
+					+ "users/"
+					+ Long.toString( videoGame.getID_uploader() ) 
+				);
+	}
+    
+    
+    /** Returns all the videoGame rows from the database
+     * 
+     * @return All the videoGame rows from the database
+     * @throws SQLException
+     */
     @GET
-    public Response getVideoGames()throws SQLException {
+    public Response getVideoGames()throws SQLException
+    {
 		this.videoGameService = new VideoGameService();
 		
 		return Response.status(Status.OK)
@@ -43,6 +59,12 @@ public class VideoGameResource {
     }
 
 
+    /** Returns a given videoGame from the database
+     * 
+     * @param id ID of the videoGame we are returning
+     * @return a specific videoGame row
+     * @throws SQLException
+     */
     @Path("/{videoGame_id}")
     @GET
     public Response getVideoGame(@PathParam("videoGame_id") long id) 
@@ -50,9 +72,9 @@ public class VideoGameResource {
     {
 		this.videoGameService = new VideoGameService();
 		
+		// We add the links to all foreign references
 		VideoGame videoGame = videoGameService.getVideoGame(id);
-		
-		// addLinks(videoGame);
+		addLinks(videoGame);
 		
         return Response.status(Status.OK)
 				.entity(videoGameService.getVideoGame(id))
@@ -60,10 +82,16 @@ public class VideoGameResource {
     }
 
 
+    /** Displays the number of rows inside the table videoGame
+     * 
+     * @return the number of rows inside the table videoGame
+     * @throws SQLException
+     */
     @GET
     @Path("/count")
     public Response getCount() 
-    		throws SQLException {
+    		throws SQLException
+    {
 		this.videoGameService = new VideoGameService();
 		
 		
@@ -114,8 +142,5 @@ public class VideoGameResource {
 //		return Response.status(Status.OK) 
 //				.entity(videoGameService.removeVideoGame(id))
 //				.build();
-//    }
-
-    
-    
+//    } 
 }

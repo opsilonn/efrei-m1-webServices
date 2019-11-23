@@ -94,7 +94,14 @@ public class UserResource {
 				.build();
     }
 
-
+    
+    
+    /** Displays the page of a specific user row
+     * 
+     * @param id ID of the user we are displaying
+     * @return the page of a specific user row
+     * @throws SQLException
+     */
     @Path("/{user_id}")
     @GET
     public Response getUser(@PathParam("user_id") long id) 
@@ -111,7 +118,13 @@ public class UserResource {
 				.build();
     }
 
-
+    
+    
+    /** Displays the number of rows inside the table user
+     * 
+     * @return the number of rows inside the table user
+     * @throws SQLException
+     */
     @GET
     @Path("count")
     public Response getCount() 

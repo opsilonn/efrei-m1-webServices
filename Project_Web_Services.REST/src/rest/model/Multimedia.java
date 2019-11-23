@@ -2,6 +2,7 @@ package rest.model;
 
 
 import rest.model.util.Date;
+import rest.model.util.Link;
 import rest.model.util.Timestamp;
 import rest.resource.BookResource;
 import rest.resource.FilmResource;
@@ -12,6 +13,8 @@ import rest.util.DB_web_services;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -36,6 +39,9 @@ public class Multimedia {
 	private Date date_release;
 	
 	private long ID_uploader;
+	
+
+	private List<Link> links = new ArrayList<Link>();
 	
 	
 	public enum Category{
@@ -314,5 +320,35 @@ public class Multimedia {
 	 */
 	public void setID_uploader(long ID_uploader) {
 		this.ID_uploader = ID_uploader;
+	}
+	
+	
+	
+
+	/**
+	 * @return the links
+	 */
+	public List<Link> getLinks()
+	{
+		return links;
+	}
+
+
+	/**
+	 * @param links the links to set
+	 */
+	public void setLinks(List<Link> links)
+	{
+		this.links = links;
+	}
+
+
+	/**
+	 * @param link the link to add
+	 */
+	public void addLink(String rel, String href)
+	{
+		Link link = new Link(rel, href);
+		this.links.add(link);
 	}
 }
