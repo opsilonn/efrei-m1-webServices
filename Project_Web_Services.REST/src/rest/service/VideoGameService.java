@@ -32,12 +32,12 @@ public class VideoGameService
     	while( rs.next() )
 		{
     		// We create our map values (Key & Value)
-    		long mapKey = rs.getLong("ID_multimedia");
+    		long id_multimedia = rs.getLong("ID_multimedia");
     		VideoGame mapValue = new VideoGame();
 
     		// We search for the corresponding Multimedia row
         	PreparedStatement stmt2 = db.getPreparedStatement(Constants.Multimedia.getByID);
-			stmt2.setLong(1, mapKey);
+			stmt2.setLong(1, id_multimedia);
 			ResultSet rs2 = stmt2.executeQuery();
 			
 			// If the said row exist :
@@ -61,9 +61,9 @@ public class VideoGameService
 	     				);
 			}
     		
-    		
+
     		// We put our values in the map
-    		videoGames.put(mapKey, mapValue);
+    		videoGames.put(rs.getLong("ID_videoGame"), mapValue);
     	}
 	}
 	
@@ -79,8 +79,8 @@ public class VideoGameService
     	return return_videoGames;
 	}
 	
-	public VideoGame getVideoGame(long id){
-		VideoGame videoGame = videoGames.get(id);
+	public VideoGame getVideoGame(long id){	
+		VideoGame videoGame = this.videoGames.get(id);
 
 		if(videoGame == null)
 			throw new DataNotFoundException("The videoGame with the id `" + id + "` was not found !");
