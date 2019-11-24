@@ -211,9 +211,6 @@ public class UserService {
 			
 
 			throw new DataNotFoundException("The user with the id `" + id + "` doesn't exist !");
-
-			
-
 		}
 	}
 }

@@ -51,8 +51,9 @@ public class BookService {
 			if(rs2.next())
 			{
 				// fill here the good values
-	    		 mapValue = new Book(rs2.getLong("ID_multimedia"), rs2.getString("title"),
-	    				 rs2.getString("description"), rs2.getString("language"), 
+	    		 mapValue = new Book(rs2.getLong("ID_multimedia"), rs2.getString("title"), 
+	    				 rs2.getString("language"),
+	    				 rs2.getString("description"), 
 	    				 rs2.getString("genre"), 
 	    				 rs2.getInt("category"), 
 	    				 rs2.getInt("status"),

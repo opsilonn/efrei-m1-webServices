@@ -22,8 +22,8 @@ public class Book extends Multimedia{
 	public Book() { }
 	
 	
-	public Book(long ID_multimedia, String title, String description, 
-			String genre, String language, int category, int status, long ID_upp,
+	public Book(long ID_multimedia, String title,String language, String description, 
+			String genre, int category, int status, long ID_upp,
 			Timestamp status_date, Timestamp upload_date , Date release, long ID_book, String author, String publisher)
 	{
 		super(ID_multimedia, title, description, language, genre, category, status, status_date, upload_date, release, ID_upp);
