@@ -3,6 +3,7 @@ package rest.resource;
 import java.sql.SQLException;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -61,6 +62,16 @@ public class FilmResource {
 		 f = films.addFilm(film);
 		 
 		 return Response.status(Status.OK).entity(f).build();
+	 }
+	 
+	 @Path("/{film_id}")
+	 @DELETE
+	 public Response DeleteFilm(@PathParam("film_id") long id) throws SQLException{
+		 
+		 this.films = new FilmService();
+		 films.delFilm(id);
+		 
+		 return Response.status(Status.OK).build();
 	 }
 	 
 }

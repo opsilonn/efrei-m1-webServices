@@ -123,22 +123,26 @@ public class FilmService {
 	public void delFilm(long id) throws SQLException{
 		
 		DB_web_services dba = new DB_web_services();
+		Film f = films.get(id);
 		
 		PreparedStatement psmt = dba.getPreparedStatement(Constants.Rate.DeleteByMult);
-		psmt.setLong(1, id);
+		psmt.setLong(1, f.getId_multimedia());
 		
 		PreparedStatement psmt2 = dba.getPreparedStatement(Constants.Comment.deleteByMult);
-		psmt2.setLong(1, id);
+		psmt2.setLong(1, f.getId_multimedia());
 		
 		PreparedStatement psmt3 = dba.getPreparedStatement(Constants.Film.delete);
 		psmt3.setLong(1, id);
 		
 		PreparedStatement psmt4 = dba.getPreparedStatement(Constants.Multimedia.delete);
-		psmt4.setLong(1, id);
+		psmt4.setLong(1, f.getId_multimedia());
 		
 		psmt.executeUpdate();
 		psmt2.executeUpdate();
 		psmt3.executeUpdate();
 		psmt4.executeUpdate();
+		
+		System.out.println(f.getId_multimedia());
+		
 	}
 }
