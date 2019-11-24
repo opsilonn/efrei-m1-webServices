@@ -13,7 +13,7 @@ import com.mysql.cj.protocol.Resultset;
 import rest.model.Film;
 import rest.model.User;
 import rest.model.util.Timestamp;
-import rest.service.util.Constants;
+import rest.resource.util.Constants;
 import rest.util.DB_web_services;
 
 public class FilmService {
@@ -118,5 +118,27 @@ public class FilmService {
 		}
 		
 		return f;
+	}
+	
+	public void delFilm(long id) throws SQLException{
+		
+		DB_web_services dba = new DB_web_services();
+		
+		PreparedStatement psmt = dba.getPreparedStatement(Constants.Rate.DeleteByMult);
+		psmt.setLong(1, id);
+		
+		PreparedStatement psmt2 = dba.getPreparedStatement(Constants.Comment.deleteByMult);
+		psmt2.setLong(1, id);
+		
+		PreparedStatement psmt3 = dba.getPreparedStatement(Constants.Film.delete);
+		psmt3.setLong(1, id);
+		
+		PreparedStatement psmt4 = dba.getPreparedStatement(Constants.Multimedia.delete);
+		psmt4.setLong(1, id);
+		
+		psmt.executeUpdate();
+		psmt2.executeUpdate();
+		psmt3.executeUpdate();
+		psmt4.executeUpdate();
 	}
 }
