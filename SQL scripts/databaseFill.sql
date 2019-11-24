@@ -92,7 +92,7 @@ INSERT INTO `film` (ID_film, director, productor, mainCast, duration, ID_multime
 -- -----------------------------------------------------
 -- Filling Table web_services.videogame
 -- -----------------------------------------------------
-INSERT INTO `videogame` (ID_videogame, developer, publisher, ID_multimedia) VALUES
+INSERT INTO `videogame` (ID_videogame, developper, publisher, ID_multimedia) VALUES
 ('1', 'Bethesda Game Studios', 'Bethesda Softworks', '7'),
 ('2', 'Nintendo', 'Nintendo', '8'),
 ('3', 'Kojima Productions', 'Konami', '9');

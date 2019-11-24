@@ -111,9 +111,8 @@ public class RateService {
     	    		Rate rate = new Rate(rs_rate.getLong("ID_rate"), rs_rate.getInt("value"), new Timestamp(rs_rate.getString("date_creation")), rs_rate.getLong("ID_user"), rs_rate.getLong("ID_multimedia"));
     	    		this.rates.put(rs_rate.getLong("ID_rate"), rate);
     	    		
-    	    		
     	    		return rate;
-    	    	}
+    	    	} 
     		}
     	}
 

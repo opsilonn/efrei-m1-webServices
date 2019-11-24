@@ -76,6 +76,7 @@ public class FilmService {
 	}
 	
 	public Film addFilm(Film film) throws SQLException{
+		
 		Film f = film;
 		User u = film.getUploader();
 		

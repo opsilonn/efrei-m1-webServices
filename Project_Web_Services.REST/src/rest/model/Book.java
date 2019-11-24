@@ -12,16 +12,17 @@ public class Book extends Multimedia{
 	private long id_book;
 	private String author;
 	private String publisher;
-	
+	private long id_multimedia;
 	
 	public Book() { }
 	
 	
-	public Book(long id_book, String author, String publisher)
+	public Book(long id_book, String author, String publisher, long id_multimedia)
 	{
 		this.id_book = id_book;
 		this.author = author;
 		this.publisher = publisher;	
+		this.id_multimedia = id_multimedia;
 	}
 	
 	/**
@@ -35,6 +36,19 @@ public class Book extends Multimedia{
 	 */
 	public void setId_book(long id_book) {
 		this.id_book = id_book;
+	}
+	
+	/**
+	 * @return the id_book
+	 */
+	public long getId_multimedia() {
+		return id_multimedia;
+	}
+	/**
+	 * @param id_book the id_book to set
+	 */
+	public void setId_multimedia(long id_multimedia) {
+		this.id_multimedia = id_multimedia;
 	}
 	/**
 	 * @return the author
