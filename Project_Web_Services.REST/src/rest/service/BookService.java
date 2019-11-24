@@ -10,6 +10,7 @@ import java.util.Map;
 
 import rest.exception.DataNotFoundException;
 import rest.model.Book;
+import rest.model.Film;
 import rest.model.VideoGame;
 import rest.model.util.Date;
 import rest.model.util.Timestamp;
@@ -42,18 +43,26 @@ public class BookService {
     		
     		// We search for the corresponding Multimedia row
     		PreparedStatement stmt2 = db.getPreparedStatement(Constants.Multimedia.getByID);
-			stmt2.setLong(1, mapKey);
-			ResultSet rs2 = stmt2.executeQuery();
+    		stmt2.setLong(1, rs.getLong("ID_multimedia"));
+    		
+    		ResultSet rs2 = stmt2.executeQuery();
 			
 			// If the said row exist :
 			if(rs2.next())
 			{
 				// fill here the good values
-				// Book(rs.getLong("ID_book"), rs.getString("author"), rs.getString("publisher"));
-	    		 mapValue = new Book();
-			}
-    		
-    		
+	    		 mapValue = new Book(rs2.getLong("ID_multimedia"), rs2.getString("title"),
+	    				 rs2.getString("description"), rs2.getString("language"), 
+	    				 rs2.getString("genre"), 
+	    				 rs2.getInt("category"), 
+	    				 rs2.getInt("status"),
+	    				 rs2.getLong("ID_uploader"),
+	    				 new Timestamp(rs2.getString("date_status")),
+	    				new Timestamp(rs2.getString("date_upload")), 
+	    				new Date(rs2.getString("date_release")), 
+	    				rs.getLong("ID_book"), rs.getString("author"), 
+	    				rs.getString("publisher"));
+			}    		
     		// We put our values in the map
     		books.put(mapKey, mapValue);
 
@@ -87,45 +96,71 @@ public class BookService {
 	}
 	
 	
-	public Book addBook(String author, String publisher, long id_multimedia)
+	public Book addBook(Book book)
 			throws SQLException{
-		
 	
 		DB_web_services db = new DB_web_services();
     	
-    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Book.post);
+		PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.post);
     	
-    	ppsm.setString(1, author);
-    	ppsm.setString(2, publisher);
-    	ppsm.setLong(3, id_multimedia);
+		// We initialize our statement's values of multimedia
+		ppsm.setString(1, book.getTitle());
+		ppsm.setString(2, book.getDescription());
+		ppsm.setString(3, book.getLanguage());
+		ppsm.setString(4, book.getGenre());
+		ppsm.setInt(5, book.getCategory());
+		ppsm.setInt(6, book.getStatus());
+		ppsm.setLong(7, book.getID_uploader());
+		ppsm.setString(8, book.getDate_release().toString());
     	
     	int rs = ppsm.executeUpdate();
 
+    	//Now that the multimedia is created, we can add it to the book table
     	if(rs == 1){
     		ResultSet generated_id = ppsm.getGeneratedKeys();
     		
     		if(generated_id.next()){
-    			ppsm = db.getPreparedStatement(Constants.Book.getByID);
     			
-    			ppsm.setLong(1, generated_id.getLong(1));
-    			ppsm.setLong(2, id_multimedia);
+    			PreparedStatement ppsm2 = db.getPreparedStatement(Constants.Book.post);
     			
-    			ResultSet rs_book = ppsm.executeQuery();
-    	    	
-    	    	if(rs_book.next()){
-    	    		Book new_book = new Book(rs_book.getLong("ID_book"), rs_book.getString("author"), rs_book.getString("publisher"), rs_book.getLong("ID_multimedia"));
-    	    		
-    	    		this.books.put(rs_book.getLong("ID_book"), new_book);
-    	    		
-    	    		
-    	    		return new_book;
-    	    	}
+				ppsm2.setString(1, book.getAuthor());
+				ppsm2.setString(2, book.getPublisher());
+				ppsm2.setLong(3, generated_id.getLong(1));
+				
+    			ppsm2.executeQuery();
     		}
+    		return book;
     	}
 
-    	
     	return null;
 	}
+	
+	
+//	public void deleteBook(long id) throws SQLException{
+//		
+//		DB_web_services dba = new DB_web_services();
+//		Film f = films.get(id);
+//		
+//		PreparedStatement psmt = dba.getPreparedStatement(Constants.Rate.DeleteByMult);
+//		psmt.setLong(1, f.getId_multimedia());
+//		
+//		PreparedStatement psmt2 = dba.getPreparedStatement(Constants.Comment.deleteByMult);
+//		psmt2.setLong(1, f.getId_multimedia());
+//		
+//		PreparedStatement psmt3 = dba.getPreparedStatement(Constants.Film.delete);
+//		psmt3.setLong(1, id);
+//		
+//		PreparedStatement psmt4 = dba.getPreparedStatement(Constants.Multimedia.delete);
+//		psmt4.setLong(1, f.getId_multimedia());
+//		
+//		psmt.executeUpdate();
+//		psmt2.executeUpdate();
+//		psmt3.executeUpdate();
+//		psmt4.executeUpdate();
+//		
+//		System.out.println(f.getId_multimedia());
+//		
+//	}
 	
 	
 	

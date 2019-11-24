@@ -58,7 +58,7 @@ public class VideoGameService {
 						new Timestamp(rs2.getString("date_status")),
 						new Timestamp(rs2.getString("date_upload")),
 						new Date(rs2.getString("date_release")),
-						rs.getLong("ID_videoGame"), rs.getString("developer"),
+						rs.getLong("ID_videoGame"), rs.getString("developper"),
 						rs.getString("publisher")
 						);
 			}
