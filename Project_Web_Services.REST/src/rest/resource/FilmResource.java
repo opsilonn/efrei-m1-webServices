@@ -21,7 +21,10 @@ import rest.service.FilmService;
 
 @Path("/films")
 @Produces(MediaType.APPLICATION_JSON)
-public class FilmResource {
+public class FilmResource
+{
+    // Allows to insert contextual objects into the class,
+    // e.g. ServletContext, Request, Response, UriInfo
 
 	 @Context
 	 UriInfo uriInfo;
@@ -30,6 +33,13 @@ public class FilmResource {
 	
 	 FilmService films;
 	 
+	 
+		
+    /** Returns all the {@Film} rows from the database
+     * 
+     * @return All the {@Film} rows from the database
+     * @throws SQLException
+     */
 	 @GET
 	 public Response getFilms() 
 			 throws SQLException{
@@ -38,6 +48,15 @@ public class FilmResource {
 		 return Response.status(Status.OK).entity(films.getFilm()).build();
 	 }
 	 
+	 
+	 
+	 
+    /** Returns a given {@Film} from the database
+     * 
+     * @param id ID of the {@Film} we are returning
+     * @return a specific {@Film} row
+     * @throws SQLException
+     */
 	 @Path("/{film_id}")
 	 @GET
 	 public Response getFilm(@PathParam("film_id") long id) 
@@ -51,12 +70,21 @@ public class FilmResource {
 	        		.build();
 	 }
 	 
+	 
+	 
+	 
+
+	 /** Creates a new instance of the table {@Film}
+	  * 
+	  * @param film Instance to add to the database
+	  * @return
+	  * @throws SQLException
+	  */
 	 @POST
 	 @Consumes(MediaType.APPLICATION_JSON)
 	 public Response PostFilm(Film film)
-			 throws SQLException{
-		 
-		 
+			 throws SQLException
+	 {	 
 		 Film f;
 		 this.films = new FilmService();
 		 f = films.addFilm(film);
