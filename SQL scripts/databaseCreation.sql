@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `web_services`.`multimedia` (
   `ID_multimedia` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
   `description` VARCHAR(510) NULL,
-  `language` VARCHAR(3) NOT NULL,
+  `language` VARCHAR(2) NOT NULL,
   `genre` VARCHAR(255) NULL,
   `category` TINYINT(3) NOT NULL,
   `status` TINYINT(3) NOT NULL,
@@ -117,7 +117,7 @@ DROP TABLE IF EXISTS `web_services`.`rate` ;
 
 CREATE TABLE IF NOT EXISTS `web_services`.`rate` (
   `ID_rate` INT NOT NULL AUTO_INCREMENT,
-  `value` INT(3) NOT NULL,
+  `value` TINYINT(3) NOT NULL,
   `date_creation` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ID_user` INT NOT NULL,
   `ID_multimedia` INT NOT NULL,
