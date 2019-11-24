@@ -17,11 +17,12 @@ public class Book extends Multimedia{
 	public Book() { }
 	
 	
-	public Book(long id_book, String author, String publisher, long id_multimedia, String title, 
+	public Book(long id_book, String author, String publisher, String title, 
 			String description, String language, String genre, int category,
 			int status, long ID_upp, Date release)
 	{
 		super(title, description, language, genre, category, status, ID_upp, release);
+		this.id_book = id_book;
 		this.author = author;
 		this.publisher = publisher;	
 	}
