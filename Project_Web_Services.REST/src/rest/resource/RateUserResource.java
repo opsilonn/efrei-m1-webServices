@@ -76,29 +76,30 @@ public class RateUserResource {
     
     
     @GET
-    public Response getRates(@PathParam("id_user")long id_user, @QueryParam("value")String value,
+    public Response getRates(@PathParam("id_user")long id_user, @QueryParam("value")String value, @QueryParam("start")int start, @QueryParam("end")int end,
     		@Context UriInfo uriInfo) 
     		throws SQLException{
    		this.rateService = new RateUserService(id_user);
 		
+   		List<Rate> rates;
+   		
 		if(value != null){
     		
     		int valueInt = Integer.valueOf(value);
-    		List<Rate> rates = rateService.getRatesByValue(valueInt);
-    		
-    		for(Rate rate : rates){
-    			addLinks(rate, uriInfo);
-    		}
-    		
-    		
-    		return Response
-    				.status(Status.OK)
-    				.entity(rates)
-    				.build();
+    		rates = rateService.getRatesByValue(valueInt);
 			
+		}else{
+			rates = rateService.getAllRates();
 		}
 		
-		List<Rate> rates = rateService.getAllRates();
+		if(start >= 0 && end != 0 && start < end){
+			
+			if(end > rates.size()){
+				end = rates.size();
+			}
+			
+			rates = rates.subList(start, end);
+		}
 
 		for(Rate rate : rates){
 			addLinks(rate, uriInfo);

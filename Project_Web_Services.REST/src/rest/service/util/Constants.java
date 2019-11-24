@@ -15,9 +15,6 @@ public class Constants {
 		public static final String putEmailByID = "UPDATE User SET email = ? WHERE id_user = ?";
 
 		public static final String deleteByID = "DELETE FROM User WHERE id_user = ?";
-		public static final String deleteRatesByID = "DELETE FROM Rate WHERE id_user = ?";
-		public static final String deleteCommentsByID = "DELETE FROM Comment WHERE id_user = ?";
-		public static final String deleteMultimediaByID = "DELETE FROM Multimedia WHERE id_uploader = ?";
 
 	}
 	
