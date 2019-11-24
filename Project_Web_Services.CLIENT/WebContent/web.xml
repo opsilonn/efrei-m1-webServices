@@ -9,6 +9,6 @@
     
     
     <welcome-file-list>
-        <welcome-file>JSP/navbar</welcome-file>
+        <welcome-file>navbar</welcome-file>
     </welcome-file-list>
 </web-app>
