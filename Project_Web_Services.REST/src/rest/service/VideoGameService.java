@@ -138,6 +138,14 @@ public class VideoGameService {
 		DB_web_services db = new DB_web_services();
 		PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.post);
 
+		
+		// IMPORTANT IMPORTANT IMPORTANT
+		// le JAVA a du mal avec les dates, et du coup n'arrive pas lire celle fournie par le JSON
+		// Du coup, pour le moment, j'en fourni une manuellement
+		// A CORRIGER
+		videoGame.setDate_release(new Date("2019-12-12"));
+		
+		
 		// We initialize our statement's values
 		ppsm.setString(1, videoGame.getTitle());
 		ppsm.setString(2, videoGame.getLanguage());
