@@ -123,11 +123,13 @@ public class BookService {
     			
     			PreparedStatement ppsm2 = db.getPreparedStatement(Constants.Book.post);
     			
+
 				ppsm2.setString(1, book.getAuthor());
 				ppsm2.setString(2, book.getPublisher());
 				ppsm2.setLong(3, generated_id.getLong(1));
 				
     			ppsm2.executeQuery();
+
     		}
     		return book;
     	}

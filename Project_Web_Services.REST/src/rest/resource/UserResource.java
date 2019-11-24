@@ -12,6 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
@@ -79,11 +80,20 @@ public class UserResource {
      * @throws SQLException
      */
     @GET
-    public Response getUsers()
+    public Response getUsers(@QueryParam("start")int start, @QueryParam("end")int end)
     		throws SQLException {
 		this.userService = new UserService();
 		
 		List<User> users = userService.getAllUsers();
+		
+		if(start >= 0 && end != 0 && start < end){
+			
+			if(end > users.size()){
+				end = users.size();
+			}
+			
+			users = users.subList(start, end);
+		}
 		
 		for(User user : users){
 			addLinks(user);
@@ -191,14 +201,14 @@ public class UserResource {
     
     
     @Path("/{id_user}/rates")
-    public RateResource getRateResource() {
-    	return new RateResource();
+    public RateUserResource getRateResource() {
+    	return new RateUserResource();
     }
     
     
     @Path("/{id_user}/comments")
-    public CommentResource getCommentResource() {
-    	return new CommentResource();
+    public CommentUserResource getCommentResource() {
+    	return new CommentUserResource();
     }
 
 }

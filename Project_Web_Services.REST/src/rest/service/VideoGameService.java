@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import rest.exception.DataNotFoundException;
-import rest.model.User;
 import rest.model.VideoGame;
 import rest.model.util.Date;
 import rest.model.util.Timestamp;
@@ -127,7 +126,7 @@ public class VideoGameService {
 	{
 		// DO ALL VERIFICATION HERE
 		//(I only do title for the moment, should we implement all the other fields ?)
-		
+		System.out.println("LANGUAGE : " + videoGame.getLanguage());
 		if (videoGame.getTitle() == null || videoGame.getTitle().length() == 0)
 		{
 			throw new SQLIntegrityConstraintViolationException("Le champ 'title' ne peut être vide (null)");
@@ -139,14 +138,22 @@ public class VideoGameService {
 		DB_web_services db = new DB_web_services();
 		PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.post);
 
+		
+		// IMPORTANT IMPORTANT IMPORTANT
+		// le JAVA a du mal avec les dates, et du coup n'arrive pas lire celle fournie par le JSON
+		// Du coup, pour le moment, j'en fourni une manuellement
+		// A CORRIGER
+		videoGame.setDate_release(new Date("2019-12-12"));
+		
+		
 		// We initialize our statement's values
 		ppsm.setString(1, videoGame.getTitle());
-		ppsm.setString(2, videoGame.getDescription());
-		ppsm.setString(3, videoGame.getLanguage());
-		ppsm.setString(4, videoGame.getGenre());
-		ppsm.setInt(5, videoGame.getCategory());
-		ppsm.setInt(6, videoGame.getStatus());
-		ppsm.setLong(7, videoGame.getID_uploader());
+		ppsm.setString(2, videoGame.getLanguage());
+		ppsm.setString(3, videoGame.getGenre());
+		ppsm.setInt(4, videoGame.getCategory());
+		ppsm.setInt(5, videoGame.getStatus());
+		ppsm.setLong(6, videoGame.getID_uploader());
+		ppsm.setString(7, videoGame.getDescription());
 		ppsm.setString(8, videoGame.getDate_release().toString());
 
 		int rs = ppsm.executeUpdate();

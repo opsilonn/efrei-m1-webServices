@@ -30,7 +30,8 @@ public class Date {
 		this.year = year;
 		this.month = month;
 		this.day = day;
-		setValue();
+		
+		resetValue();
 	}
 	
 	
@@ -47,7 +48,7 @@ public class Date {
 	 */
 	public void setYear(int year) {
 		this.year = year;
-		this.setValue();
+		this.resetValue();
 	}
 	/**
 	 * @return the month
@@ -61,7 +62,7 @@ public class Date {
 	 */
 	public void setMonth(int month) {
 		this.month = month;
-		this.setValue();
+		this.resetValue();
 	}
 	/**
 	 * @return the day
@@ -75,21 +76,30 @@ public class Date {
 	 */
 	public void setDay(int day) {
 		this.day = day;
-		this.setValue();
+		this.resetValue();
 	}
 
 	/**
 	 * @return the value
 	 */
 	public String getValue() {
-		setValue();
+		resetValue();
 		return value;
 	}
 
 	/**
 	 * @param value the value to set
 	 */
-	public void setValue() {
+	public void setValue(String value) {
+		String spliter[] = value.split("-");
+
+		this.year = Integer.valueOf(spliter[0]);
+		this.month = Integer.valueOf(spliter[1]);
+		this.day = Integer.valueOf(spliter[2]);
+	}
+
+
+	public void resetValue() {
 		this.value = year + "-" + month + "-" + day;
 	}
 
@@ -98,7 +108,7 @@ public class Date {
 	 */
 	@Override
 	public String toString() {
-		setValue();
+		resetValue();
 		return value;
 	}
 	

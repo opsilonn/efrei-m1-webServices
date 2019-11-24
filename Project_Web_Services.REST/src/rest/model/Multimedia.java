@@ -88,29 +88,31 @@ public class Multimedia {
 	
 	public static Category getChildCategory(long id_multimedia) throws SQLException{
 		
-		DB_web_services db = new DB_web_services();
+		try(DB_web_services db = new DB_web_services()){
     	
-    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.getTypeByID);
-    	    	
-    	ppsm.setLong(1, id_multimedia);
-    	
-    	ResultSet rs = ppsm.executeQuery();
-    	
-    	if(rs.next()){
-    		int type = rs.getInt(1);
-    		
-    		switch(type){
-    		case 1:
-    			return Category.BOOK;
-    		case 2:
-    			return Category.FILM;
-    		case 3:
-    			return Category.VIDEO_GAME;
-    		}
-    	}
-    	
-    	
-    	return null;
+	    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.getTypeByID);
+	    	    	
+	    	ppsm.setLong(1, id_multimedia);
+	    	
+	    	ResultSet rs = ppsm.executeQuery();
+	    	
+	    	if(rs.next()){
+	    		int type = rs.getInt(1);
+	    		
+	    		switch(type){
+	    		case 1:
+	    			return Category.BOOK;
+	    		case 2:
+	    			return Category.FILM;
+	    		case 3:
+	    			return Category.VIDEO_GAME;
+	    		}
+	    	}
+	    	
+	    	
+	    	return null;
+		}
+		
 	}
 	
 	
@@ -150,20 +152,22 @@ public class Multimedia {
 			return 0;
 		}
 		
-		DB_web_services db = new DB_web_services();
+		try(DB_web_services db = new DB_web_services()){
     	
-    	PreparedStatement ppsm = db.getPreparedStatement(query);
-    	
-    	ppsm.setLong(1, id_multimedia);
-    	
-    	ResultSet rs = ppsm.executeQuery();
-    	
-    	if(rs.next()){
-    		return rs.getInt(1);
-    	}
-    	
-    	
-    	return 0;
+	    	PreparedStatement ppsm = db.getPreparedStatement(query);
+	    	
+	    	ppsm.setLong(1, id_multimedia);
+	    	
+	    	ResultSet rs = ppsm.executeQuery();
+	    	
+	    	if(rs.next()){
+	    		return rs.getInt(1);
+	    	}
+	    	
+	    	
+	    	return 0;
+		}
+		
 	}
 
 

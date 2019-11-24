@@ -60,6 +60,8 @@ public class UserService {
 	
 	
 	public int getUserCount(){
+		
+		
 		return users.size();
 	}
 	
@@ -105,8 +107,6 @@ public class UserService {
 	    	
 	    	return null;
 	    	
-		}catch(SQLException e){
-			throw e;
 		}
 		
 	}
@@ -116,11 +116,11 @@ public class UserService {
 			throws SQLException, InvalidPasswordException{
 		
 		try(DB_web_services db = new DB_web_services()) {
+
+			db.setAutoCommit(false);
 			
 			boolean change = false;
 			boolean return_value = true;
-
-			db.setAutoCommit(false);
 			
 			if(password != null){
 
@@ -163,15 +163,11 @@ public class UserService {
 
 				PreparedStatement ppsm3 = db.getPreparedStatement(Constants.User.putEmailByID);
 
-				System.out.println(Constants.User.putEmailByID);
-				System.out.println(email);
-				System.out.println(id);
 				ppsm3.setString(1, email);
 				ppsm3.setLong(2, id);
 				
 				int rs = ppsm3.executeUpdate();
 
-				System.out.println("RS = " + rs);
 				if(rs == 1){
 					User user = this.users.get(id);
 
@@ -188,16 +184,19 @@ public class UserService {
 			
 			return (return_value && change);
 			
-		} catch (SQLException | InvalidPasswordException e) {
-			throw e;
 		}
 	}
 	
 	
 	public boolean removeUser(long id) 
 			throws SQLException{
+		
 		try(DB_web_services db = new DB_web_services()){
 
+			if(this.users.get(id) == null){
+				throw new DataNotFoundException("The user with the id `" + id + "` doesn't exist !");
+			}
+			
 			PreparedStatement ppsm = db.getPreparedStatement(Constants.User.deleteByID);
 
 			ppsm.setLong(1, id);
@@ -210,7 +209,11 @@ public class UserService {
 				return true;
 			}
 			
+
 			throw new DataNotFoundException("The user with the id `" + id + "` doesn't exist !");
+
+			return false;
+
 		}
 	}
 }

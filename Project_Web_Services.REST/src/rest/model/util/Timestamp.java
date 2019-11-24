@@ -44,6 +44,8 @@ public class Timestamp {
 		this.hour = hour;
 		this.minute = minute;
 		this.second = second;
+		
+		resetValue();
 	}
 	
 	
@@ -60,7 +62,7 @@ public class Timestamp {
 	 */
 	public void setYear(int year) {
 		this.year = year;
-		this.setValue();
+		this.resetValue();
 	}
 	/**
 	 * @return the month
@@ -74,7 +76,7 @@ public class Timestamp {
 	 */
 	public void setMonth(int month) {
 		this.month = month;
-		this.setValue();
+		this.resetValue();
 	}
 	/**
 	 * @return the day
@@ -88,7 +90,7 @@ public class Timestamp {
 	 */
 	public void setDay(int day) {
 		this.day = day;
-		this.setValue();
+		this.resetValue();
 	}
 	/**
 	 * @return the hour
@@ -102,7 +104,7 @@ public class Timestamp {
 	 */
 	public void setHour(int hour) {
 		this.hour = hour;
-		this.setValue();
+		this.resetValue();
 	}
 	/**
 	 * @return the minute
@@ -116,7 +118,7 @@ public class Timestamp {
 	 */
 	public void setMinute(int minute) {
 		this.minute = minute;
-		this.setValue();
+		this.resetValue();
 	}
 	/**
 	 * @return the second
@@ -130,20 +132,39 @@ public class Timestamp {
 	 */
 	public void setSecond(int second) {
 		this.second = second;
-		this.setValue();
+		this.resetValue();
 	}
 
 	/**
 	 * @return the value
 	 */
 	public String getValue() {
+		resetValue();
 		return value;
 	}
 
 	/**
 	 * @param value the value to set
 	 */
-	public void setValue() {
+	public void setValue(String value) {
+		String spliter[] = value.split("-");
+
+		this.year = Integer.valueOf(spliter[0]);
+		this.month = Integer.valueOf(spliter[1]);
+
+		spliter = spliter[2].split(" ");
+
+		this.day = Integer.valueOf(spliter[0]);
+
+		spliter = spliter[1].split(":");
+
+		this.hour = Integer.valueOf(spliter[0]);
+		this.minute = Integer.valueOf(spliter[1]);
+		this.second = Integer.valueOf(spliter[2]);
+	}
+	
+	
+	public void resetValue(){
 		this.value = year + "-" + month + "-" + day + " " + hour + ":" + minute
 				+ ":" + second;
 	}
@@ -153,6 +174,7 @@ public class Timestamp {
 	 */
 	@Override
 	public String toString() {
+		resetValue();
 		return value;
 	}
 	
