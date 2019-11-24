@@ -191,14 +191,14 @@ public class UserResource {
     
     
     @Path("/{id_user}/rates")
-    public RateResource getRateResource() {
-    	return new RateResource();
+    public RateUserResource getRateResource() {
+    	return new RateUserResource();
     }
     
     
     @Path("/{id_user}/comments")
-    public CommentResource getCommentResource() {
-    	return new CommentResource();
+    public CommentUserResource getCommentResource() {
+    	return new CommentUserResource();
     }
 
 }

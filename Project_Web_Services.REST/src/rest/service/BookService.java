@@ -113,7 +113,7 @@ public class BookService {
     			ResultSet rs_book = ppsm.executeQuery();
     	    	
     	    	if(rs_book.next()){
-    	    		Book new_book = new Book(rs_book.getLong("ID_book"), rs_book.getString("author"), rs_book.getString("publisher"), rs_book.getLong("ID_multimedia"));
+    	    		Book new_book = new Book();
     	    		
     	    		this.books.put(rs_book.getLong("ID_book"), new_book);
     	    		
