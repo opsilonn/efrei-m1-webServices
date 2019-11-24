@@ -23,15 +23,16 @@ public class UserService {
 	public UserService()
 			throws SQLException
 	{
-    	DB_web_services db = new DB_web_services();
+    	try(DB_web_services db = new DB_web_services()){
 	    	
-    	PreparedStatement ppsm = db.getPreparedStatement(Constants.User.getAll);
-    	
-    	ResultSet rs = ppsm.executeQuery();
-    	users.clear();
-    	
-    	while(rs.next()){
-    		users.put(rs.getLong("ID_user"), new User(rs.getLong("ID_user"), rs.getString("pseudo"), rs.getString("email"), new Timestamp(rs.getString("date_creation"))));
+        	PreparedStatement ppsm = db.getPreparedStatement(Constants.User.getAll);
+        	
+        	ResultSet rs = ppsm.executeQuery();
+        	users.clear();
+        	
+        	while(rs.next()){
+        		users.put(rs.getLong("ID_user"), new User(rs.getLong("ID_user"), rs.getString("pseudo"), rs.getString("email"), new Timestamp(rs.getString("date_creation"))));
+        	}
     	}
 	}
 
@@ -66,145 +67,152 @@ public class UserService {
 	public User addUser(String pseudo, String password, String email)
 			throws SQLException{
 		
-		if(password == null || password == ""){
-			throw new SQLIntegrityConstraintViolationException("Le champ 'password' ne peut être vide (null)");
+		try(DB_web_services db = new DB_web_services()){
+			
+			if(password == null || password == ""){
+				throw new SQLIntegrityConstraintViolationException("Le champ 'password' ne peut être vide (null)");
+			}
+	    	
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.User.post);
+	    	
+	    	ppsm.setString(1, pseudo);
+	    	ppsm.setString(2, password);
+	    	ppsm.setString(3, email);
+	    	
+	    	int rs = ppsm.executeUpdate();
+
+	    	if(rs == 1){
+	    		ResultSet generated_id = ppsm.getGeneratedKeys();
+	    		
+	    		if(generated_id.next()){
+	    			PreparedStatement ppsm2 = db.getPreparedStatement(Constants.User.getByID);
+	    			
+	    			ppsm2.setLong(1, generated_id.getLong(1));
+	    			
+	    			ResultSet rs_user = ppsm2.executeQuery();
+	    	    	
+	    	    	if(rs_user.next()){
+	    	    		User new_user = new User(rs_user.getLong("ID_user"), rs_user.getString("pseudo"), rs_user.getString("email"), new Timestamp(rs_user.getString("date_creation")));
+	    	    		
+	    	    		this.users.put(rs_user.getLong("ID_user"), new_user);
+	    	    		
+	    	    		
+	    	    		return new_user;
+	    	    	}
+	    		}
+	    	}
+	    	
+	    	
+	    	return null;
+	    	
+		}catch(SQLException e){
+			throw e;
 		}
 		
-		DB_web_services db = new DB_web_services();
-    	
-    	PreparedStatement ppsm = db.getPreparedStatement(Constants.User.post);
-    	
-    	ppsm.setString(1, pseudo);
-    	ppsm.setString(2, password);
-    	ppsm.setString(3, email);
-    	
-    	int rs = ppsm.executeUpdate();
-
-    	if(rs == 1){
-    		ResultSet generated_id = ppsm.getGeneratedKeys();
-    		
-    		if(generated_id.next()){
-    			ppsm = db.getPreparedStatement(Constants.User.getByID);
-    			
-    			ppsm.setLong(1, generated_id.getLong(1));
-    			
-    			ResultSet rs_user = ppsm.executeQuery();
-    	    	
-    	    	if(rs_user.next()){
-    	    		User new_user = new User(rs_user.getLong("ID_user"), rs_user.getString("pseudo"), rs_user.getString("email"), new Timestamp(rs_user.getString("date_creation")));
-    	    		
-    	    		this.users.put(rs_user.getLong("ID_user"), new_user);
-    	    		
-    	    		
-    	    		return new_user;
-    	    	}
-    		}
-    	}
-
-    	
-    	return null;
 	}
 	
 	
 	public boolean updateUser(long id, String password, String new_password, String email) 
 			throws SQLException, InvalidPasswordException{
-		boolean change = false;
-		boolean return_value = true;
 		
-		if(password != null){
+		try(DB_web_services db = new DB_web_services()) {
+			
+			boolean change = false;
+			boolean return_value = true;
 
-			if(new_password == null){
-				throw new SQLException("Le champ 'new_password' ne peut être vide (null)");
+			db.setAutoCommit(false);
+			
+			if(password != null){
+
+				if(new_password == null){
+					throw new SQLException("Le champ 'new_password' ne peut être vide (null)");
+				}
+				
+
+				PreparedStatement ppsm = db.getPreparedStatement(Constants.User.checkPasswordByID);
+
+				ppsm.setString(1, password);
+				ppsm.setLong(2, id);
+				
+				ResultSet rs_check = ppsm.executeQuery();
+				
+				if(rs_check.next() && rs_check.getInt(1) == 1){
+					
+			    	PreparedStatement ppsm2 = db.getPreparedStatement(Constants.User.putPasswordByID);
+			    	
+			    	ppsm2.setString(1, new_password);
+			    	ppsm2.setLong(2, id);
+			    	
+			    	int rs = ppsm2.executeUpdate();
+
+			    	if(rs == 1){
+			    		User user = this.users.get(id);
+
+			    		user.setPassword(new_password);
+			    	}
+			    	
+			    	return_value = (rs == 1 && return_value == true) ? true : false;
+			    	change = return_value;
+				}
+				
+				else
+					throw new InvalidPasswordException();
+			}
+			
+			if(email != null){		
+
+				PreparedStatement ppsm3 = db.getPreparedStatement(Constants.User.putEmailByID);
+
+				System.out.println(Constants.User.putEmailByID);
+				System.out.println(email);
+				System.out.println(id);
+				ppsm3.setString(1, email);
+				ppsm3.setLong(2, id);
+				
+				int rs = ppsm3.executeUpdate();
+
+				System.out.println("RS = " + rs);
+				if(rs == 1){
+					User user = this.users.get(id);
+
+					user.setEmail(email);
+				}
+				
+
+				return_value = (rs == 1 && return_value == true) ? true : false;
+				change = return_value;
 			}
 
-			DB_web_services db = new DB_web_services();
-	    	
-
-	    	PreparedStatement ppsm = db.getPreparedStatement(Constants.User.checkPasswordByID);
-
-	    	ppsm.setString(1, password);
-	    	ppsm.setLong(2, id);
+			db.commit();
 			
-			ResultSet rs_check = ppsm.executeQuery();
 			
-			if(rs_check.next() && rs_check.getInt(1) == 1){
-	    		
-	        	ppsm = db.getPreparedStatement(Constants.User.putPasswordByID);
-	        	
-	        	ppsm.setString(1, new_password);
-	        	ppsm.setLong(2, id);
-	        	
-	        	int rs = ppsm.executeUpdate();
-
-	        	if(rs == 1){
-	        		User user = this.users.get(id);
-
-	        		user.setPassword(new_password);
-	        	}
-	        	
-
-	        	System.out.println("password");
-	        	System.out.println(return_value + " " + change);
-	        	return_value = (rs == 1 && return_value == true) ? true : false;
-	        	change = return_value;
-	        	System.out.println(return_value + " " + change);
-	    	}
+			return (return_value && change);
 			
-			else
-				throw new InvalidPasswordException();
+		} catch (SQLException | InvalidPasswordException e) {
+			throw e;
 		}
-		
-		
-		if(email != null){
-
-			DB_web_services db = new DB_web_services();
-	    	
-
-	    	PreparedStatement ppsm = db.getPreparedStatement(Constants.User.putEmailByID);
-	        	
-        	ppsm.setString(1, email);
-        	ppsm.setLong(2, id);
-        	
-        	int rs = ppsm.executeUpdate();
-
-        	if(rs == 1){
-        		User user = this.users.get(id);
-
-        		user.setEmail(email);
-        	}
-        	
-
-        	System.out.println("email");
-        	System.out.println(return_value + " " + change);
-        	return_value = (rs == 1 && return_value == true) ? true : false;
-        	change = return_value;
-        	System.out.println(return_value + " " + change);
-		}
-
-    	
-    	
-    	return (return_value && change);
 	}
 	
 	
 	public boolean removeUser(long id) 
 			throws SQLException{
-		DB_web_services db = new DB_web_services();
+		try(DB_web_services db = new DB_web_services()){
 
-		PreparedStatement ppsm = db.getPreparedStatement(Constants.User.deleteByID);
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.User.deleteByID);
 
-    	ppsm.setLong(1, id);
-    	
-    	int rs = ppsm.executeUpdate();
+			ppsm.setLong(1, id);
+			
+			int rs = ppsm.executeUpdate();
 
-    	if(rs == 1){
-    		users.remove(id);
-    		
-    		
-    		return true;
-    	}
-    	
-    	
-    	throw new DataNotFoundException("The user with the id `" + id + "` doesn't exist !");
+			if(rs == 1){
+				users.remove(id);
+				
+				
+				return true;
+			}
+			
+			
+			throw new DataNotFoundException("The user with the id `" + id + "` doesn't exist !");
+		}
 	}
 }

@@ -59,8 +59,8 @@ public class RateResource {
 	private URI getUriForMultimedia(Rate rate, UriInfo uriInfo)
 			throws SQLException {			
 		return uriInfo.getBaseUriBuilder()
-				.path(rest.model.Multimedia.getChildClass(rate.getId_multimedia()))
-				.path(String.valueOf(rate.getId_multimedia()))
+				.path( rest.model.Multimedia.getChildClass(rate.getId_multimedia()) ) 
+				.path( String.valueOf(rest.model.Multimedia.getChildID(rate.getId_multimedia())) )
 				.build();
 	}
 

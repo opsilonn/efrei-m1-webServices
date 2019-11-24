@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `web_services`.`user` ;
 CREATE TABLE IF NOT EXISTS `web_services`.`user` (
   `ID_user` INT NOT NULL AUTO_INCREMENT,
   `pseudo` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
   `date_creation` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID_user`)
   )
@@ -40,10 +40,10 @@ DROP TABLE IF EXISTS `web_services`.`multimedia` ;
 
 CREATE TABLE IF NOT EXISTS `web_services`.`multimedia` (
   `ID_multimedia` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(100) NOT NULL,
-  `description` VARCHAR(500) NULL,
+  `title` VARCHAR(255) NOT NULL,
+  `description` VARCHAR(510) NULL,
   `language` VARCHAR(2) NOT NULL,
-  `genre` VARCHAR(45) NULL,
+  `genre` VARCHAR(255) NULL,
   `category` TINYINT(3) NOT NULL,
   `status` TINYINT(3) NOT NULL,
   `date_status` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -64,8 +64,8 @@ DROP TABLE IF EXISTS `web_services`.`book` ;
 
 CREATE TABLE IF NOT EXISTS `web_services`.`book` (
   `ID_book` INT NOT NULL AUTO_INCREMENT,
-  `author` VARCHAR(65) NOT NULL,
-  `publisher` VARCHAR(65) NULL,
+  `author` VARCHAR(100) NOT NULL,
+  `publisher` VARCHAR(100) NULL,
   `ID_multimedia` INT NOT NULL,
   PRIMARY KEY (`ID_book`),
     FOREIGN KEY (`ID_multimedia`)
@@ -81,8 +81,8 @@ DROP TABLE IF EXISTS `web_services`.`videoGame` ;
 
 CREATE TABLE IF NOT EXISTS `web_services`.`videoGame` (
   `ID_videoGame` INT NOT NULL AUTO_INCREMENT,
-  `developer` VARCHAR(65) NOT NULL,
-  `publisher` VARCHAR(65) NULL,
+  `developer` VARCHAR(100) NOT NULL,
+  `publisher` VARCHAR(100) NULL,
   `ID_multimedia` INT NOT NULL,
   PRIMARY KEY (`ID_videoGame`),
     FOREIGN KEY (`ID_multimedia`)
@@ -98,9 +98,9 @@ DROP TABLE IF EXISTS `web_services`.`film` ;
 
 CREATE TABLE IF NOT EXISTS `web_services`.`film` (
   `ID_film` INT NOT NULL AUTO_INCREMENT,
-  `director` VARCHAR(65) NOT NULL,
-  `productor` VARCHAR(65) NULL,
-  `mainCast` VARCHAR(65) NULL,
+  `director` VARCHAR(100) NOT NULL,
+  `productor` VARCHAR(100) NULL,
+  `mainCast` VARCHAR(255) NULL,
   `duration` TIME NULL,
   `ID_multimedia` INT NOT NULL,
   PRIMARY KEY (`ID_film`),
@@ -117,7 +117,7 @@ DROP TABLE IF EXISTS `web_services`.`rate` ;
 
 CREATE TABLE IF NOT EXISTS `web_services`.`rate` (
   `ID_rate` INT NOT NULL AUTO_INCREMENT,
-  `value` INT(3) NOT NULL,
+  `value` TINYINT(3) NOT NULL,
   `date_creation` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ID_user` INT NOT NULL,
   `ID_multimedia` INT NOT NULL,
@@ -137,7 +137,7 @@ DROP TABLE IF EXISTS `web_services`.`comment` ;
 
 CREATE TABLE IF NOT EXISTS `web_services`.`comment` (
   `ID_comment` INT NOT NULL AUTO_INCREMENT,
-  `value` VARCHAR(300) NOT NULL,
+  `value` VARCHAR(255) NOT NULL,
   `date_creation` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ID_user` INT NOT NULL,
   `ID_multimedia` INT NOT NULL,

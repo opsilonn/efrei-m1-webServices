@@ -47,6 +47,7 @@ public class Rate {
 	/**
 	 * @return the id_rate
 	 */
+    @XmlTransient
 	public long getId_rate() {
 		return id_rate;
 	}

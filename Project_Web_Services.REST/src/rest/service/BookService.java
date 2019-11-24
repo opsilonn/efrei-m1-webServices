@@ -10,7 +10,8 @@ import java.util.Map;
 
 import rest.exception.DataNotFoundException;
 import rest.model.Book;
-import rest.model.User;
+import rest.model.VideoGame;
+import rest.model.util.Date;
 import rest.model.util.Timestamp;
 import rest.service.util.Constants;
 import rest.util.DB_web_services;
@@ -23,16 +24,39 @@ public class BookService {
 	
 	public BookService() throws SQLException
 	{
-		DB_web_services db = new DB_web_services();
-		
-		PreparedStatement ppsm = db.getPreparedStatement(Constants.Book.getAll);
-    
-		
+		// We initialize some helpful variables
+		DB_web_services db = new DB_web_services();		
+		PreparedStatement ppsm = db.getPreparedStatement(Constants.Book.getAll);	
     	ResultSet rs = ppsm.executeQuery();
+
+    	// We empty our current map
     	books.clear();
 
-    	while(rs.next()){
-    		books.put(rs.getLong("ID_book"),new Book(rs.getLong("ID_book"), rs.getString("author"), rs.getString("publisher"), rs.getLong("ID_multimedia")));
+    	// As long as the database returns a row, we fill the map
+    	while(rs.next())
+    	{
+    		// We create our map values (Key & Value)
+    		long mapKey = rs.getLong("ID_book");
+    		Book mapValue = new Book();
+    		
+    		
+    		// We search for the corresponding Multimedia row
+    		PreparedStatement stmt2 = db.getPreparedStatement(Constants.Multimedia.getByID);
+			stmt2.setLong(1, mapKey);
+			ResultSet rs2 = stmt2.executeQuery();
+			
+			// If the said row exist :
+			if(rs2.next())
+			{
+				// fill here the good values
+				// Book(rs.getLong("ID_book"), rs.getString("author"), rs.getString("publisher"));
+	    		 mapValue = new Book();
+			}
+    		
+    		
+    		// We put our values in the map
+    		books.put(mapKey, mapValue);
+
     	}
 		
 	}

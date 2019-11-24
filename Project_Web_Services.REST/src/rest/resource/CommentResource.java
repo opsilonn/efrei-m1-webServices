@@ -55,18 +55,20 @@ public class CommentResource {
 	}
     
     
-	/*private URI getUriForMultimedia(Comment comment, UriInfo uriInfo) {	
+	private URI getUriForMultimedia(Comment comment, UriInfo uriInfo)
+			throws SQLException {			
 		return uriInfo.getBaseUriBuilder()
-				.path(MultimediaResource.class)
-				.path(String.valueOf(comment.getMultimedia().getId_multimedia()))
+				.path( rest.model.Multimedia.getChildClass(comment.getId_multimedia()) ) 
+				.path( String.valueOf(rest.model.Multimedia.getChildID(comment.getId_multimedia())) )
 				.build();
-	}*/
+	}
 
 
-	private void addLinks(Comment comment, UriInfo uriInfo) {
+	private void addLinks(Comment comment, UriInfo uriInfo)
+			throws SQLException {
 		comment.addLink("self", getUriForSelf(comment, uriInfo).toString());
 		comment.addLink("author", getUriForParentUser(comment, uriInfo).toString());
-		//comment.addLink("multimedia", getUriForMultimedia(comment, uriInfo).toString());
+		comment.addLink("multimedia", getUriForMultimedia(comment, uriInfo).toString());
 	}
     
 

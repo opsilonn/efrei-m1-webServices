@@ -20,26 +20,26 @@ DELETE FROM user;
 -- Filling Table web_services.user
 -- -----------------------------------------------------
 INSERT INTO user (ID_user, pseudo, password, email, date_creation) VALUES
-('1', 'JohnDOE', 'azerty', 'jDOE@gmail.com', '2019-11-12 00:00:00'),
-('2', 'JaneDOE', 'qwerty', 'jDOE@gmail.com', '2019-11-12 00:00:00'),
-('3', 'Siphona', 'aqzszde', 'adibou@efrei.net', '2019-11-12 00:00:00'),
-('4', 'Samo', 'aqzszde', 'jaenSamo@efrei.net', '2019-11-12 00:00:00'),
-('5', 'Kenobi', '12345', 'republic@gmail.com', '2017-08-15 00:00:00'),
-('6', 'Grievous', '12345', 'csi@gmail.com', '2017-08-15 00:00:00'),
-('7', 'Skywalker', '12345', 'empire@gmail.com', '2014-08-15 00:00:00'),
-('8', 'Yoda', '12345', 'republic@gmail.com', '2014-08-15 00:00:00'),
-('9', 'Windu', '12345', 'republic@gmail.com', '2013-12-11 00:00:00'),
-('10', 'Ki-Adi Mundi', '12345', 'republic@gmail.com', '2017-11-25 00:00:00'),
-('11', 'Fisto', '12345', 'republic@gmail.com', '2016-10-15 00:00:00'),
-('12', 'Secura', '12345', 'republic@gmail.com', '2017-09-16 00:00:00'),
-('13', 'Offee', '12345', 'republic@gmail.com', '2015-08-15 00:00:00'),
-('14', 'Unduli', '12345', 'republic@gmail.com', '2011-07-15 00:00:00'),
-('15', 'Palpatine', '12345', 'senate@gmail.com', '2012-06-02 00:00:00'),
-('16', 'Ameda', '12345', 'senate@gmail.com', '2013-05-30 00:00:00'),
-('17', 'Organa', '12345', 'senate@gmail.com', '2016-04-30 00:00:00'),
-('18', 'Amidala', '12345', 'senate@gmail.com', '2014-03-25 00:00:00'),
-('19', 'Maul', '12345', 'csi@gmail.com', '2009-02-01 00:00:00'),
-('20', 'Tyrannus', '12345', 'csi@gmail.com', '2017-01-20 00:00:00');
+('1', 'JohnDOE', PASSWORD('azerty'), 'jDOE@gmail.com', '2019-11-12 00:00:00'),
+('2', 'JaneDOE', PASSWORD('qwerty'), 'jDOE@gmail.com', '2019-11-12 00:00:00'),
+('3', 'Siphona', PASSWORD('aqzszde'), 'adibou@efrei.net', '2019-11-12 00:00:00'),
+('4', 'Samo', PASSWORD('aqzszde'), 'jaenSamo@efrei.net', '2019-11-12 00:00:00'),
+('5', 'Kenobi', PASSWORD('12345'), 'republic@gmail.com', '2017-08-15 00:00:00'),
+('6', 'Grievous', PASSWORD('12345'), 'csi@gmail.com', '2017-08-15 00:00:00'),
+('7', 'Skywalker', PASSWORD('12345'), 'empire@gmail.com', '2014-08-15 00:00:00'),
+('8', 'Yoda', PASSWORD('12345'), 'republic@gmail.com', '2014-08-15 00:00:00'),
+('9', 'Windu', PASSWORD('12345'), 'republic@gmail.com', '2013-12-11 00:00:00'),
+('10', 'Ki-Adi Mundi', PASSWORD('12345'), 'republic@gmail.com', '2017-11-25 00:00:00'),
+('11', 'Fisto', PASSWORD('12345'), 'republic@gmail.com', '2016-10-15 00:00:00'),
+('12', 'Secura', PASSWORD('12345'), 'republic@gmail.com', '2017-09-16 00:00:00'),
+('13', 'Offee', PASSWORD('12345'), 'republic@gmail.com', '2015-08-15 00:00:00'),
+('14', 'Unduli', PASSWORD('12345'), 'republic@gmail.com', '2011-07-15 00:00:00'),
+('15', 'Palpatine', PASSWORD('12345'), 'senate@gmail.com', '2012-06-02 00:00:00'),
+('16', 'Ameda', PASSWORD('12345'), 'senate@gmail.com', '2013-05-30 00:00:00'),
+('17', 'Organa', PASSWORD('12345'), 'senate@gmail.com', '2016-04-30 00:00:00'),
+('18', 'Amidala', PASSWORD('12345'), 'senate@gmail.com', '2014-03-25 00:00:00'),
+('19', 'Maul', PASSWORD('12345'), 'csi@gmail.com', '2009-02-01 00:00:00'),
+('20', 'Tyrannus', PASSWORD('12345'), 'csi@gmail.com', '2017-01-20 00:00:00');
 
 
 
