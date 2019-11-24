@@ -146,9 +146,7 @@ public class UserResource {
     public Response postUser(User user) 
     		throws SQLException {
 		this.userService = new UserService();
-		
-		System.out.println(user);
-		
+				
 		User new_user = userService.addUser(user.getPseudo(), user.getPassword(), user.getEmail());
 		addLinks(new_user);
 		URI location = getUriForSelf(new_user);

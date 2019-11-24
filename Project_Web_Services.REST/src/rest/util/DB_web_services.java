@@ -19,7 +19,7 @@ import rest.model.VideoGame;
 
 
 
-public class DB_web_services {
+public class DB_web_services implements AutoCloseable{
 	
     private final Connection conn;
 
@@ -50,6 +50,56 @@ public class DB_web_services {
     {
         return conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
     }
+    
+    
+    
+    /** Try to define if the query should be auto commit
+     * 
+     * @param bool the boolean to define if the query should be auto commit
+     */
+    public void setAutoCommit(boolean bool)
+            throws SQLException
+    {
+        this.conn.setAutoCommit(bool);
+    }
+    
+    
+    
+    /** Try to commit queries
+     * 
+     */
+    public void commit()
+            throws SQLException
+    {
+        this.conn.commit();
+		this.conn.setAutoCommit(true);
+    }
+    
+    
+    
+    /** Try to rollback queries
+     * 
+     */
+    public void rollback()
+            throws SQLException
+    {
+        this.conn.rollback();
+    }
+    
+    
+    
+    /** Try to close the connection to the database
+     * 
+     */
+	@Override
+	public void close()
+			throws SQLException {
+    	if(!this.conn.isClosed()){
+    		if(!this.conn.getAutoCommit())
+    			this.conn.rollback();
+    		this.conn.close();    		
+    	}
+	}
     
     
     private static Map<Long, User> users = new HashMap<Long, User>();
