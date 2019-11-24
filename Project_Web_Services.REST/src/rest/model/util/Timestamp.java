@@ -14,6 +14,8 @@ public class Timestamp {
 	private String value;
 	
 	
+	public Timestamp() { }
+	
 	public Timestamp(String date_string){
 		this.value = date_string;
 		

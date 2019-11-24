@@ -1,5 +1,9 @@
+
 package rest.model;
 
+
+import rest.model.util.Date;
+import rest.model.util.Timestamp;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -14,17 +18,16 @@ public class Book extends Multimedia{
 	private long id_book;
 	private String author;
 	private String publisher;
-	private long id_multimedia;
 	
 	public Book() { }
 	
 	
-	public Book(long id_book, String author, String publisher, String title, 
-			String description, String language, String genre, int category,
-			int status, long ID_upp, Date release)
+	public Book(long ID_multimedia, String title,String language, String description, 
+			String genre, int category, int status, long ID_upp,
+			Timestamp status_date, Timestamp upload_date , Date release, long ID_book, String author, String publisher)
 	{
-		super(title, description, language, genre, category, status, ID_upp, release);
-		this.id_book = id_book;
+		super(ID_multimedia, title, description, language, genre, category, status, status_date, upload_date, release, ID_upp);
+		this.id_book = ID_book;
 		this.author = author;
 		this.publisher = publisher;	
 	}
@@ -42,18 +45,6 @@ public class Book extends Multimedia{
 		this.id_book = id_book;
 	}
 	
-	/**
-	 * @return the id_book
-	 */
-	public long getId_multimedia() {
-		return id_multimedia;
-	}
-	/**
-	 * @param id_book the id_book to set
-	 */
-	public void setId_multimedia(long id_multimedia) {
-		this.id_multimedia = id_multimedia;
-	}
 	/**
 	 * @return the author
 	 */

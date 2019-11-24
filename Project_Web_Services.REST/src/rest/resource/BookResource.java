@@ -18,8 +18,10 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
 import rest.model.Book;
+import rest.model.Film;
 import rest.model.Rate;
 import rest.service.BookService;
+import rest.service.FilmService;
 
 @Path("/books")
 @Produces(MediaType.APPLICATION_JSON)
@@ -75,18 +77,13 @@ public class BookResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postBook(Book book) 
     		throws SQLException {
+		
+    	Book b = new Book();
 		this.bookService = new BookService();
-		
-		Book new_book = new Book();
-		
-		new_book = bookService.addBook(book.getAuthor(), book.getPublisher(), book.getId_multimedia());
-		//addLinks(new_book, uriInfo);
-		URI location = uriInfo.getAbsolutePathBuilder().path(String.valueOf(new_book.getId_book())).build();
-		
-		
-		return Response.created(location)
-				.entity(new_book)
-				.build();
+		b = bookService.addBook(book);
+		 
+		return Response.status(Status.OK).entity(b).build();
+	
     }
 //
 //
