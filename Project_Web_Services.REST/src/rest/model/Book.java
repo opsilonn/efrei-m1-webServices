@@ -3,6 +3,8 @@ package rest.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import rest.model.util.Date;
+
 
 
 

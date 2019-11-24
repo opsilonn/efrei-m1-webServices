@@ -13,6 +13,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
@@ -75,7 +76,7 @@ public class CommentUserResource {
     
     
     @GET
-    public Response getComments(@PathParam("id_user")long id_user,
+    public Response getComments(@PathParam("id_user")long id_user, @QueryParam("start")int start, @QueryParam("end")int end,
     		@Context UriInfo uriInfo) 
     		throws SQLException{
    		this.commentService = new CommentUserService(id_user);
@@ -84,6 +85,16 @@ public class CommentUserResource {
 
 		for(Comment comment : comments){
 			addLinks(comment, uriInfo);
+		}
+		
+
+		if(start >= 0 && end != 0 && start < end){
+			
+			if(end > comments.size()){
+				end = comments.size();
+			}
+			
+			comments = comments.subList(start, end);
 		}
 		
 		
