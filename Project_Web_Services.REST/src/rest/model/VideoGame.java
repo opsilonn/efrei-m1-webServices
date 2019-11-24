@@ -34,7 +34,7 @@ public class VideoGame extends Multimedia
 		super(ID_multimedia, title, description, language, genre, category, status, status_date,  upload_date, release, ID_upp);
 		this.id_videoGame = ID_videoGame;
 		this.developer = developer;
-		this.publisher = publisher;	
+		this.publisher = publisher;
 	}
 	
 	
@@ -67,4 +67,27 @@ public class VideoGame extends Multimedia
 	 * @param publisher the publisher to set
 	 */
 	public void setPublisher(String publisher) { this.publisher = publisher; }
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString()
+	{
+		return "VideoGame [id_videoGame = " + this.id_videoGame
+				+ ", titre = " + this.getTitle()
+				+ ", description = " + this.getDescription()
+				+ ", language = " + this.getLanguage()
+				+ ", genre = " + this.getGenre()
+				+ ", category = " + this.getCategory()
+				+ ", status = " + this.getStatus()
+				+ ", date_upload = " + this.getDate_upload()
+				+ ", date_status = " + this.getDate_Status()
+				+ ", date_release = " + this.getDate_release()
+				+ ", developer = " + this.getDeveloper()
+				+ ", publisher = " + this.getPublisher()
+				+ "]";
+	}
 }

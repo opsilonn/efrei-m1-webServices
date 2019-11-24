@@ -158,6 +158,4 @@ public class User {
 		return "User [id_user=" + this.id_user + ", pseudo=" + this.pseudo + ", email=" + this.email + ", creation_date="
 				+ this.creation_date + "]";
 	}
-	
-	
 }
