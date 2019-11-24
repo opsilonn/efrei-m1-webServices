@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     
-    <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
-    </session-config>
-    
+	<!-- ========================================================== -->
+	<!-- General -->
+	<!-- ========================================================== -->
+	
+	<!-- Name the application -->
+	<display-name>The Otter Market</display-name>
+	<description>A market where you'll buy many wonders !!</description>
+	
+	<!-- This app is cluster-ready -->
+	<distributable />
+	
+	<!-- Set timeout to 30 minutes -->
+	<session-config>
+	        <session-timeout>30</session-timeout>
+	</session-config>
+  
     
     <welcome-file-list>
-        <welcome-file>navbar</welcome-file>
+        <welcome-file>random.jsp</welcome-file>
     </welcome-file-list>
+
+
+    
+    
+    
+    
+	<!-- ========================================================== -->
+	<!-- JSP Configuration -->
+	<!-- ========================================================== -->
+	
+	<jsp-config>
+	    <jsp-property-group>
+	        <url-pattern>*.jsp</url-pattern>
+	    </jsp-property-group>
+	</jsp-config>
 </web-app>
