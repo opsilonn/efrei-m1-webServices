@@ -12,6 +12,7 @@ import com.mysql.cj.protocol.Resultset;
 
 import rest.model.Film;
 import rest.model.User;
+import rest.model.util.Date;
 import rest.model.util.Timestamp;
 import rest.resource.util.Constants;
 import rest.util.DB_web_services;
@@ -57,7 +58,7 @@ public class FilmService {
 				f.setId_multimedia(rs.getLong("ID_multimedia"));
 				f.setTitle(rs2.getString("title"));
 				f.setDescription(rs2.getString("description"));
-				//f.setRelease_date(new Date(rs.getString()));
+				f.setDate_release(new Date(rs2.getString("date_release")));
 				f.setLanguage(rs2.getString("language"));
 				f.setGenre(rs2.getString("genre"));
 				f.setCategory(rs2.getInt("category"));
