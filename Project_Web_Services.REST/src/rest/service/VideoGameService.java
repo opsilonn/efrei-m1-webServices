@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import rest.exception.DataNotFoundException;
-import rest.model.User;
 import rest.model.VideoGame;
 import rest.model.util.Date;
 import rest.model.util.Timestamp;

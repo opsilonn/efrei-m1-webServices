@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS `web_services`.`multimedia` (
   PRIMARY KEY (`ID_multimedia`),
     FOREIGN KEY (`ID_uploader`)
     REFERENCES `web_services`.`user` (`ID_user`)
+	ON DELETE CASCADE
     )
 ENGINE = InnoDB;
 
@@ -70,6 +71,7 @@ CREATE TABLE IF NOT EXISTS `web_services`.`book` (
   PRIMARY KEY (`ID_book`),
     FOREIGN KEY (`ID_multimedia`)
     REFERENCES `web_services`.`multimedia` (`ID_multimedia`)
+	ON DELETE CASCADE
     )
 ENGINE = InnoDB;
 
@@ -87,6 +89,7 @@ CREATE TABLE IF NOT EXISTS `web_services`.`videoGame` (
   PRIMARY KEY (`ID_videoGame`),
     FOREIGN KEY (`ID_multimedia`)
     REFERENCES `web_services`.`multimedia` (`ID_multimedia`)
+	ON DELETE CASCADE
     )
 ENGINE = InnoDB;
 
@@ -106,6 +109,7 @@ CREATE TABLE IF NOT EXISTS `web_services`.`film` (
   PRIMARY KEY (`ID_film`),
     FOREIGN KEY (`ID_multimedia`)
     REFERENCES `web_services`.`multimedia` (`ID_multimedia`)
+	ON DELETE CASCADE
     )
 ENGINE = InnoDB;
 
@@ -123,9 +127,11 @@ CREATE TABLE IF NOT EXISTS `web_services`.`rate` (
   `ID_multimedia` INT NOT NULL,
   PRIMARY KEY (`ID_rate`),
     FOREIGN KEY (`ID_user`)
-    REFERENCES `web_services`.`user` (`ID_user`),
+    REFERENCES `web_services`.`user` (`ID_user`)
+	ON DELETE CASCADE,
     FOREIGN KEY (`ID_multimedia`)
     REFERENCES `web_services`.`multimedia` (`ID_multimedia`)
+	ON DELETE CASCADE
     )
 ENGINE = InnoDB;
 
@@ -143,9 +149,11 @@ CREATE TABLE IF NOT EXISTS `web_services`.`comment` (
   `ID_multimedia` INT NOT NULL,
   PRIMARY KEY (`ID_comment`),
     FOREIGN KEY (`ID_user`)
-    REFERENCES `web_services`.`user` (`ID_user`),
+    REFERENCES `web_services`.`user` (`ID_user`)
+	ON DELETE CASCADE,
     FOREIGN KEY (`ID_multimedia`)
     REFERENCES `web_services`.`multimedia` (`ID_multimedia`)
+	ON DELETE CASCADE
     )
 ENGINE = InnoDB;
 
