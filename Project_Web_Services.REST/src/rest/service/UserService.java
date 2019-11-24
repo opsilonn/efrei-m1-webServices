@@ -205,12 +205,12 @@ public class UserService {
 
 			if(rs == 1){
 				users.remove(id);
-			
+				
+				
 				return true;
 			}
 			
-
-			throw new DataNotFoundException("The user with the id `" + id + "` doesn't exist !");
+			return false;
 		}
 	}
 }
