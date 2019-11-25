@@ -63,6 +63,14 @@ public class Constants {
 		public static final String post ="INSERT INTO Film (director, productor, mainCast, duration, ID_multimedia) VALUES(?,?,?,?,?)";
 		
 		public static final String deleteByID = "DELETE FROM Film WHERE id_film = ?";
+		
+		public static final String PutDescriptionByID = "UPDATE Film_v SET description = ? WHERE id_film = ?";
+		public static final String PutLangueByID = "UPDATE Film_v SET language = ? WHERE id_film = ?";
+		public static final String PutGenreByID = "UPDATE Film_v SET genre = ? Where id_film = ?";
+		public static final String PutStatusByID = "UPDATE Film_v SET status = ?, date_status = NOW() WHERE id_film = ?";
+		public static final String PutDirectorByID = "UPDATE Film_v SET director = ? WHERE id_film = ?";
+		public static final String PutProductorByID = "UPDATE Film_v SET productor = ? WHERE id_film = ?";
+		public static final String PutMainCastByID = "UPDATE film_v SET mainCast = ? Where id_film = ?";
 	}
 
 

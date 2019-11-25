@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.org.glassfish.gmbal.Description;
+
 import rest.exception.DataNotFoundException;
 import rest.model.Film;
 import rest.model.util.Date;
@@ -156,6 +158,71 @@ public class FilmService {
 			return false;
 		}
 		
+	}
+	
+	public Film UpdateFilm(String description, String Langue, String genre, int Status, String Director, String Productor, String Cast, long id) throws SQLException{
+		
+		
+		try(DB_web_services db = new DB_web_services()){
+			if(description !=null){
+				//System.out.println("entering the if");
+				PreparedStatement stmt = db.getPreparedStatement(Constants.Film.PutDescriptionByID);
+				stmt.setString(1, description);
+				stmt.setLong(2, id);
+				
+				stmt.executeUpdate();
+			}
+			
+			if(Langue != null){
+				PreparedStatement stmt2 = db.getPreparedStatement(Constants.Film.PutLangueByID);
+				stmt2.setString(1, Langue);
+				stmt2.setLong(2, id);
+				
+				stmt2.executeUpdate();
+			}
+			
+			if(genre != null){
+				PreparedStatement stmt3 = db.getPreparedStatement(Constants.Film.PutGenreByID);
+				stmt3.setString(1, genre);
+				stmt3.setLong(2, id);
+				
+				stmt3.executeUpdate();
+			}
+			
+			if(Status >0){
+				PreparedStatement stmt4 = db.getPreparedStatement(Constants.Film.PutStatusByID);
+				stmt4.setInt(1, Status);
+				stmt4.setLong(2, id);
+				
+				stmt4.executeUpdate();
+			}
+			
+			if(Director != null){
+				PreparedStatement stmt5 = db.getPreparedStatement(Constants.Film.PutDirectorByID);
+				stmt5.setString(1, Director);
+				stmt5.setLong(2, id);
+				
+				stmt5.executeUpdate();
+			}
+			
+			if(Productor != null){
+				PreparedStatement stmt6 = db.getPreparedStatement(Constants.Film.PutProductorByID);
+				stmt6.setString(1, Productor);
+				stmt6.setLong(2, id);
+				
+				stmt6.executeUpdate();
+			}
+			
+			if(Cast != null){
+				PreparedStatement stmt7 = db.getPreparedStatement(Constants.Film.PutMainCastByID);
+				stmt7.setString(1, Cast);
+				stmt7.setLong(2, id);
+				
+				stmt7.executeUpdate();
+			}
+		}
+		
+		return films.get(id);
 	}
 	
 	

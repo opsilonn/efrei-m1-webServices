@@ -8,6 +8,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -139,6 +140,18 @@ public class FilmResource
 		 return Response
 				 .status(Status.OK)
 				 .entity(filmService.removeFilm(id))
+				 .build();
+	 }
+	 
+	 @Path("/{film_id}")
+	 @PUT
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 public Response UpdateFilm(@PathParam("film_id") long id, Film film) throws SQLException{
+		 
+		 this.filmService = new FilmService();
+		 
+		 return Response.status(Status.OK)
+				 .entity(filmService.UpdateFilm(film.getDescription(), film.getLanguage(), film.getGenre(),film.getStatus(), film.getDirector(), film.getProductor(), film.getMainCast(), id))
 				 .build();
 	 }
 	 

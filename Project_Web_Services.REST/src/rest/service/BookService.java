@@ -139,7 +139,7 @@ public class BookService {
     	
 	}
 	
-	public boolean updateBook(long id, ) 
+	/*public boolean updateBook(long id, ) 
 			throws SQLException{
 
 		DB_web_services db = new DB_web_services();
@@ -162,7 +162,7 @@ public class BookService {
     	
     	
     	return (rs == 1) ? true : false;
-	}
+	}*/
 	
 	
 	
