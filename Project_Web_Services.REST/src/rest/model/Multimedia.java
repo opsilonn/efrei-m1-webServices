@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 
 
@@ -175,6 +176,7 @@ public class Multimedia {
 	/**
 	 * @return the id_multimedia
 	 */
+    @XmlTransient
 	public long getId_multimedia() {
 		return id_multimedia;
 	}
@@ -315,6 +317,7 @@ public class Multimedia {
 	/**
 	 * @return the uploader's ID
 	 */
+    @XmlTransient
 	public long getID_uploader() {
 		return ID_uploader;
 	}

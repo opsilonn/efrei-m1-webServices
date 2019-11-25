@@ -2,6 +2,8 @@ package rest.model;
 
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
 import rest.model.util.Date;
 import rest.model.util.Timestamp;
 
@@ -42,6 +44,7 @@ public class VideoGame extends Multimedia
 	/**
 	 * @return the id_videoGame
 	 */
+    @XmlTransient
 	public long getId_videoGame() { return id_videoGame; }
 	/**
 	 * @param id_videoGame the id_videoGame to set

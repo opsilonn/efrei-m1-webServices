@@ -76,7 +76,8 @@ public class RateUserResource {
     
     
     @GET
-    public Response getRates(@PathParam("id_user")long id_user, @QueryParam("value")String value, @QueryParam("start")int start, @QueryParam("end")int end,
+    public Response getRates(@PathParam("id_user")long id_user,
+    		@QueryParam("value")String value, @QueryParam("start")int start, @QueryParam("end")int end,
     		@Context UriInfo uriInfo) 
     		throws SQLException{
    		this.rateService = new RateUserService(id_user);

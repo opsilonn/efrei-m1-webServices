@@ -25,46 +25,49 @@ public class VideoGameService {
 	public VideoGameService() throws SQLException
 	{
 		// We initialize some helpful variables
-		DB_web_services db = new DB_web_services();
-		PreparedStatement ppsm = db.getPreparedStatement(Constants.VideoGame.getAll);
-		ResultSet rs = ppsm.executeQuery();
+		try(DB_web_services db = new DB_web_services()){
+			
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.VideoGame.getAll);
+			ResultSet rs = ppsm.executeQuery();
 
-		// We empty our current map
-		videoGames.clear();
+			// We empty our current map
+			videoGames.clear();
 
-		// As long as the database returns a row, we fill the map
-		while (rs.next())
-		{
-			// We create our map values (Key & Value)
-			long mapKey = rs.getLong("ID_videoGame");
-			VideoGame mapValue = new VideoGame();
-
-			// We search for the corresponding Multimedia row
-			PreparedStatement stmt2 = db.getPreparedStatement(Constants.Multimedia.getByID);
-			stmt2.setLong(1, rs.getLong("ID_multimedia"));
-			ResultSet rs2 = stmt2.executeQuery();
-
-			// If the said row exist :
-			if (rs2.next())
+			// As long as the database returns a row, we fill the map
+			while (rs.next())
 			{
-				mapValue = new VideoGame(
-						rs2.getLong("ID_multimedia"), rs2.getString("title"),
-						rs2.getString("description"), rs2.getString("language"),
-						rs2.getString("genre"),
-						rs2.getInt("category"),
-						rs2.getInt("status"),
-						rs2.getLong("ID_uploader"),
-						new Timestamp(rs2.getString("date_status")),
-						new Timestamp(rs2.getString("date_upload")),
-						new Date(rs2.getString("date_release")),
-						rs.getLong("ID_videoGame"), rs.getString("developer"),
-						rs.getString("publisher")
-						);
-			}
+				// We create our map values (Key & Value)
+				long mapKey = rs.getLong("ID_videoGame");
+				VideoGame mapValue = new VideoGame();
 
-			// We put our values in the map
-			videoGames.put(mapKey, mapValue);
+				// We search for the corresponding Multimedia row
+				PreparedStatement stmt2 = db.getPreparedStatement(Constants.Multimedia.getByID);
+				stmt2.setLong(1, rs.getLong("ID_multimedia"));
+				ResultSet rs2 = stmt2.executeQuery();
+
+				// If the said row exist :
+				if (rs2.next())
+				{
+					mapValue = new VideoGame(
+							rs2.getLong("ID_multimedia"), rs2.getString("title"),
+							rs2.getString("description"), rs2.getString("language"),
+							rs2.getString("genre"),
+							rs2.getInt("category"),
+							rs2.getInt("status"),
+							rs2.getLong("ID_uploader"),
+							new Timestamp(rs2.getString("date_status")),
+							new Timestamp(rs2.getString("date_upload")),
+							new Date(rs2.getString("date_release")),
+							rs.getLong("ID_videoGame"), rs.getString("developer"),
+							rs.getString("publisher")
+							);
+
+					// We put our values in the map
+					videoGames.put(mapKey, mapValue);
+				}
+			}
 		}
+		
 	}
 
 	
@@ -129,46 +132,64 @@ public class VideoGameService {
 		System.out.println("LANGUAGE : " + videoGame.getLanguage());
 		if (videoGame.getTitle() == null || videoGame.getTitle().length() == 0)
 		{
-			throw new SQLIntegrityConstraintViolationException("Le champ 'title' ne peut être vide (null)");
+			throw new SQLIntegrityConstraintViolationException("Le champ 'title' ne peut ï¿½tre vide (null)");
 		}
 		
 
 		
 		// We initialize some variables
-		DB_web_services db = new DB_web_services();
-		PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.post);
-		
-		
-		// We initialize our statement's values
-		ppsm.setString(1, videoGame.getTitle());
-		ppsm.setString(2, videoGame.getLanguage());
-		ppsm.setString(3, videoGame.getGenre());
-		ppsm.setInt(4, videoGame.getCategory());
-		ppsm.setInt(5, videoGame.getStatus());
-		ppsm.setLong(6, videoGame.getID_uploader());
-		ppsm.setString(7, videoGame.getDescription());
-		ppsm.setString(8, videoGame.getDate_release().toString());
+		try(DB_web_services db = new DB_web_services()){
+			
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.post);
+			
+			
+			// We initialize our statement's values
+			ppsm.setString(1, videoGame.getTitle());
+			ppsm.setString(2, videoGame.getLanguage());
+			ppsm.setString(3, videoGame.getGenre());
+			ppsm.setInt(4, videoGame.getCategory());
+			ppsm.setInt(5, videoGame.getStatus());
+			ppsm.setLong(6, videoGame.getID_uploader());
+			ppsm.setString(7, videoGame.getDescription());
+			ppsm.setString(8, videoGame.getDate_release().toString());
+	
+			int succes = ppsm.executeUpdate();
+	
+			if (succes == 1) {
+				ResultSet generated_id = ppsm.getGeneratedKeys();
+	
+				if (generated_id.next())
+				{
+					PreparedStatement ppsm2 = db.getPreparedStatement(Constants.VideoGame.post);
+	
+					ppsm2.setString(1, videoGame.getDeveloper());
+					ppsm2.setString(2, videoGame.getPublisher());
+					ppsm2.setLong(3, generated_id.getLong(1));
+	
+					int succes2 = ppsm2.executeUpdate();
+					
+					if(succes2 == 1){
+						PreparedStatement ppsm3 = db.getPreparedStatement(Constants.VideoGame.getByID);
+						
+						ppsm3.setLong(1, generated_id.getLong(1));
+						
 
-		int rs = ppsm.executeUpdate();
+						ResultSet rs = ppsm3.executeQuery();
+						
+						if(rs.next()){
 
-		if (rs == 1) {
-			ResultSet generated_id = ppsm.getGeneratedKeys();
-
-			if (generated_id.next())
-			{
-				ppsm = db.getPreparedStatement(Constants.VideoGame.post);
-
-				ppsm.setString(1, videoGame.getDeveloper());
-				ppsm.setString(2, videoGame.getPublisher());
-				ppsm.setLong(3, generated_id.getLong(1));
-
-				ppsm.executeUpdate();
-
-				return videoGame;
+							//create the new video game Object with rs and return it
+							return videoGame;
+							
+						}
+					}
+				}
 			}
+	
+			return null;
+			
 		}
-
-		return null;
+		
 	}
 
 	
