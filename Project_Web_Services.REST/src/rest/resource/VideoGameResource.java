@@ -2,8 +2,8 @@ package rest.resource;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.net.URI;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -146,34 +146,15 @@ public class VideoGameResource
     public Response postVideoGame(VideoGame videoGame) 
     		throws SQLException
     {
-    	/*
 		this.videoGameService = new VideoGameService();
+		VideoGame new_videoGame = videoGameService.addVideoGame(videoGame);
 		
-		VideoGame new_videoGame = new VideoGame();
-		
-		VideoGame new_videoGame = videoGameService.addVideoGame(
-				videoGame.getTitle(),
-				videoGame.getDescription(),
-				videoGame.getGenre(),
-				videoGame.getCategory(),
-				videoGame.getStatus(),
-				videoGame.getID_uploader(),
-				videoGame.getDate_release(),
-				videoGame.getDeveloper(),
-				videoGame.getPublisher()
-				);
-		
-		URI location = uriInfo.getAbsolutePathBuilder().path(String.valueOf(new_videoGame.getId_videoGame())).build();
-		
-		
-		return Response.created(location)
+		addLinks(new_videoGame);
+		 
+		return Response
+				.status(Status.OK)
 				.entity(new_videoGame)
 				.build();
-		*/
-		this.videoGameService = new VideoGameService();
-		VideoGame vG = videoGameService.addVideoGame(videoGame);
-		 
-		return Response.status(Status.OK).entity(vG).build();
     }
 
 
@@ -189,18 +170,17 @@ public class VideoGameResource
 //				.entity(userService.updateUser(id, existing_password, new_password, email))
 //				.build();
 //    }
-//
-//    
-//    @Path("/{id_user}")
-//    @DELETE
-//    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-//    public Response deleteVideoGame(@PathParam("id_videoGame")Long id)
-//    		throws SQLException {
-//		this.videoGameService = new VideoGameService();
-//		
-//		
-//		return Response.status(Status.OK) 
-//				.entity(videoGameService.removeVideoGame(id))
-//				.build();
-//    } 
+
+    
+	@Path("/{id_videoGame}")
+    @DELETE
+    public Response deleteVideoGame(@PathParam("id_videoGame")Long id)
+    		throws SQLException {
+		this.videoGameService = new VideoGameService();
+		
+		
+		return Response.status(Status.OK) 
+				.entity(videoGameService.removeVideoGame(id))
+				.build();
+    } 
 }
