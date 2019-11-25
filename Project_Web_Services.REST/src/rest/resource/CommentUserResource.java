@@ -76,7 +76,8 @@ public class CommentUserResource {
     
     
     @GET
-    public Response getComments(@PathParam("id_user")long id_user, @QueryParam("start")int start, @QueryParam("end")int end,
+    public Response getComments(@PathParam("id_user")long id_user,
+    		@QueryParam("start")int start, @QueryParam("end")int end,
     		@Context UriInfo uriInfo) 
     		throws SQLException{
    		this.commentService = new CommentUserService(id_user);

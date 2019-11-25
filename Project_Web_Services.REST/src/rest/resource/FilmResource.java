@@ -1,6 +1,8 @@
 package rest.resource;
 
+import java.net.URI;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -31,10 +33,35 @@ public class FilmResource
 	 @Context
 	 Request request;
 	
-	 FilmService films;
+	 FilmService filmService;
+	    
+
+
+
+	private URI getUriForSelf(Film film) {
+		return this.uriInfo.getBaseUriBuilder()
+				.path(FilmResource.class)
+				.path(String.valueOf(film.getId_film()))
+				.build();
+	}
+    
+    
+	private URI getUriForUploader(Film film) {		
+		return this.uriInfo.getBaseUriBuilder()
+				.path(UserResource.class)
+				.path(String.valueOf(film.getID_uploader()))
+				.build();
+	}
+
+
+	private void addLinks(Film film) {
+		film.addLink("self", getUriForSelf(film).toString());
+		film.addLink("uploader", getUriForUploader(film).toString());
+	}
 	 
-	 
-		
+
+	
+	
     /** Returns all the {@Film} rows from the database
      * 
      * @return All the {@Film} rows from the database
@@ -43,12 +70,18 @@ public class FilmResource
 	 @GET
 	 public Response getFilms() 
 			 throws SQLException{
-		 this.films = new FilmService();
+		 this.filmService = new FilmService();
 		 
-		 return Response.status(Status.OK).entity(films.getFilm()).build();
+		 List<Film> films = filmService.getFilms();
+		 
+		 for(Film film : films)
+			 addLinks(film);		 
+		 
+		 return Response
+				 .status(Status.OK)
+				 .entity(films)
+				 .build();
 	 }
-	 
-	 
 	 
 	 
     /** Returns a given {@Film} from the database
@@ -61,17 +94,16 @@ public class FilmResource
 	 @GET
 	 public Response getFilm(@PathParam("film_id") long id) 
 			 throws SQLException {
-		 
-		 
-		this.films = new FilmService();
+		this.filmService = new FilmService();
+		
+		Film film = filmService.getFilm(id);
+		
+		addLinks(film);
 		
 		 return Response.status(Status.OK)
-	        		.entity(films.getFilmByValue(id))
+	        		.entity(film)
 	        		.build();
 	 }
-	 
-	 
-	 
 	 
 
 	 /** Creates a new instance of the table {@Film}
@@ -85,21 +117,29 @@ public class FilmResource
 	 public Response PostFilm(Film film)
 			 throws SQLException
 	 {	 
-		 Film f;
-		 this.films = new FilmService();
-		 f = films.addFilm(film);
+		 this.filmService = new FilmService();
 		 
-		 return Response.status(Status.OK).entity(f).build();
+		 Film new_film = filmService.addFilm(film);
+		 
+		 addLinks(new_film);
+		 
+		 return Response
+				 .status(Status.OK)
+				 .entity(new_film)
+				 .build();
 	 }
+	 
 	 
 	 @Path("/{film_id}")
 	 @DELETE
 	 public Response DeleteFilm(@PathParam("film_id") long id) throws SQLException{
 		 
-		 this.films = new FilmService();
-		 films.delFilm(id);
+		 this.filmService = new FilmService();
 		 
-		 return Response.status(Status.OK).build();
+		 return Response
+				 .status(Status.OK)
+				 .entity(filmService.deleteFilm(id))
+				 .build();
 	 }
 	 
 }
