@@ -1,14 +1,14 @@
 package rest.model;
 
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
 import rest.model.util.Date;
 import rest.model.util.Timestamp;
 
 
 
 
-@XmlRootElement
 public class VideoGame extends Multimedia
 {
 	private long id_videoGame;
@@ -21,17 +21,19 @@ public class VideoGame extends Multimedia
 	
 	
 	public VideoGame(String title, String description, String language, String genre, int category,
-			int status, long ID_upp, Date release, String developer, String publisher)
+			int status, long ID_uploader, Date release_date, String developer, String publisher)
 	{
-		super(title, description, language, genre, category, status, ID_upp, release);
+		super(title, description, language, genre, category, status, ID_uploader, release_date);
+		
 		this.developer = developer;
 		this.publisher = publisher;	
 	}	
 	
 	public VideoGame(long ID_multimedia, String title, String description, String language, String genre, int category,
-			int status, long ID_upp, Timestamp status_date, Timestamp upload_date, Date release, long ID_videoGame, String developer, String publisher)
+			int status, long ID_uploader, Timestamp status_date, Timestamp upload_date, Date release_date, long ID_videoGame, String developer, String publisher)
 	{	
-		super(ID_multimedia, title, description, language, genre, category, status, status_date,  upload_date, release, ID_upp);
+		super(ID_multimedia, title, description, language, genre, category, status, status_date,  upload_date, release_date, ID_uploader);
+		
 		this.id_videoGame = ID_videoGame;
 		this.developer = developer;
 		this.publisher = publisher;
@@ -42,6 +44,7 @@ public class VideoGame extends Multimedia
 	/**
 	 * @return the id_videoGame
 	 */
+    @XmlTransient
 	public long getId_videoGame() { return id_videoGame; }
 	/**
 	 * @param id_videoGame the id_videoGame to set

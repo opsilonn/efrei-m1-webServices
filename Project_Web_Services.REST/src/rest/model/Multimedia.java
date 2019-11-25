@@ -17,6 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 
@@ -37,7 +41,8 @@ public class Multimedia {
 	
 	private Timestamp date_upload;
 	private Date date_release;
-	
+
+	@JsonIgnore
 	private long ID_uploader;
 	
 
@@ -175,6 +180,7 @@ public class Multimedia {
 	/**
 	 * @return the id_multimedia
 	 */
+    @XmlTransient
 	public long getId_multimedia() {
 		return id_multimedia;
 	}
@@ -315,6 +321,7 @@ public class Multimedia {
 	/**
 	 * @return the uploader's ID
 	 */
+	@JsonIgnore
 	public long getID_uploader() {
 		return ID_uploader;
 	}
@@ -322,6 +329,7 @@ public class Multimedia {
 	/**
 	 * @param ID_uploader the uploader's ID to set
 	 */
+	@JsonProperty
 	public void setID_uploader(long ID_uploader) {
 		this.ID_uploader = ID_uploader;
 	}

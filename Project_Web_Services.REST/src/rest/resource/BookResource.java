@@ -2,6 +2,7 @@ package rest.resource;
 
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,10 +20,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
 import rest.model.Book;
-import rest.model.Film;
-import rest.model.Rate;
 import rest.service.BookService;
-import rest.service.FilmService;
 
 @Path("/books")
 @Produces(MediaType.APPLICATION_JSON)
@@ -37,12 +35,46 @@ public class BookResource {
     
     BookService bookService;
     
+
+
+
+	private URI getUriForSelf(Book book) {
+		return this.uriInfo.getBaseUriBuilder()
+				.path(BookResource.class)
+				.path(String.valueOf(book.getId_book()))
+				.build();
+	}
+    
+    
+	private URI getUriForUploader(Book book) {		
+		return this.uriInfo.getBaseUriBuilder()
+				.path(UserResource.class)
+				.path(String.valueOf(book.getID_uploader()))
+				.build();
+	}
+
+
+	private void addLinks(Book book) {
+		book.addLink("self", getUriForSelf(book).toString());
+		book.addLink("uploader", getUriForUploader(book).toString());
+	}
+	
+	
+	
+    
     @GET
     public Response getBooks()throws SQLException {
 		this.bookService = new BookService();
 		
-		return Response.status(Status.OK)
-				.entity((bookService.getAllBooks()))
+		List<Book> books = bookService.getAllBooks();
+		
+		for(Book book : books){
+			addLinks(book);
+		}
+		
+		
+        return Response.status(Status.OK)
+				.entity(books)
 				.build();
 
     }
@@ -54,9 +86,13 @@ public class BookResource {
     		throws SQLException {
 		this.bookService = new BookService();
 		
+		Book book = bookService.getBook(id);
+		
+		addLinks(book);
+		
 		
         return Response.status(Status.OK)
-				.entity(bookService.getBook(id))
+				.entity(book)
 				.build();
     }
 
@@ -78,42 +114,42 @@ public class BookResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postBook(Book book) 
     		throws SQLException {
-		
-    	Book b = new Book();
 		this.bookService = new BookService();
-		b = bookService.addBook(book);
+		
+		Book new_book = bookService.addBook(book);
+		
+		addLinks(new_book);
 		 
-		return Response.status(Status.OK).entity(b).build();
+		return Response.status(Status.OK).entity(new_book).build();
 	
     }
+//
+//
+//    @Path("/{user_id}")
+//    @PUT
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public Response putUser(@PathParam("user_id")Long id, @FormParam("e_psw")String existing_password, @FormParam("n_psw")String new_password, @FormParam("mail")String email)
+//    		throws SQLException {
+//		this.userService = new UserService();
+//		
+//		
+//		return Response.status(Status.OK) 
+//				.entity(userService.updateUser(id, existing_password, new_password, email))
+//				.build();
+//    }
 
-
-    @Path("/{user_id}")
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response putUser(@PathParam("id_book")Long id, Book new_book)
+    
+    @Path("/{id_book}")
+    @DELETE
+    public Response deleteBook(@PathParam("id_book")Long id)
     		throws SQLException {
 		this.bookService = new BookService();
 		
 		
 		return Response.status(Status.OK) 
-				.entity(bookService.updateBook(id, new_book))
+				.entity(bookService.removeBook(id))
 				.build();
     }
-//
-//    
-//    @Path("/{id_user}")
-//    @DELETE
-//    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-//    public Response deleteBook(@PathParam("id_book")Long id)
-//    		throws SQLException {
-//		this.bookService = new BookService();
-//		
-//		
-//		return Response.status(Status.OK) 
-//				.entity(bookService.removeBook(id))
-//				.build();
-//    }
 
     
     

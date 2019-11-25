@@ -25,46 +25,40 @@ public class VideoGameService {
 	public VideoGameService() throws SQLException
 	{
 		// We initialize some helpful variables
-		DB_web_services db = new DB_web_services();
-		PreparedStatement ppsm = db.getPreparedStatement(Constants.VideoGame.getAll);
-		ResultSet rs = ppsm.executeQuery();
+		try(DB_web_services db = new DB_web_services()){
+			
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.VideoGame.getAll);
+			ResultSet rs = ppsm.executeQuery();
 
-		// We empty our current map
-		videoGames.clear();
+			// We empty our current map
+			videoGames.clear();
 
-		// As long as the database returns a row, we fill the map
-		while (rs.next())
-		{
-			// We create our map values (Key & Value)
-			long mapKey = rs.getLong("ID_videoGame");
-			VideoGame mapValue = new VideoGame();
-
-			// We search for the corresponding Multimedia row
-			PreparedStatement stmt2 = db.getPreparedStatement(Constants.Multimedia.getByID);
-			stmt2.setLong(1, rs.getLong("ID_multimedia"));
-			ResultSet rs2 = stmt2.executeQuery();
-
-			// If the said row exist :
-			if (rs2.next())
+			// As long as the database returns a row, we fill the map
+			while (rs.next())
 			{
-				mapValue = new VideoGame(
-						rs2.getLong("ID_multimedia"), rs2.getString("title"),
-						rs2.getString("description"), rs2.getString("language"),
-						rs2.getString("genre"),
-						rs2.getInt("category"),
-						rs2.getInt("status"),
-						rs2.getLong("ID_uploader"),
-						new Timestamp(rs2.getString("date_status")),
-						new Timestamp(rs2.getString("date_upload")),
-						new Date(rs2.getString("date_release")),
-						rs.getLong("ID_videoGame"), rs.getString("developper"),
+				
+				VideoGame videoGame = new VideoGame(
+						rs.getLong("ID_multimedia"),
+						rs.getString("title"),
+						rs.getString("description"),
+						rs.getString("language"),
+						rs.getString("genre"),
+						rs.getInt("category"),
+						rs.getInt("status"),
+						rs.getLong("ID_uploader"),
+						new Timestamp(rs.getString("date_status")),
+						new Timestamp(rs.getString("date_upload")),
+						new Date(rs.getString("date_release")),
+						rs.getLong("ID_videoGame"),
+						rs.getString("developer"),
 						rs.getString("publisher")
 						);
-			}
 
-			// We put our values in the map
-			videoGames.put(mapKey, mapValue);
+				// We put our values in the map
+				videoGames.put(rs.getLong("ID_videoGame"), videoGame);
+			}
 		}
+		
 	}
 
 	
@@ -79,7 +73,7 @@ public class VideoGameService {
 		List<VideoGame> return_videoGames = new ArrayList<VideoGame>(videoGames.values());
 
 		if (return_videoGames.isEmpty())
-			throw new DataNotFoundException("No videoGames was found !");
+			throw new DataNotFoundException("No video games was found !");
 
 		return return_videoGames;
 	}
@@ -99,12 +93,10 @@ public class VideoGameService {
 		VideoGame videoGame = this.videoGames.get(id);
 
 		if (videoGame == null)
-			throw new DataNotFoundException("The videoGame with the id `" + id + "` was not found !");
+			throw new DataNotFoundException("The video game with the id `" + id + "` was not found !");
 
 		return videoGame;
 	}
-
-	
 	
 	
 	/**
@@ -115,8 +107,6 @@ public class VideoGameService {
 	public int getVideoGameCount() {
 		return videoGames.size();
 	}
-	
-	
 	
 
 	/**
@@ -129,78 +119,115 @@ public class VideoGameService {
 		System.out.println("LANGUAGE : " + videoGame.getLanguage());
 		if (videoGame.getTitle() == null || videoGame.getTitle().length() == 0)
 		{
-			throw new SQLIntegrityConstraintViolationException("Le champ 'title' ne peut être vide (null)");
+			throw new SQLIntegrityConstraintViolationException("Le champ 'title' ne peut ï¿½tre vide (null)");
 		}
 		
 
 		
 		// We initialize some variables
-		DB_web_services db = new DB_web_services();
-		PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.post);
+		try(DB_web_services db = new DB_web_services()){
+			
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.post);
+			
+			System.out.println(videoGame);
+			
+			
+			// We initialize our statement's values
+			ppsm.setString(1, videoGame.getTitle());
+			ppsm.setString(2, videoGame.getLanguage());
+			ppsm.setString(3, videoGame.getGenre());
+			ppsm.setInt(4, 3); //category
+			ppsm.setInt(5, videoGame.getStatus());
+			ppsm.setLong(6, videoGame.getID_uploader());
+			ppsm.setString(7, videoGame.getDescription());
+			ppsm.setString(8, videoGame.getDate_release().toString());
+	
+			int succes = ppsm.executeUpdate();
+	
+			if (succes == 1) {
+				ResultSet generated_id = ppsm.getGeneratedKeys();
+				
+				if(generated_id.next()){
+					
+					PreparedStatement ppsm2 = db.getPreparedStatement(Constants.VideoGame.post);
+					
+					// We initialize our statement's values
+					
+					ppsm2.setString(1, videoGame.getDeveloper());
+					ppsm2.setString(2, videoGame.getPublisher());
+					ppsm2.setLong(3, generated_id.getLong(1));
+			
+					int succes2 = ppsm2.executeUpdate();
+			
+					if (succes2 == 1) {
+						ResultSet generated_id2 = ppsm2.getGeneratedKeys();
+			
+						if (generated_id2.next())
+						{
+							
+							PreparedStatement ppsm3 = db.getPreparedStatement(Constants.VideoGame.getByID);
 
-		
-		// IMPORTANT IMPORTANT IMPORTANT
-		// le JAVA a du mal avec les dates, et du coup n'arrive pas lire celle fournie par le JSON
-		// Du coup, pour le moment, j'en fourni une manuellement
-		// A CORRIGER
-		videoGame.setDate_release(new Date("2019-12-12"));
-		
-		
-		// We initialize our statement's values
-		ppsm.setString(1, videoGame.getTitle());
-		ppsm.setString(2, videoGame.getLanguage());
-		ppsm.setString(3, videoGame.getGenre());
-		ppsm.setInt(4, videoGame.getCategory());
-		ppsm.setInt(5, videoGame.getStatus());
-		ppsm.setLong(6, videoGame.getID_uploader());
-		ppsm.setString(7, videoGame.getDescription());
-		ppsm.setString(8, videoGame.getDate_release().toString());
-
-		int rs = ppsm.executeUpdate();
-
-		if (rs == 1) {
-			ResultSet generated_id = ppsm.getGeneratedKeys();
-
-			if (generated_id.next())
-			{
-				ppsm = db.getPreparedStatement(Constants.VideoGame.post);
-
-				ppsm.setString(1, videoGame.getDeveloper());
-				ppsm.setString(2, videoGame.getPublisher());
-				ppsm.setLong(3, generated_id.getLong(1));
-
-				ppsm.executeUpdate();
-
-				return videoGame;
+							ppsm3.setLong(1, generated_id2.getLong(1));
+			
+							ResultSet rs = ppsm3.executeQuery();
+							
+							if(rs.next()){
+								
+								
+								return new VideoGame(
+										rs.getLong("ID_multimedia"),
+										rs.getString("title"),
+										rs.getString("description"),
+										rs.getString("language"),
+										rs.getString("genre"),
+										rs.getInt("category"),
+										rs.getInt("status"),
+										rs.getLong("ID_uploader"),
+										new Timestamp(rs.getString("date_status")),
+										new Timestamp(rs.getString("date_upload")),
+										new Date(rs.getString("date_release")),
+										rs.getLong("ID_videoGame"),
+										rs.getString("developer"),
+										rs.getString("publisher")
+										);
+							}
+						}
+					}
+				}
 			}
+	
+			
+			return null;
+			
 		}
-
-		return null;
+		
 	}
 
 	
-	// public int removeVideoGame(long id) throws SQLException{
-	//
-	// DB_web_services db = new DB_web_services();
-	//
-	// PreparedStatement ppsm =
-	// db.getPreparedStatement(Constants.VideoGame.deleteByID);
-	//
-	// ppsm.setLong(1, id);
-	//
-	// int rs = ppsm.executeUpdate();
-	//
-	// if(rs == 1){
-	// users.remove(id);
-	//
-	//
-	// return true;
-	// }
-	//
-	//
-	// throw new DataNotFoundException("The user with the id `" + id + "`
-	// doesn't exist !");
-	// }
-	// }
-	//
+	public boolean removeVideoGame(long id)
+			throws SQLException{
+	
+		try(DB_web_services db = new DB_web_services()){
+			
+			if(this.videoGames.get(id) == null)
+				throw new DataNotFoundException("The video game with the id `" + id + "` doesn't exist !");
+
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.VideoGame.deleteByID);
+	
+	    	ppsm.setLong(1, id);
+	    	
+	    	int rs = ppsm.executeUpdate();
+	
+	    	if(rs == 1){
+	    		videoGames.remove(id);
+	    		
+	    		
+	    		return true;
+	    	}	
+			
+	    	
+			return false;
+		}
+	}
+	
 }

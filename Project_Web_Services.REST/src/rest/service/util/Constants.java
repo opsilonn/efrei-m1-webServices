@@ -57,15 +57,18 @@ public class Constants {
 	
 
 	public class Film{
-		public static final String getAll = "SELECT * FROM film";
+		public static final String getAll = "SELECT * FROM Film_v";
+		public static final String getByID = "SELECT * FROM Film_v WHERE (id_film = ?)";
 		
-		public static final String post ="INSERT INTO `film` (director, productor, mainCast, duration, ID_multimedia) VALUES(?,?,?,?,?)";
+		public static final String post ="INSERT INTO Film (director, productor, mainCast, duration, ID_multimedia) VALUES(?,?,?,?,?)";
+		
+		public static final String deleteByID = "DELETE FROM Film WHERE id_film = ?";
 	}
 
 
 	public class Book{
-		public static final String getAll = "SELECT * FROM Book";
-		public static final String getByID = "SELECT * FROM Book WHERE (id_book = ?)";
+		public static final String getAll = "SELECT * FROM Book_v";
+		public static final String getByID = "SELECT * FROM Book_v WHERE (id_book = ?)";
 		
 		public static final String deleteByID = "DELETE FROM Book WHERE id_book = ?";
 		public static final String putByID = "UPDATE Book SET value = ? WHERE (id_comment = ? AND id_user = ?)";
@@ -74,12 +77,12 @@ public class Constants {
 
 
 	public class VideoGame{
-		public static final String getAll = "SELECT * FROM VideoGame";
-		public static final String getByID = "SELECT * FROM VideoGame WHERE id_videoGame = ?";
+		public static final String getAll = "SELECT * FROM VideoGame_v";
+		public static final String getByID = "SELECT * FROM VideoGame_v WHERE id_videoGame = ?";
 		
 		public static final String deleteByID = "DELETE FROM VideoGame WHERE id_videoGame = ?";
 		
-		public static final String post ="INSERT INTO `videogame` (developer, publisher, ID_multimedia) VALUES(?,?,?)";
+		public static final String post ="INSERT INTO VideoGame (developer, publisher, ID_multimedia) VALUES(?,?,?)";
 	}
 	
 }
