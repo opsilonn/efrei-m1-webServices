@@ -11,6 +11,7 @@ import java.util.Map;
 import rest.exception.DataNotFoundException;
 import rest.model.Book;
 import rest.model.Film;
+import rest.model.Rate;
 import rest.model.VideoGame;
 import rest.model.util.Date;
 import rest.model.util.Timestamp;
@@ -105,13 +106,14 @@ public class BookService {
 		PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.post);
     	
 		// We initialize our statement's values of multimedia
+		//title, language, genre, category, status, ID_uploader, description, date_release) VALUES(?,?,?,?,?,?,?,?)";
 		ppsm.setString(1, book.getTitle());
-		ppsm.setString(2, book.getDescription());
-		ppsm.setString(3, book.getLanguage());
-		ppsm.setString(4, book.getGenre());
-		ppsm.setInt(5, book.getCategory());
-		ppsm.setInt(6, book.getStatus());
-		ppsm.setLong(7, book.getID_uploader());
+		ppsm.setString(2, book.getLanguage());
+		ppsm.setString(3, book.getGenre());
+		ppsm.setInt(4, book.getCategory());
+		ppsm.setInt(5, book.getStatus());
+		ppsm.setLong(6, book.getID_uploader());
+		ppsm.setString(7, book.getDescription());
 		ppsm.setString(8, book.getDate_release().toString());
     	
     	int rs = ppsm.executeUpdate();
@@ -129,13 +131,38 @@ public class BookService {
 				ppsm2.setString(2, book.getPublisher());
 				ppsm2.setLong(3, generated_id.getLong(1));
 				
-    			ppsm2.executeQuery();
+    			ppsm2.executeUpdate();
 
     		}
     		return book;
     	}
 
     	return null;
+	}
+	
+	public boolean updateBook(long id, ) 
+			throws SQLException{
+
+		DB_web_services db = new DB_web_services();
+    	
+
+    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Rate.putByID);
+        	
+    	ppsm.setInt(1, value);
+    	ppsm.setLong(2, id);
+    	ppsm.setLong(3, this.id_user);
+
+    	
+    	int rs = ppsm.executeUpdate();
+
+    	if(rs == 1){
+    		Rate rate = getRate(id);
+    		
+    		rate.setValue(value);
+    	}
+    	
+    	
+    	return (rs == 1) ? true : false;
 	}
 	
 	

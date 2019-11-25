@@ -68,6 +68,7 @@ public class Constants {
 		public static final String getByID = "SELECT * FROM Book WHERE (id_book = ?)";
 		
 		public static final String deleteByID = "DELETE FROM Book WHERE id_book = ?";
+		public static final String putByID = "UPDATE Book SET value = ? WHERE (id_comment = ? AND id_user = ?)";
 		public static final String post = "INSERT INTO `book` (author, publisher, id_multimedia) VALUES(?,?,?)";
 	}
 
