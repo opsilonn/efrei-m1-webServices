@@ -161,37 +161,37 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- View `web_services`.`book_v`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `web_services`.`book_v` ;
+DROP VIEW IF EXISTS `web_services`.`book_v` ;
 
 CREATE VIEW book_v 
 	AS SELECT m.ID_multimedia, m.title, m.description, m.language, m.genre, m.category, m.status, m.date_status, m.date_upload, m.date_release, m.ID_uploader, b.ID_book, b.author, b.publisher
 	FROM multimedia m
 		INNER JOIN book b 
-		ON m.ID_multimedia = b.ID_multimedia
+		ON m.ID_multimedia = b.ID_multimedia;
 
 
 -- -----------------------------------------------------
 -- View `web_services`.`film_v`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `web_services`.`film_v` ;
+DROP VIEW IF EXISTS `web_services`.`film_v` ;
 
 CREATE VIEW film_v
 	AS SELECT m.ID_multimedia, m.title, m.description, m.language, m.genre, m.category, m.status, m.date_status, m.date_upload, m.date_release, m.ID_uploader, f.ID_film, f.director, f.productor, f.mainCast, f.duration
 	FROM multimedia m
 		INNER JOIN film f
-		ON m.ID_multimedia = f.ID_multimedia
+		ON m.ID_multimedia = f.ID_multimedia;
 
 
 -- -----------------------------------------------------
 -- View `web_services`.`videoGame_v`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `web_services`.`videoGame_v` ;
+DROP VIEW IF EXISTS `web_services`.`videoGame_v` ;
 
 CREATE VIEW videoGame_v
 	AS SELECT m.ID_multimedia, m.title, m.description, m.language, m.genre, m.category, m.status, m.date_status, m.date_upload, m.date_release, m.ID_uploader, v.ID_videoGame, v.developer, v.publisher
 	FROM multimedia m
 		INNER JOIN VideoGame v
-		ON m.ID_multimedia = v.ID_multimedia
+		ON m.ID_multimedia = v.ID_multimedia;
 
 
 		
