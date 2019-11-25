@@ -1,12 +1,12 @@
 package rest.model;
 
 
-import java.sql.Time;
-
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import rest.model.util.Date;
+import rest.model.util.Time;
+import rest.model.util.Timestamp;
 
 
 
@@ -29,11 +29,29 @@ public class Film extends Multimedia{
 	public Film(String title, String description, String language, String genre, int category,
 			int status, long ID_upp, String dir, String prod, String cast, Time dur, Date release){
 		super(title, description, language, genre, category, status, ID_upp, release);
-		director = dir;
-		productor = prod;
-		mainCast = cast;
-		duration = dur;
+		
+		this.director = dir;
+		this.productor = prod;
+		this.mainCast = cast;
+		this.duration = dur;
 	}
+	
+	
+	public Film(long ID_multimedia, String title, String description, String language, String genre, int category,
+			int status, long ID_uploader, Timestamp status_date, Timestamp upload_date, Date release_date,
+			long ID_film, String dir, String prod, String cast, Time dur)
+	{	
+		super(ID_multimedia, title, description, language, genre, category, status, status_date,  upload_date, release_date, ID_uploader);
+
+		this.id_film = ID_film;
+		this.director = dir;
+		this.productor = prod;
+		this.mainCast = cast;
+		this.duration = dur;
+	}
+	
+	
+	
 	
 	/**
 	 * @return the id_film

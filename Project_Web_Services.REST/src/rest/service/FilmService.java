@@ -11,61 +11,53 @@ import java.util.Map;
 import rest.exception.DataNotFoundException;
 import rest.model.Film;
 import rest.model.util.Date;
+import rest.model.util.Time;
 import rest.model.util.Timestamp;
-import rest.resource.util.Constants;
+import rest.service.util.Constants;
 import rest.util.DB_web_services;
 
 public class FilmService {
 
 	
-	private Map<Long, Film> films ;
+	private Map<Long, Film> films = new HashMap<Long, Film>();
 	
 	public FilmService() throws SQLException
 	{
 		// We initialize some helpful variables
 		try(DB_web_services db = new DB_web_services()){
-			Film f;
+			
 			PreparedStatement stmt = db.getPreparedStatement(Constants.Film.getAll);
 			
 			ResultSet rs = stmt.executeQuery();
 			
 
 	    	// We empty our current map
-			films = new HashMap<Long, Film>();
+			films.clear();
 
 	    	// As long as the database returns a row, we fill the map
 			while(rs.next())
 			{
-				f = new Film();
-				f.setId_film(rs.getInt("ID_film"));
-				f.setDirector(rs.getString("director"));
-				f.setProductor(rs.getString("productor"));
-				f.setMainCast(rs.getString("mainCast"));
-				f.setDuration(rs.getTime("duration"));
+				Film film = new Film(
+						rs.getLong("ID_multimedia"),
+						rs.getString("title"),
+						rs.getString("description"),
+						rs.getString("language"),
+						rs.getString("genre"),
+						rs.getInt("category"),
+						rs.getInt("status"),
+						rs.getLong("ID_uploader"),
+						new Timestamp(rs.getString("date_status")),
+						new Timestamp(rs.getString("date_upload")),
+						new Date(rs.getString("date_release")),
+						rs.getLong("ID_film"),
+						rs.getString("director"),
+						rs.getString("productor"),
+						rs.getString("mainCast"),
+						new Time(rs.getString("duration"))
+						);
 
-	    		// We search for the corresponding Multimedia row
-				PreparedStatement stmt2 = db.getPreparedStatement(Constants.Multimedia.getByID);
-				stmt2.setLong(1, rs.getLong("ID_multimedia"));
-				ResultSet rs2 = stmt2.executeQuery();
-				
-				// If the said row exist :
-				if(rs2.next())
-				{
-					f.setId_multimedia(rs.getLong("ID_multimedia"));
-					f.setTitle(rs2.getString("title"));
-					f.setDescription(rs2.getString("description"));
-					f.setDate_release(new Date(rs2.getString("date_release")));
-					f.setID_uploader(rs2.getLong("ID_uploader"));
-					f.setLanguage(rs2.getString("language"));
-					f.setGenre(rs2.getString("genre"));
-					f.setCategory(rs2.getInt("category"));
-					f.setStatus(rs2.getInt("status"));
-					f.setDate_status(new Timestamp(rs2.getString("date_status")));
-					f.setDate_upload(new Timestamp(rs2.getString("date_upload")));
-
-		    		// We put our values in the map
-					films.put(f.getId_film(), f);
-				}
+	    		// We put our values in the map
+				films.put(film.getId_film(), film);
 			}	
 		}
 		
@@ -123,7 +115,7 @@ public class FilmService {
 					psmt2.setString(1, film.getDirector());
 					psmt2.setString(2, film.getProductor());
 					psmt2.setString(3, film.getMainCast());
-					psmt2.setTime(4, film.getDuration());
+					psmt2.setString(4, film.getDuration().toString());
 					psmt2.setLong(5, film.getId_multimedia());
 					
 					psmt2.executeUpdate();
@@ -139,7 +131,7 @@ public class FilmService {
 		
 	}
 	
-	public boolean deleteFilm(long id)
+	public boolean removeFilm(long id)
 			throws SQLException{
 		
 		try(DB_web_services db = new DB_web_services()){
@@ -147,7 +139,7 @@ public class FilmService {
 			if(this.films.get(id) == null)
 				throw new DataNotFoundException("The film with the id `" + id + "` doesn't exist !");
 						
-			PreparedStatement psmt = db.getPreparedStatement(Constants.Film.delete);
+			PreparedStatement psmt = db.getPreparedStatement(Constants.Film.deleteByID);
 			psmt.setLong(1, id);
 			
 			

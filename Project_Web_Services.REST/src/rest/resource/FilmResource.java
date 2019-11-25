@@ -138,7 +138,7 @@ public class FilmResource
 		 
 		 return Response
 				 .status(Status.OK)
-				 .entity(filmService.deleteFilm(id))
+				 .entity(filmService.removeFilm(id))
 				 .build();
 	 }
 	 
