@@ -7,6 +7,7 @@ public class Constants
 {
 	public enum Multimedia
 	{
+	  ALL("See all", new ArrayList<>() ),
 	  BOOK("Book", new ArrayList<>() ),
 	  FILM("Film", new ArrayList<>() ),
 	  VIDEOGAME("Video Game", new ArrayList<>() );
@@ -22,6 +23,9 @@ public class Constants
 	    
 	    switch(name)
 	    {
+	    	case "See all":
+	    	break;
+	    	
 	    	case "Book":
 	    	values.add("Author");
 	    	values.add("Publisher");

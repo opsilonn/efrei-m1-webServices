@@ -130,7 +130,7 @@
 		if( isConnected )
 		{
 			AddButton(jw, r1, "My Profile");
-			AddButton(jw, r1, "Logout");;
+			AddButton(jw, r1, "Logout");
 		}
 		else
 		{
