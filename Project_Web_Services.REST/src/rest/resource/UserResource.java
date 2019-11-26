@@ -114,9 +114,9 @@ public class UserResource {
      * @return a specific user row
      * @throws SQLException
      */
-    @Path("/{user_id}")
+    @Path("/{id_user}")
     @GET
-    public Response getUser(@PathParam("user_id") long id) 
+    public Response getUser(@PathParam("id_user") long id) 
     		throws SQLException {
 		this.userService = new UserService();
 		

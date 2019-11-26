@@ -106,9 +106,9 @@ public class CommentUserResource {
     }
 
 
-    @Path("{comment_id}")
+    @Path("{id_comment}")
     @GET
-    public Response getComment(@PathParam("id_user")long id_user, @PathParam("comment_id") long id,
+    public Response getComment(@PathParam("id_user")long id_user, @PathParam("id_comment") long id,
     		@Context UriInfo uriInfo) 
     		throws SQLException{
 		this.commentService = new CommentUserService(id_user);
