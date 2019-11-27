@@ -65,13 +65,14 @@ public class Constants {
 		
 		public static final String deleteByID = "DELETE FROM Film WHERE id_film = ?";
 		
-		public static final String PutDescriptionByID = "UPDATE Film_v SET description = ? WHERE id_film = ?";
-		public static final String PutLangueByID = "UPDATE Film_v SET language = ? WHERE id_film = ?";
-		public static final String PutGenreByID = "UPDATE Film_v SET genre = ? Where id_film = ?";
-		public static final String PutStatusByID = "UPDATE Film_v SET status = ?, date_status = NOW() WHERE id_film = ?";
-		public static final String PutDirectorByID = "UPDATE Film_v SET director = ? WHERE id_film = ?";
-		public static final String PutProductorByID = "UPDATE Film_v SET productor = ? WHERE id_film = ?";
-		public static final String PutMainCastByID = "UPDATE film_v SET mainCast = ? Where id_film = ?";
+		public static final String putDescriptionByID = "UPDATE Film_v SET description = ? WHERE id_film = ?";
+		public static final String putLangueByID = "UPDATE Film_v SET language = ? WHERE id_film = ?";
+		public static final String putGenreByID = "UPDATE Film_v SET genre = ? Where id_film = ?";
+		public static final String putStatusByID = "UPDATE Film_v SET status = ?, date_status = NOW() WHERE id_film = ?";
+		
+		public static final String putDirectorByID = "UPDATE Film_v SET director = ? WHERE id_film = ?";
+		public static final String putProductorByID = "UPDATE Film_v SET productor = ? WHERE id_film = ?";
+		public static final String putMainCastByID = "UPDATE film_v SET mainCast = ? Where id_film = ?";
 	}
 
 
@@ -79,9 +80,11 @@ public class Constants {
 		public static final String getAll = "SELECT * FROM Book_v";
 		public static final String getByID = "SELECT * FROM Book_v WHERE (id_book = ?)";
 		
-		public static final String deleteByID = "DELETE FROM Book WHERE id_book = ?";
-		public static final String putByID = "UPDATE Book SET value = ? WHERE (id_comment = ? AND id_user = ?)";
 		public static final String post = "INSERT INTO `book` (author, publisher, id_multimedia) VALUES(?,?,?)";
+
+		public static final String putByID = "UPDATE Book SET value = ? WHERE (id_comment = ? AND id_user = ?)";
+		
+		public static final String deleteByID = "DELETE FROM Book WHERE id_book = ?";
 	}
 
 
@@ -89,9 +92,17 @@ public class Constants {
 		public static final String getAll = "SELECT * FROM VideoGame_v";
 		public static final String getByID = "SELECT * FROM VideoGame_v WHERE id_videoGame = ?";
 		
-		public static final String deleteByID = "DELETE FROM VideoGame WHERE id_videoGame = ?";
-		
 		public static final String post ="INSERT INTO VideoGame (developer, publisher, ID_multimedia) VALUES(?,?,?)";
+		
+		public static final String putDescriptionByID = "UPDATE VideoGame_v SET description = ? WHERE id_videoGame = ?";
+		public static final String putLangueByID = "UPDATE VideoGame_v SET language = ? WHERE id_videoGame = ?";
+		public static final String putGenreByID = "UPDATE VideoGame_v SET genre = ? Where id_videoGame = ?";
+		public static final String putStatusByID = "UPDATE VideoGame_v SET status = ?, date_status = NOW() WHERE id_videoGame = ?";
+		
+		public static final String putDeveloperByID = "UPDATE VideoGame_v SET developer = ? WHERE id_videoGame = ?";
+		public static final String putPublisherByID = "UPDATE VideoGame_v SET publisher = ? Where id_videoGame = ?";
+		
+		public static final String deleteByID = "DELETE FROM VideoGame WHERE id_videoGame = ?";
 	}
 	
 }

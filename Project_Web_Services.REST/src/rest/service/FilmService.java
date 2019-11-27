@@ -198,7 +198,7 @@ public class FilmService {
 		try(DB_web_services db = new DB_web_services()){
 			if(description !=null){
 				//System.out.println("entering the if");
-				PreparedStatement stmt = db.getPreparedStatement(Constants.Film.PutDescriptionByID);
+				PreparedStatement stmt = db.getPreparedStatement(Constants.Film.putDescriptionByID);
 				stmt.setString(1, description);
 				stmt.setLong(2, id);
 				
@@ -206,7 +206,7 @@ public class FilmService {
 			}
 			
 			if(Langue != null){
-				PreparedStatement stmt2 = db.getPreparedStatement(Constants.Film.PutLangueByID);
+				PreparedStatement stmt2 = db.getPreparedStatement(Constants.Film.putLangueByID);
 				stmt2.setString(1, Langue);
 				stmt2.setLong(2, id);
 				
@@ -214,7 +214,7 @@ public class FilmService {
 			}
 			
 			if(genre != null){
-				PreparedStatement stmt3 = db.getPreparedStatement(Constants.Film.PutGenreByID);
+				PreparedStatement stmt3 = db.getPreparedStatement(Constants.Film.putGenreByID);
 				stmt3.setString(1, genre);
 				stmt3.setLong(2, id);
 				
@@ -222,7 +222,7 @@ public class FilmService {
 			}
 			
 			if(Status >0){
-				PreparedStatement stmt4 = db.getPreparedStatement(Constants.Film.PutStatusByID);
+				PreparedStatement stmt4 = db.getPreparedStatement(Constants.Film.putStatusByID);
 				stmt4.setInt(1, Status);
 				stmt4.setLong(2, id);
 				
@@ -230,7 +230,7 @@ public class FilmService {
 			}
 			
 			if(Director != null){
-				PreparedStatement stmt5 = db.getPreparedStatement(Constants.Film.PutDirectorByID);
+				PreparedStatement stmt5 = db.getPreparedStatement(Constants.Film.putDirectorByID);
 				stmt5.setString(1, Director);
 				stmt5.setLong(2, id);
 				
@@ -238,7 +238,7 @@ public class FilmService {
 			}
 			
 			if(Productor != null){
-				PreparedStatement stmt6 = db.getPreparedStatement(Constants.Film.PutProductorByID);
+				PreparedStatement stmt6 = db.getPreparedStatement(Constants.Film.putProductorByID);
 				stmt6.setString(1, Productor);
 				stmt6.setLong(2, id);
 				
@@ -246,7 +246,7 @@ public class FilmService {
 			}
 			
 			if(Cast != null){
-				PreparedStatement stmt7 = db.getPreparedStatement(Constants.Film.PutMainCastByID);
+				PreparedStatement stmt7 = db.getPreparedStatement(Constants.Film.putMainCastByID);
 				stmt7.setString(1, Cast);
 				stmt7.setLong(2, id);
 				

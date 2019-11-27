@@ -6,6 +6,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -158,18 +159,18 @@ public class VideoGameResource
     }
 
 
-//    @Path("/{user_id}")
-//    @PUT
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response putUser(@PathParam("user_id")Long id, @FormParam("e_psw")String existing_password, @FormParam("n_psw")String new_password, @FormParam("mail")String email)
-//    		throws SQLException {
-//		this.userService = new UserService();
-//		
-//		
-//		return Response.status(Status.OK) 
-//				.entity(userService.updateUser(id, existing_password, new_password, email))
-//				.build();
-//    }
+	@Path("/{id_videoGame}")
+	@PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response putUser(@PathParam("id_videoGame")Long id, VideoGame videoGame)
+    		throws SQLException {
+		this.videoGameService = new VideoGameService();
+		
+		
+		return Response.status(Status.OK) 
+				.entity(videoGameService.updateVideoGame(id, videoGame))
+				.build();
+    }
 
     
 	@Path("/{id_videoGame}")
