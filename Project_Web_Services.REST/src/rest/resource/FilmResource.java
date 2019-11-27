@@ -21,8 +21,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
+import rest.model.Comment;
 import rest.model.Film;
 import rest.model.Multimedia;
+import rest.model.Rate;
 import rest.service.FilmService;
 import rest.service.MultimediaService;
 
@@ -130,7 +132,25 @@ public class FilmResource
 	 }
 	 
 
+	 @Path("/{film_id}/rates")
+	 @GET
+	 public Response getRates(@PathParam("film_id") long id) throws SQLException{
+		 this.filmService = new FilmService();
+		 
+		 List<Rate> rates = filmService.getRates(id);
+		 
+		 return Response.status(Status.OK).entity(rates).build();
+	 }
 	 
+	 @Path("/{film_id}/comments")
+	 @GET
+	 public Response getComment(@PathParam("film_id") long id) throws SQLException{
+		 this.filmService = new FilmService();
+		 
+		 List<Comment> comments = filmService.getComments(id);
+		 
+		 return Response.status(Status.OK).entity(comments).build();
+	 }
 	 
 	 /** Creates a new instance of the table {@Film}
 	  * 

@@ -22,6 +22,7 @@ public class Constants {
 		
 		public static final String getAll = "SELECT * FROM Rate WHERE id_user = ?";
 		public static final String getByID = "SELECT * FROM Rate WHERE (id_rate = ? AND id_user = ?)";
+		public static final String getByMult = "SELECT * FROM Rate WHERE ID_multimedia=?";
 		
 		public static final String post = "INSERT INTO Rate(value, id_user, id_multimedia) VALUES(?, ?, ?)";
 		
@@ -35,6 +36,7 @@ public class Constants {
 		
 		public static final String getAll = "SELECT * FROM Comment WHERE id_user = ?";
 		public static final String getByID = "SELECT * FROM Comment WHERE (id_comment = ? AND id_user = ?)";
+		public static final String getByMult = "SELECT * FROM Comment WHERE ID_multimedia = ?";
 		
 		public static final String post = "INSERT INTO Comment(value, id_user, id_multimedia) VALUES(?, ?, ?)";
 		
