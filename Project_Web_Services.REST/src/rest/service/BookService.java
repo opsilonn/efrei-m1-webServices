@@ -10,6 +10,7 @@ import java.util.Map;
 import rest.exception.DataNotFoundException;
 import rest.model.Book;
 import rest.model.Film;
+import rest.model.Rate;
 import rest.model.VideoGame;
 import rest.model.util.Date;
 import rest.model.util.Time;
@@ -86,6 +87,24 @@ public class BookService {
 		return books.size();
 	}
 	
+	public List<Rate> getRates(long id) throws SQLException{
+		List<Rate> result = new ArrayList<Rate>();
+		
+		Book graded = books.get(id);
+		
+		try(DB_web_services db = new DB_web_services()){
+			PreparedStatement psmt = db.getPreparedStatement(Constants.Rate.getByMult);
+			psmt.setLong(1, graded.getId_multimedia());
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				result.add(new Rate(rs.getLong("ID_rate"), rs.getInt("value"), new Timestamp(rs.getString("date_creation")), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
+			}
+		}
+		
+		return result;
+	}
 	
 	public Book addBook(Book book)
 			throws SQLException{

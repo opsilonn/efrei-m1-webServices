@@ -20,6 +20,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
 import rest.model.Book;
+import rest.model.Rate;
 import rest.service.BookService;
 
 @Path("/books")
@@ -109,6 +110,15 @@ public class BookResource {
         		.build();
     }
 
+    @GET
+    @Path("/{id_book}/rates")
+    public Response getRates(@PathParam("id_book") long id) throws SQLException{
+    	this.bookService = new BookService();
+    	
+    	List<Rate> rates = bookService.getRates(id);
+		 
+		return Response.status(Status.OK).entity(rates).build();
+    }
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
