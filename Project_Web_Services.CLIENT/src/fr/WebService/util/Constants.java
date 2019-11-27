@@ -58,7 +58,21 @@ public class Constants
 	public static final String NAME_PAGE_LOGIN = "The Otter Market - Login";
 	public static final String NAME_PAGE_LOGOUT = "The Otter Market - :'(";
 	
+	public static final String PATH_PAGE_HOME = "home.jsp";
+	public static final String PATH_PAGE_LOGIN = "login.jsp";
+	public static final String PATH_PAGE_LOGOUT = "logout.jsp";
+	
 
-	// Navbar
-	public static final String NAVBAR_IMAGE_PATH = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/ad1bd517-b13b-42ee-b64c-4d28236dfb86/d5dh4zm-df969a9b-099a-40de-b5cb-e5101999d7cc.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTpmaWxlLmRvd25sb2FkIl0sIm9iaiI6W1t7InBhdGgiOiIvZi9hZDFiZDUxNy1iMTNiLTQyZWUtYjY0Yy00ZDI4MjM2ZGZiODYvZDVkaDR6bS1kZjk2OWE5Yi0wOTlhLTQwZGUtYjVjYi1lNTEwMTk5OWQ3Y2MucG5nIn1dXX0.C_3c7rKx0S-X5QFESOc9M8yikJPAiE4VS29iAplhGpY";
+	// Logo
+	public static final String PATH_LOGO = "../pictures/logo.png";
+	
+
+    // Error Messages
+    public static final String ERR_MESSAGE_INVALID = "Connection failed ! Verify your credentials and try again !";
+
+
+    // Form Login fields's names
+    public static final String FORM_LOGIN_USERNAME = "Username";
+    public static final String FORM_LOGIN_PASSWORD = "Password";
+
 }

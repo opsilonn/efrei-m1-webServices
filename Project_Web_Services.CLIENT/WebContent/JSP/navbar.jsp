@@ -12,6 +12,8 @@
 	    <!-- Bootstrap CSS -->
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+		<link rel="icon" type="image/png" href="<%=Constants.PATH_LOGO%>" />
+		
 
 	    <!-- Do something -->
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -24,8 +26,8 @@
 		<nav class="navbar navbar-expand-lg navbar-light justify-content-between" style="background-color:cornflowerblue;color:white">
 		
 			<!-- Name of the Website -->
-			  <a class="navbar-brand my-0 mr-md-auto" href="#">
-			    <img src="<%=Constants.NAVBAR_IMAGE_PATH%>" width="30" height="30" class="d-inline-block align-top" alt="">
+			  <a class="navbar-brand my-0 mr-md-auto" href="home.jsp">
+			    <img src="<%=Constants.PATH_LOGO%>" width="30" height="30" class="d-inline-block align-top" alt="">
 				<b style="color:white"> <%=Constants.NAME_WEBSITE%> </b>
 			  </a>
 			
@@ -129,13 +131,13 @@
 		
 		if( isConnected )
 		{
-			AddButton(jw, r1, "My Profile");
-			AddButton(jw, r1, "Logout");
+			AddButton(jw, r1, "My Profile", "#");
+			AddButton(jw, r1, "Logout", "#");
 		}
 		else
 		{
-			AddButton(jw, r1, "Sign up");
-			AddButton(jw, r1, "Log in");	
+			AddButton(jw, r1, "Sign up", "#");
+			AddButton(jw, r1, "Log in", Constants.PATH_PAGE_LOGIN);	
 		}
 	}
 	
@@ -143,10 +145,10 @@
 	/** A method that creates the Button for a given mission
 	*
 	*/
-	public void AddButton(JspWriter jw, HttpServletRequest r1, String name) throws Exception
+	public void AddButton(JspWriter jw, HttpServletRequest r1, String name, String path) throws Exception
 	{
 		jw.println("<li class=\"nav-item\" style=\"margin:0 25px 0 0\">");
-		jw.println("<a class=\"nav-link\" href=\"#\" style=\"color:white\">" + name + "</a>");
+		jw.println("<a class=\"nav-link\" href=\" "+ path + " \" style=\"color:white\">" + name + "</a>");
 		jw.println("</li>");
 	}
 %>
