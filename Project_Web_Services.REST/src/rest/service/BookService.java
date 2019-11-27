@@ -162,6 +162,33 @@ public class BookService {
     	
 	}
 	
+
+	/*public boolean updateBook(long id, ) 
+			throws SQLException{
+
+		DB_web_services db = new DB_web_services();
+    	
+
+    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Rate.putByID);
+        	
+    	ppsm.setInt(1, value);
+    	ppsm.setLong(2, id);
+    	ppsm.setLong(3, this.id_user);
+
+    	
+    	int rs = ppsm.executeUpdate();
+
+    	if(rs == 1){
+    		Rate rate = getRate(id);
+    		
+    		rate.setValue(value);
+    	}
+    	
+    	
+    	return (rs == 1) ? true : false;
+	}*/
+	
+	
 	
 	public boolean removeBook(long id) throws SQLException{
 		

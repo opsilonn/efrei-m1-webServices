@@ -114,9 +114,9 @@ public class RateUserResource {
     }
 
 
-    @Path("{rate_id}")
+    @Path("{id_rate}")
     @GET
-    public Response getRate(@PathParam("id_user")long id_user, @PathParam("rate_id") long id,
+    public Response getRate(@PathParam("id_user")long id_user, @PathParam("id_rate") long id,
     		@Context UriInfo uriInfo) 
     		throws SQLException{
 		this.rateService = new RateUserService(id_user);

@@ -8,8 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.org.glassfish.gmbal.Description;
+
 import rest.exception.DataNotFoundException;
+import rest.model.Comment;
 import rest.model.Film;
+import rest.model.Rate;
 import rest.model.util.Date;
 import rest.model.util.Time;
 import rest.model.util.Timestamp;
@@ -86,6 +90,75 @@ public class FilmService {
 		return film;
 	}
 	
+	public List<Rate> getRates(Long id) throws SQLException{
+		List<Rate> result = new ArrayList();
+		
+		Film graded = films.get(id);
+		
+		try(DB_web_services db = new DB_web_services()){
+			PreparedStatement psmt = db.getPreparedStatement(Constants.Rate.getByMult);
+			psmt.setLong(1, graded.getId_multimedia());
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				result.add(new Rate(rs.getLong("ID_rate"), rs.getInt("value"), new Timestamp(rs.getString("date_creation")), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
+			}
+		}
+		return result;
+	}
+	
+	public List<Comment> getComments(Long id) throws SQLException{
+		List<Comment> result = new ArrayList<Comment>();
+		
+		Film graded = films.get(id);
+		
+		try(DB_web_services db = new DB_web_services()){
+			PreparedStatement psmt = db.getPreparedStatement(Constants.Comment.getByMult);
+			psmt.setLong(1, graded.getId_multimedia());
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				result.add(new Comment(rs.getLong("ID_comment"), rs.getString("value"), new Timestamp(rs.getString("date_creation")), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
+			}
+		}
+		
+		return result;
+	}
+	
+	public List<Film> searchFilm(String filtre) throws SQLException{
+		List<Film> result = new ArrayList();
+		
+		try(DB_web_services db = new DB_web_services()){
+			PreparedStatement psmt = db.getPreparedStatement(Constants.Film.getByName);
+			psmt.setString(1, "%" + filtre + "%");
+			ResultSet rs = psmt.executeQuery();
+			while(rs.next()){
+				Film film =new Film(
+						rs.getLong("ID_multimedia"),
+						rs.getString("title"),
+						rs.getString("description"),
+						rs.getString("language"),
+						rs.getString("genre"),
+						rs.getInt("category"),
+						rs.getInt("status"),
+						rs.getLong("ID_uploader"),
+						new Timestamp(rs.getString("date_status")),
+						new Timestamp(rs.getString("date_upload")),
+						new Date(rs.getString("date_release")),
+						rs.getLong("ID_film"),
+						rs.getString("director"),
+						rs.getString("productor"),
+						rs.getString("mainCast"),
+						new Time(rs.getString("duration"))
+						);
+				
+				result.add(film);
+			}
+		}		
+		return result;
+	}
 	
 	public Film addFilm(Film film) throws SQLException{
 				
@@ -156,6 +229,71 @@ public class FilmService {
 			return false;
 		}
 		
+	}
+	
+	public Film UpdateFilm(String description, String Langue, String genre, int Status, String Director, String Productor, String Cast, long id) throws SQLException{
+		
+		
+		try(DB_web_services db = new DB_web_services()){
+			if(description !=null){
+				//System.out.println("entering the if");
+				PreparedStatement stmt = db.getPreparedStatement(Constants.Film.putDescriptionByID);
+				stmt.setString(1, description);
+				stmt.setLong(2, id);
+				
+				stmt.executeUpdate();
+			}
+			
+			if(Langue != null){
+				PreparedStatement stmt2 = db.getPreparedStatement(Constants.Film.putLangueByID);
+				stmt2.setString(1, Langue);
+				stmt2.setLong(2, id);
+				
+				stmt2.executeUpdate();
+			}
+			
+			if(genre != null){
+				PreparedStatement stmt3 = db.getPreparedStatement(Constants.Film.putGenreByID);
+				stmt3.setString(1, genre);
+				stmt3.setLong(2, id);
+				
+				stmt3.executeUpdate();
+			}
+			
+			if(Status >0){
+				PreparedStatement stmt4 = db.getPreparedStatement(Constants.Film.putStatusByID);
+				stmt4.setInt(1, Status);
+				stmt4.setLong(2, id);
+				
+				stmt4.executeUpdate();
+			}
+			
+			if(Director != null){
+				PreparedStatement stmt5 = db.getPreparedStatement(Constants.Film.putDirectorByID);
+				stmt5.setString(1, Director);
+				stmt5.setLong(2, id);
+				
+				stmt5.executeUpdate();
+			}
+			
+			if(Productor != null){
+				PreparedStatement stmt6 = db.getPreparedStatement(Constants.Film.putProductorByID);
+				stmt6.setString(1, Productor);
+				stmt6.setLong(2, id);
+				
+				stmt6.executeUpdate();
+			}
+			
+			if(Cast != null){
+				PreparedStatement stmt7 = db.getPreparedStatement(Constants.Film.putMainCastByID);
+				stmt7.setString(1, Cast);
+				stmt7.setLong(2, id);
+				
+				stmt7.executeUpdate();
+			}
+		}
+		
+		return films.get(id);
 	}
 	
 	

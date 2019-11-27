@@ -279,7 +279,7 @@ public class Multimedia {
 	/**
 	 * @return the status_date
 	 */
-	public Timestamp getDate_Status() {
+	public Timestamp getDate_status() {
 		return date_status;
 	}
 

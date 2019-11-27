@@ -87,7 +87,7 @@ public class VideoGame extends Multimedia
 				+ ", category = " + this.getCategory()
 				+ ", status = " + this.getStatus()
 				+ ", date_upload = " + this.getDate_upload()
-				+ ", date_status = " + this.getDate_Status()
+				+ ", date_status = " + this.getDate_status()
 				+ ", date_release = " + this.getDate_release()
 				+ ", developer = " + this.getDeveloper()
 				+ ", publisher = " + this.getPublisher()

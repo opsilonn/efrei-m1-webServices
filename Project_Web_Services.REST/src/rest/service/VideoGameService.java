@@ -1,13 +1,15 @@
 package rest.service;
 
+import java.security.InvalidParameterException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import rest.exception.DataNotFoundException;
+import rest.model.Multimedia;
 import rest.model.VideoGame;
 import rest.model.util.Date;
 import rest.model.util.Timestamp;
@@ -114,23 +116,26 @@ public class VideoGameService {
 	 */
 	public VideoGame addVideoGame(VideoGame videoGame) throws SQLException
 	{
-		// DO ALL VERIFICATION HERE
-		//(I only do title for the moment, should we implement all the other fields ?)
-		System.out.println("LANGUAGE : " + videoGame.getLanguage());
+
 		if (videoGame.getTitle() == null || videoGame.getTitle().length() == 0)
-		{
-			throw new SQLIntegrityConstraintViolationException("Le champ 'title' ne peut ï¿½tre vide (null)");
-		}
+			throw new InvalidParameterException("Le champ 'title' ne peut être vide (null)");
+		if (videoGame.getLanguage() == null || videoGame.getLanguage().length() == 0)
+			throw new InvalidParameterException("Le champ 'language' ne peut être vide (null)");
+		if (videoGame.getCategory() == 0)
+			throw new InvalidParameterException("Le champ 'Category' ne peut être vide (0)");
+		if (videoGame.getStatus() == 0)
+			throw new InvalidParameterException("Le champ 'Status' ne peut être vide (0)");
+		if (videoGame.getID_uploader() == 0)
+			throw new InvalidParameterException("Le champ 'ID_uploader' ne peut être vide (0)");
 		
 
 		
 		// We initialize some variables
 		try(DB_web_services db = new DB_web_services()){
 			
+			db.setAutoCommit(false);
+			
 			PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.post);
-			
-			System.out.println(videoGame);
-			
 			
 			// We initialize our statement's values
 			ppsm.setString(1, videoGame.getTitle());
@@ -201,6 +206,127 @@ public class VideoGameService {
 			
 		}
 		
+	}
+	
+	
+	public boolean updateVideoGame(long id, VideoGame videoGame)
+			throws SQLException{
+		
+		boolean change = false;
+		boolean return_value = true;
+		
+		try(DB_web_services db = new DB_web_services()) {
+
+			db.setAutoCommit(false);
+
+			if(videoGame.getDescription() != null){
+					
+		    	PreparedStatement ppsm = db.getPreparedStatement(Constants.VideoGame.putDescriptionByID);
+		    	
+		    	ppsm.setString(1, videoGame.getDescription());
+		    	ppsm.setLong(2, id);
+		    	
+		    	int rs = ppsm.executeUpdate();
+
+		    	if(rs == 1){
+		    		this.videoGames.get(id).setDescription(videoGame.getDescription());
+		    	}
+		    	
+		    	return_value = (rs == 1 && return_value == true) ? true : false;
+		    	change = return_value;
+			}
+
+			if(videoGame.getLanguage() != null){
+					
+		    	PreparedStatement ppsm = db.getPreparedStatement(Constants.VideoGame.putLangueByID);
+		    	
+		    	ppsm.setString(1, videoGame.getLanguage());
+		    	ppsm.setLong(2, id);
+		    	
+		    	int rs = ppsm.executeUpdate();
+
+		    	if(rs == 1){
+		    		this.videoGames.get(id).setLanguage(videoGame.getLanguage());
+		    	}
+		    	
+		    	return_value = (rs == 1 && return_value == true) ? true : false;
+		    	change = return_value;
+			}
+
+			if(videoGame.getGenre() != null){
+					
+		    	PreparedStatement ppsm = db.getPreparedStatement(Constants.VideoGame.putGenreByID);
+		    	
+		    	ppsm.setString(1, videoGame.getGenre());
+		    	ppsm.setLong(2, id);
+		    	
+		    	int rs = ppsm.executeUpdate();
+
+		    	if(rs == 1){
+		    		this.videoGames.get(id).setGenre(videoGame.getGenre());
+		    	}
+		    	
+		    	return_value = (rs == 1 && return_value == true) ? true : false;
+		    	change = return_value;
+			}
+
+			if(videoGame.getStatus() != 0){
+					
+		    	PreparedStatement ppsm = db.getPreparedStatement(Constants.VideoGame.putStatusByID);
+		    	
+		    	ppsm.setInt(1, videoGame.getStatus());
+		    	ppsm.setLong(2, id);
+		    	
+		    	int rs = ppsm.executeUpdate();
+
+		    	if(rs == 1){
+		    		this.videoGames.get(id).setStatus(videoGame.getStatus());
+		    	}
+		    	
+		    	return_value = (rs == 1 && return_value == true) ? true : false;
+		    	change = return_value;
+			}
+
+			if(videoGame.getDeveloper() != null){
+					
+		    	PreparedStatement ppsm = db.getPreparedStatement(Constants.VideoGame.putDeveloperByID);
+		    	
+		    	ppsm.setString(1, videoGame.getDeveloper());
+		    	ppsm.setLong(2, id);
+		    	
+		    	int rs = ppsm.executeUpdate();
+
+		    	if(rs == 1){
+		    		this.videoGames.get(id).setDeveloper(videoGame.getDeveloper());
+		    	}
+		    	
+		    	return_value = (rs == 1 && return_value == true) ? true : false;
+		    	change = return_value;
+			}
+
+			if(videoGame.getPublisher() != null){
+					
+		    	PreparedStatement ppsm = db.getPreparedStatement(Constants.VideoGame.putPublisherByID);
+		    	
+		    	ppsm.setString(1, videoGame.getPublisher());
+		    	ppsm.setLong(2, id);
+		    	
+		    	int rs = ppsm.executeUpdate();
+
+		    	if(rs == 1){
+		    		this.videoGames.get(id).setPublisher(videoGame.getPublisher());
+		    	}
+		    	
+		    	return_value = (rs == 1 && return_value == true) ? true : false;
+		    	change = return_value;
+			}
+
+			db.commit();
+			
+		}
+		
+		
+		return (return_value && change);
 	}
 
 	
