@@ -83,9 +83,13 @@ public class Constants {
 		public static final String getByID = "SELECT * FROM Book_v WHERE (id_book = ?)";
 		
 		public static final String post = "INSERT INTO `book` (author, publisher, id_multimedia) VALUES(?,?,?)";
-
-		public static final String putByID = "UPDATE Book SET value = ? WHERE (id_comment = ? AND id_user = ?)";
-		
+		public static final String putDescriptionByID = "UPDATE Book_v SET description = ? WHERE id_book = ?";
+		public static final String putLangueByID = "UPDATE Book_v SET language = ? WHERE id_book = ?";
+		public static final String putGenreByID = "UPDATE Book_v SET genre = ? Where id_book = ?";
+		public static final String putStatusByID = "UPDATE Book_v SET status = ?, date_status = NOW() WHERE id_book = ?";
+		public static final String putAuthorByID = "UPDATE Book_v SET author = ? WHERE id_book = ?";
+		public static final String putTitleByID = "UPDATE Book_v SET title = ? WHERE id_book = ?";
+		public static final String putPublisherByID = "UPDATE Book_v SET publisher = ? Where id_book = ?";
 		public static final String deleteByID = "DELETE FROM Book WHERE id_book = ?";
 	}
 

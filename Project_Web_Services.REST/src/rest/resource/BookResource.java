@@ -6,9 +6,9 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -80,9 +80,9 @@ public class BookResource {
     }
 
 
-    @Path("/{book_id}")
+    @Path("/{id_book}")
     @GET
-    public Response getBook(@PathParam("book_id") long id) 
+    public Response getBook(@PathParam("id_book") long id) 
     		throws SQLException {
 		this.bookService = new BookService();
 		
@@ -123,20 +123,20 @@ public class BookResource {
 		return Response.status(Status.OK).entity(new_book).build();
 	
     }
-//
-//
-//    @Path("/{user_id}")
-//    @PUT
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response putUser(@PathParam("user_id")Long id, @FormParam("e_psw")String existing_password, @FormParam("n_psw")String new_password, @FormParam("mail")String email)
-//    		throws SQLException {
-//		this.userService = new UserService();
-//		
-//		
-//		return Response.status(Status.OK) 
-//				.entity(userService.updateUser(id, existing_password, new_password, email))
-//				.build();
-//    }
+
+
+    @Path("/{id_book}")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response putUser(@PathParam("id_book")Long id, Book book)
+    		throws SQLException {
+		this.bookService = new BookService();
+		
+		
+		return Response.status(Status.OK) 
+				.entity(bookService.updateBook(id, book))
+				.build();
+    }
 
     
     @Path("/{id_book}")

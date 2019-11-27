@@ -163,30 +163,138 @@ public class BookService {
 	}
 	
 
-	/*public boolean updateBook(long id, ) 
-			throws SQLException{
+	
+	public boolean updateBook(long id, Book book) throws SQLException{
+		
+		boolean change = false;
+		boolean return_value = true;
+		
+		try(DB_web_services db = new DB_web_services()) {
 
-		DB_web_services db = new DB_web_services();
-    	
+			db.setAutoCommit(false);
+			
+			if(book.getTitle() != null){
+				
+		    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Book.putTitleByID);
+		    	
+		    	ppsm.setString(1, book.getTitle());
+		    	ppsm.setLong(2, id);
+		    	
+		    	int rs = ppsm.executeUpdate();
 
-    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Rate.putByID);
-        	
-    	ppsm.setInt(1, value);
-    	ppsm.setLong(2, id);
-    	ppsm.setLong(3, this.id_user);
+		    	if(rs == 1){
+		    		this.books.get(id).setDescription(book.getTitle());
+		    	}
+		    	
+		    	return_value = (rs == 1 && return_value == true) ? true : false;
+		    	change = return_value;
+			}
+			
+			if(book.getDescription() != null){
+					
+		    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Book.putDescriptionByID);
+		    	
+		    	ppsm.setString(1, book.getDescription());
+		    	ppsm.setLong(2, id);
+		    	
+		    	int rs = ppsm.executeUpdate();
 
-    	
-    	int rs = ppsm.executeUpdate();
+		    	if(rs == 1){
+		    		this.books.get(id).setDescription(book.getDescription());
+		    	}
+		    	
+		    	return_value = (rs == 1 && return_value == true) ? true : false;
+		    	change = return_value;
+			}
 
-    	if(rs == 1){
-    		Rate rate = getRate(id);
-    		
-    		rate.setValue(value);
-    	}
-    	
-    	
-    	return (rs == 1) ? true : false;
-	}*/
+			if(book.getLanguage() != null){
+					
+		    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Book.putLangueByID);
+		    	
+		    	ppsm.setString(1, book.getLanguage());
+		    	ppsm.setLong(2, id);
+		    	
+		    	int rs = ppsm.executeUpdate();
+
+		    	if(rs == 1){
+		    		this.books.get(id).setLanguage(book.getLanguage());
+		    	}
+		    	
+		    	return_value = (rs == 1 && return_value == true) ? true : false;
+		    	change = return_value;
+			}
+
+			if(book.getGenre() != null){
+					
+		    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Book.putGenreByID);
+		    	
+		    	ppsm.setString(1, book.getGenre());
+		    	ppsm.setLong(2, id);
+		    	
+		    	int rs = ppsm.executeUpdate();
+
+		    	if(rs == 1){
+		    		this.books.get(id).setGenre(book.getGenre());
+		    	}
+		    	
+		    	return_value = (rs == 1 && return_value == true) ? true : false;
+		    	change = return_value;
+			}
+
+			if(book.getStatus() != 0){
+					
+		    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Book.putStatusByID);
+		    	
+		    	ppsm.setInt(1, book.getStatus());
+		    	ppsm.setLong(2, id);
+		    	
+		    	int rs = ppsm.executeUpdate();
+
+		    	if(rs == 1){
+		    		this.books.get(id).setStatus(book.getStatus());
+		    	}
+		    	
+		    	return_value = (rs == 1 && return_value == true) ? true : false;
+		    	change = return_value;
+			}
+
+			if(book.getAuthor() != null){
+					
+		    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Book.putAuthorByID);
+		    	
+		    	ppsm.setString(1, book.getAuthor());
+		    	ppsm.setLong(2, id);
+		    	
+		    	int rs = ppsm.executeUpdate();
+
+		    	if(rs == 1){
+		    		this.books.get(id).setAuthor(book.getAuthor());
+		    	}
+		    	
+		    	return_value = (rs == 1 && return_value == true) ? true : false;
+		    	change = return_value;
+			}
+
+			if(book.getPublisher() != null){
+					
+		    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Book.putPublisherByID);
+		    	
+		    	ppsm.setString(1, book.getPublisher());
+		    	ppsm.setLong(2, id);
+		    	
+		    	int rs = ppsm.executeUpdate();
+
+		    	if(rs == 1){
+		    		this.books.get(id).setPublisher(book.getPublisher());
+		    	}
+		    	
+		    	return_value = (rs == 1 && return_value == true) ? true : false;
+		    	change = return_value;
+			}
+			db.commit();
+		}
+		return (return_value && change);
+	}
 	
 	
 	
@@ -206,11 +314,8 @@ public class BookService {
 	    	if(rs == 1){
 	    		books.remove(id);
 	    		
-	    		
 	    		return true;
 	    	}	
-			
-	    	
 			return false;
 		}
 		
