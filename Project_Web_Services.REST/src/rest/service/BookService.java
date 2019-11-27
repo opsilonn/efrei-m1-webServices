@@ -9,7 +9,10 @@ import java.util.Map;
 
 import rest.exception.DataNotFoundException;
 import rest.model.Book;
+import rest.model.Film;
+import rest.model.VideoGame;
 import rest.model.util.Date;
+import rest.model.util.Time;
 import rest.model.util.Timestamp;
 import rest.service.util.Constants;
 import rest.util.DB_web_services;
@@ -32,37 +35,26 @@ public class BookService {
 
 	    	// As long as the database returns a row, we fill the map
 	    	while(rs.next())
-	    	{
-	    		// We create our map values (Key & Value)
-	    		long mapKey = rs.getLong("ID_book");
-	    		Book mapValue = new Book();
-	    		
-	    		
-	    		// We search for the corresponding Multimedia row
-	    		PreparedStatement stmt2 = db.getPreparedStatement(Constants.Multimedia.getByID);
-	    		stmt2.setLong(1, rs.getLong("ID_multimedia"));
-	    		
-	    		ResultSet rs2 = stmt2.executeQuery();
-				
-				// If the said row exist :
-				if(rs2.next())
-				{
-					// fill here the good values
-		    		 mapValue = new Book(rs2.getLong("ID_multimedia"), rs2.getString("title"), 
-		    				 rs2.getString("language"),
-		    				 rs2.getString("description"), 
-		    				 rs2.getString("genre"), 
-		    				 rs2.getInt("category"), 
-		    				 rs2.getInt("status"),
-		    				 rs2.getLong("ID_uploader"),
-		    				 new Timestamp(rs2.getString("date_status")),
-		    				new Timestamp(rs2.getString("date_upload")), 
-		    				new Date(rs2.getString("date_release")), 
-		    				rs.getLong("ID_book"), rs.getString("author"), 
-		    				rs.getString("publisher"));
-				}    		
+	    	{	
+				Book book = new Book(
+						rs.getLong("ID_multimedia"),
+						rs.getString("title"),
+						rs.getString("language"),
+						rs.getString("description"),
+						rs.getString("genre"),
+						rs.getInt("category"),
+						rs.getInt("status"),
+						rs.getLong("ID_uploader"),
+						new Timestamp(rs.getString("date_status")),
+						new Timestamp(rs.getString("date_upload")),
+						new Date(rs.getString("date_release")),
+						rs.getLong("ID_book"),
+						rs.getString("author"),
+						rs.getString("publisher")
+						);
+
 	    		// We put our values in the map
-	    		books.put(mapKey, mapValue);
+				books.put(book.getId_book(), book);
 
 	    	}
 		}
@@ -104,12 +96,12 @@ public class BookService {
 	    	
 			// We initialize our statement's values of multimedia
 			ppsm.setString(1, book.getTitle());
-			ppsm.setString(2, book.getDescription());
-			ppsm.setString(3, book.getLanguage());
-			ppsm.setString(4, book.getGenre());
-			ppsm.setInt(5, book.getCategory());
-			ppsm.setInt(6, book.getStatus());
-			ppsm.setLong(7, book.getID_uploader());
+			ppsm.setString(2, book.getLanguage());
+			ppsm.setString(3, book.getGenre());
+			ppsm.setInt(4, book.getCategory());
+			ppsm.setInt(5, book.getStatus());
+			ppsm.setLong(6, book.getID_uploader());
+			ppsm.setString(7, book.getDescription());
 			ppsm.setString(8, book.getDate_release().toString());
 	    	
 	    	int rs = ppsm.executeUpdate();
@@ -127,10 +119,41 @@ public class BookService {
 					ppsm2.setString(2, book.getPublisher());
 					ppsm2.setLong(3, generated_id.getLong(1));
 					
-	    			ppsm2.executeQuery();
-
-
-	    			return book;
+					int rs2 = ppsm2.executeUpdate();
+					if(rs2 == 1)
+					{
+						ResultSet generated_id2 = ppsm2.getGeneratedKeys();
+						if(generated_id2.next())
+						{
+							PreparedStatement ppsm3 = db.getPreparedStatement(Constants.Book.getByID);
+							ppsm3.setLong(1, generated_id2.getLong(1));
+							
+							
+							ResultSet rs3 = ppsm3.executeQuery();
+							
+							if(rs3.next()){
+			
+								return new Book(
+										rs3.getLong("ID_multimedia"),
+										rs3.getString("title"),
+										rs3.getString("language"),
+										rs3.getString("description"),
+										rs3.getString("genre"),
+										rs3.getInt("category"),
+										rs3.getInt("status"),
+										rs3.getLong("ID_uploader"),
+										new Timestamp(rs3.getString("date_status")),
+										new Timestamp(rs3.getString("date_upload")),
+										new Date(rs3.getString("date_release")),
+										rs3.getLong("ID_book"),
+										rs3.getString("author"),
+										rs3.getString("publisher")
+										);
+							}
+						}
+						
+						
+					}
 	    		}
 	    	}
 
@@ -138,32 +161,32 @@ public class BookService {
 		}
     	
 	}
-	
-	public boolean updateBook(long id, ) 
-			throws SQLException{
-
-		DB_web_services db = new DB_web_services();
-    	
-
-    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Rate.putByID);
-        	
-    	ppsm.setInt(1, value);
-    	ppsm.setLong(2, id);
-    	ppsm.setLong(3, this.id_user);
-
-    	
-    	int rs = ppsm.executeUpdate();
-
-    	if(rs == 1){
-    		Rate rate = getRate(id);
-    		
-    		rate.setValue(value);
-    	}
-    	
-    	
-    	return (rs == 1) ? true : false;
-	}
-	
+//	
+//	public boolean updateBook(long id, ) 
+//			throws SQLException{
+//
+//		DB_web_services db = new DB_web_services();
+//    	
+//
+//    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Rate.putByID);
+//        	
+//    	ppsm.setInt(1, value);
+//    	ppsm.setLong(2, id);
+//    	ppsm.setLong(3, this.id_user);
+//
+//    	
+//    	int rs = ppsm.executeUpdate();
+//
+//    	if(rs == 1){
+//    		Rate rate = getRate(id);
+//    		
+//    		rate.setValue(value);
+//    	}
+//    	
+//    	
+//    	return (rs == 1) ? true : false;
+//	}
+//	
 	
 	
 	
