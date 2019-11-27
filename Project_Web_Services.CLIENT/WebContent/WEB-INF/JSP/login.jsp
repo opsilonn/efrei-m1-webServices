@@ -34,13 +34,16 @@
                     </div>
             
                     <div class="card">
+                    
+                        <%-- LOGIN FORM HEADER --%>
                         <div class="card-header">
                             Login
                         </div>
+                        
                         <div class="card-body">
 
-                            <%-- LOGIN FORM --%>
-                            <form action="login" method="post">
+                            <%-- LOGIN FORM CONTENT --%>
+                            <form action="Login" method="post">
                             
                                 <%-- LOGIN FIELD --%>
                                 <div class="form-group">
