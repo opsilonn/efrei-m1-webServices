@@ -94,7 +94,7 @@ public class FilmResource
 			 films = filmService.getFilms();
 		 }
 		
-		 if(start >0 && end>0 && end>=start){
+		 if(start >=0 && end>0 && end>=start && end < films.size()){
 			 result = films.subList(start, end);
 		 }else{
 			 result = films;

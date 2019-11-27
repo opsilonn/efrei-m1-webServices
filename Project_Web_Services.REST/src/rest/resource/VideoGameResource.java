@@ -10,12 +10,16 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
+
+import rest.model.Comment;
+import rest.model.Rate;
 import rest.model.VideoGame;
 import rest.service.VideoGameService;
 
@@ -72,19 +76,37 @@ public class VideoGameResource
      * @throws SQLException
      */
     @GET
-    public Response getVideoGames()throws SQLException
+    public Response getVideoGames(@QueryParam("start")int start, @QueryParam("end")int end, @QueryParam("filtre")String filtre)throws SQLException
     {
 		this.videoGameService = new VideoGameService();
 
 		// We add the links to all foreign references
-		List<VideoGame> videoGames = videoGameService.getAllVideoGames();
-		for(VideoGame videoGame : videoGames)
+		List<VideoGame> videoGames;
+		List<VideoGame> result;
+		
+		System.out.println(start);
+		System.out.println(end);
+		
+		
+		if(filtre != null){
+			videoGames = videoGameService.filtre(filtre);
+		}else{
+			videoGames = videoGameService.getAllVideoGames();
+		}
+		
+		if(start >=0 && end>0 && end>=start && end<=videoGames.size()){
+			 result = videoGames.subList(start, end);
+		 }else{
+			 result = videoGames;
+		 }
+		
+		for(VideoGame videoGame : result)
 		{
 			addLinks(videoGame);
 		}
 		
 		return Response.status(Status.OK)
-				.entity(videoGames)
+				.entity(result)
 				.build();
     }
 
@@ -113,8 +135,25 @@ public class VideoGameResource
 				.build();
     }
 
+    @Path("/{videoGame_id}/rates")
+    @GET
+    public Response GetRate(@PathParam("videoGame_id") long id) throws SQLException{
+    	this.videoGameService = new VideoGameService();
+    	
+    	List<Rate> result = videoGameService.getRate(id);
+    	
+    	return Response.status(Status.OK).entity(result).build();
+    }
     
-    
+    @Path("/{videoGame_id}/comment")
+    @GET
+    public Response GetComment(@PathParam("videoGame_id") long id) throws SQLException{
+    	this.videoGameService = new VideoGameService();
+    	
+    	List<Comment> result = videoGameService.getComment(id);
+    	
+    	return Response.status(Status.OK).entity(result).build();
+    }
 
     /** Displays the number of rows inside the table {@VideoGame}
      * 

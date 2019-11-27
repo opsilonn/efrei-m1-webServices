@@ -97,6 +97,7 @@ public class Constants {
 	public class VideoGame{
 		public static final String getAll = "SELECT * FROM VideoGame_v";
 		public static final String getByID = "SELECT * FROM VideoGame_v WHERE id_videoGame = ?";
+		public static final String getByName= "SELECT * FROM VideoGame_v WHERE title LIKE ?";
 		
 		public static final String post ="INSERT INTO VideoGame (developer, publisher, ID_multimedia) VALUES(?,?,?)";
 		

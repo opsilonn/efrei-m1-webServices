@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 import rest.exception.DataNotFoundException;
+import rest.model.Comment;
 import rest.model.Multimedia;
+import rest.model.Rate;
 import rest.model.VideoGame;
 import rest.model.util.Date;
 import rest.model.util.Timestamp;
@@ -80,7 +82,38 @@ public class VideoGameService {
 		return return_videoGames;
 	}
 	
-	
+	public List<VideoGame> filtre(String filtrage) throws SQLException{
+		List<VideoGame> result = new ArrayList<VideoGame>();
+		
+		try(DB_web_services db = new DB_web_services()){
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.VideoGame.getByName);
+			ppsm.setString(1, "%"+filtrage+"%");
+			ResultSet rs = ppsm.executeQuery();
+			
+			while(rs.next()){
+				VideoGame videoGame = new VideoGame(
+						rs.getLong("ID_multimedia"),
+						rs.getString("title"),
+						rs.getString("description"),
+						rs.getString("language"),
+						rs.getString("genre"),
+						rs.getInt("category"),
+						rs.getInt("status"),
+						rs.getLong("ID_uploader"),
+						new Timestamp(rs.getString("date_status")),
+						new Timestamp(rs.getString("date_upload")),
+						new Date(rs.getString("date_release")),
+						rs.getLong("ID_videoGame"),
+						rs.getString("developer"),
+						rs.getString("publisher")
+						);
+				
+				result.add(videoGame);
+			}
+		}
+		
+		return result;
+	}
 	
 
 	/**
@@ -110,6 +143,43 @@ public class VideoGameService {
 		return videoGames.size();
 	}
 	
+	public List<Rate> getRate(long id) throws SQLException{
+		List<Rate> result = new ArrayList<Rate>();
+		
+		VideoGame graded = videoGames.get(id);
+		
+		try(DB_web_services db = new DB_web_services()){
+			PreparedStatement psmt = db.getPreparedStatement(Constants.Rate.getByMult);
+			psmt.setLong(1, graded.getId_multimedia());
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				result.add(new Rate(rs.getLong("ID_rate"), rs.getInt("value"), new Timestamp(rs.getString("date_creation")), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
+			}
+		}
+		
+		return result;
+	}
+	
+	public List<Comment> getComment(Long id) throws SQLException{
+		List<Comment> result = new ArrayList<Comment>();
+		
+		VideoGame graded = videoGames.get(id);
+		
+		try(DB_web_services db = new DB_web_services()){
+			PreparedStatement psmt = db.getPreparedStatement(Constants.Comment.getByMult);
+			psmt.setLong(1, graded.getId_multimedia());
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				result.add(new Comment(rs.getLong("ID_comment"), rs.getString("value"), new Timestamp(rs.getString("date_creation")), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
+			}
+		}
+		
+		return result;
+	}
 
 	/**
 	 * PLEASE ADD THE DOCUMENTATION PLEASE PLEASE PLEASE
