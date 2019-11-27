@@ -88,6 +88,38 @@ public class FilmService {
 		return film;
 	}
 	
+	public List<Film> searchFilm(String filtre) throws SQLException{
+		List<Film> result = new ArrayList();
+		
+		try(DB_web_services db = new DB_web_services()){
+			PreparedStatement psmt = db.getPreparedStatement(Constants.Film.getByName);
+			psmt.setString(1, "%" + filtre + "%");
+			ResultSet rs = psmt.executeQuery();
+			while(rs.next()){
+				Film film =new Film(
+						rs.getLong("ID_multimedia"),
+						rs.getString("title"),
+						rs.getString("description"),
+						rs.getString("language"),
+						rs.getString("genre"),
+						rs.getInt("category"),
+						rs.getInt("status"),
+						rs.getLong("ID_uploader"),
+						new Timestamp(rs.getString("date_status")),
+						new Timestamp(rs.getString("date_upload")),
+						new Date(rs.getString("date_release")),
+						rs.getLong("ID_film"),
+						rs.getString("director"),
+						rs.getString("productor"),
+						rs.getString("mainCast"),
+						new Time(rs.getString("duration"))
+						);
+				
+				result.add(film);
+			}
+		}		
+		return result;
+	}
 	
 	public Film addFilm(Film film) throws SQLException{
 				

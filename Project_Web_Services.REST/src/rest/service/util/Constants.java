@@ -59,6 +59,7 @@ public class Constants {
 	public class Film{
 		public static final String getAll = "SELECT * FROM Film_v";
 		public static final String getByID = "SELECT * FROM Film_v WHERE (id_film = ?)";
+		public static final String getByName = "SELECT * FROM Film_v WHERE title LIKE ? ";
 		
 		public static final String post ="INSERT INTO Film (director, productor, mainCast, duration, ID_multimedia) VALUES(?,?,?,?,?)";
 		
