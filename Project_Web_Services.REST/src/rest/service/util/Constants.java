@@ -20,29 +20,29 @@ public class Constants {
 	
 	public class Rate{
 		
-		public static final String getAll = "SELECT * FROM Rate WHERE id_user = ?";
-		public static final String getByID = "SELECT * FROM Rate WHERE (id_rate = ? AND id_user = ?)";
+		public static final String getAll = "SELECT * FROM Rate";
+		public static final String getByID = "SELECT * FROM Rate WHERE id_rate = ?";
 		public static final String getByMult = "SELECT * FROM Rate WHERE ID_multimedia=?";
 		
 		public static final String post = "INSERT INTO Rate(value, id_user, id_multimedia) VALUES(?, ?, ?)";
 		
-		public static final String putByID = "UPDATE Rate SET value = ? WHERE (id_rate = ? AND id_user = ?)";
+		public static final String putByID = "UPDATE Rate SET value = ?, date_creation = NOW() WHERE id_rate = ?";
 
-		public static final String deleteByID = "DELETE FROM Rate WHERE (id_rate = ? AND id_user = ?)";
+		public static final String deleteByID = "DELETE FROM Rate WHERE id_rate = ?";
 
 	}
 	
 	public class Comment{
 		
-		public static final String getAll = "SELECT * FROM Comment WHERE id_user = ?";
-		public static final String getByID = "SELECT * FROM Comment WHERE (id_comment = ? AND id_user = ?)";
+		public static final String getAll = "SELECT * FROM Comment";
+		public static final String getByID = "SELECT * FROM Comment WHERE id_comment = ?";
 		public static final String getByMult = "SELECT * FROM Comment WHERE ID_multimedia = ?";
 		
 		public static final String post = "INSERT INTO Comment(value, id_user, id_multimedia) VALUES(?, ?, ?)";
 		
-		public static final String putByID = "UPDATE Comment SET value = ? WHERE (id_comment = ? AND id_user = ?)";
+		public static final String putByID = "UPDATE Comment SET value = ?, date_creation = NOW() WHERE id_comment = ?";
 
-		public static final String deleteByID = "DELETE FROM Comment WHERE (id_comment = ? AND id_user = ?)";
+		public static final String deleteByID = "DELETE FROM Comment WHERE id_comment = ?";
 
 	}
 	

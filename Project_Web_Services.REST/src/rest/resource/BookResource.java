@@ -20,7 +20,6 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
 import rest.model.Book;
-import rest.model.Rate;
 import rest.service.BookService;
 
 @Path("/books")
@@ -53,11 +52,29 @@ public class BookResource {
 				.path(String.valueOf(book.getID_uploader()))
 				.build();
 	}
+    
+    
+	private URI getUriForRates(Book book) {		
+		return this.uriInfo.getBaseUriBuilder()
+				.path(RateResource.class)
+				.queryParam("id_multimedia", book.getId_multimedia())
+				.build();
+	}
+    
+    
+	private URI getUriForComments(Book book) {		
+		return this.uriInfo.getBaseUriBuilder()
+				.path(CommentResource.class)
+				.queryParam("id_multimedia", book.getId_multimedia())
+				.build();
+	}
 
 
 	private void addLinks(Book book) {
 		book.addLink("self", getUriForSelf(book).toString());
 		book.addLink("uploader", getUriForUploader(book).toString());
+		book.addLink("rates", getUriForRates(book).toString());
+		book.addLink("comments", getUriForComments(book).toString());
 	}
 	
 	
@@ -108,16 +125,6 @@ public class BookResource {
         return Response.status(Status.OK)
         		.entity(bookService.getBookCount())
         		.build();
-    }
-
-    @GET
-    @Path("/{id_book}/rates")
-    public Response getRates(@PathParam("id_book") long id) throws SQLException{
-    	this.bookService = new BookService();
-    	
-    	List<Rate> rates = bookService.getRates(id);
-		 
-		return Response.status(Status.OK).entity(rates).build();
     }
     
     @POST

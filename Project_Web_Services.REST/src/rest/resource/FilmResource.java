@@ -2,7 +2,6 @@ package rest.resource;
 
 import java.net.URI;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -21,12 +20,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
-import rest.model.Comment;
 import rest.model.Film;
-import rest.model.Multimedia;
-import rest.model.Rate;
 import rest.service.FilmService;
-import rest.service.MultimediaService;
 
 @Path("/films")
 @Produces(MediaType.APPLICATION_JSON)
@@ -59,11 +54,29 @@ public class FilmResource
 				.path(String.valueOf(film.getID_uploader()))
 				.build();
 	}
+    
+    
+	private URI getUriForRates(Film film) {		
+		return this.uriInfo.getBaseUriBuilder()
+				.path(RateResource.class)
+				.queryParam("id_multimedia", film.getId_multimedia())
+				.build();
+	}
+    
+    
+	private URI getUriForComments(Film film) {		
+		return this.uriInfo.getBaseUriBuilder()
+				.path(CommentResource.class)
+				.queryParam("id_multimedia", film.getId_multimedia())
+				.build();
+	}
 
 
 	private void addLinks(Film film) {
 		film.addLink("self", getUriForSelf(film).toString());
 		film.addLink("uploader", getUriForUploader(film).toString());
+		film.addLink("rates", getUriForRates(film).toString());
+		film.addLink("Comments", getUriForComments(film).toString());
 	}
 	 
 
@@ -131,26 +144,6 @@ public class FilmResource
 	        		.build();
 	 }
 	 
-
-	 @Path("/{film_id}/rates")
-	 @GET
-	 public Response getRates(@PathParam("film_id") long id) throws SQLException{
-		 this.filmService = new FilmService();
-		 
-		 List<Rate> rates = filmService.getRates(id);
-		 
-		 return Response.status(Status.OK).entity(rates).build();
-	 }
-	 
-	 @Path("/{film_id}/comments")
-	 @GET
-	 public Response getComment(@PathParam("film_id") long id) throws SQLException{
-		 this.filmService = new FilmService();
-		 
-		 List<Comment> comments = filmService.getComments(id);
-		 
-		 return Response.status(Status.OK).entity(comments).build();
-	 }
 	 
 	 /** Creates a new instance of the table {@Film}
 	  * 

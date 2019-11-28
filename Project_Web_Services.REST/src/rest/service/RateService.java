@@ -13,23 +13,17 @@ import rest.model.util.Timestamp;
 import rest.service.util.Constants;
 import rest.util.DB_web_services;
 
-public class RateUserService {
-	
-	private long id_user;
-	
+public class RateService {
+		
 	private Map<Long, Rate> rates = DB_web_services.getRates();
 	
 	
-	public RateUserService(long id_user)
+	public RateService()
 			throws SQLException
-	{
-		this.id_user = id_user;
-		
+	{		
 		try(DB_web_services db = new DB_web_services()){
 	    	
 	    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Rate.getAll);
-	    	
-	    	ppsm.setLong(1, this.id_user);
 	    	
 	    	ResultSet rs = ppsm.executeQuery();
 	    	this.rates.clear();
@@ -39,30 +33,19 @@ public class RateUserService {
 	    	}
 		}
 	}
+	
+	
+	
 
 	public List<Rate> getAllRates()
 	{
 		List<Rate> return_rates = new ArrayList<Rate>(this.rates.values());
 		
 		if(return_rates.isEmpty())
-			throw new DataNotFoundException("No rates was found for the user `" + this.id_user + "` !");
+			throw new DataNotFoundException("No rates was found !");
 		
 		
     	return return_rates;		
-	}
-	
-
-	public List<Rate> getRatesByValue(int value)
-	{
-		List<Rate> return_rates = new ArrayList<Rate>();
-
-		for(Map.Entry<Long, Rate> entry : this.rates.entrySet()){
-			if(entry.getValue().getValue() == value){
-				return_rates.add(entry.getValue());
-			}
-		}
-		
-    	return return_rates;
 	}
 	
 
@@ -70,7 +53,7 @@ public class RateUserService {
 		Rate rate = rates.get(id);
 
 		if(rate == null)
-			throw new DataNotFoundException("The rate with the id `" + id + "` was not found for the user `" + this.id_user + "` !");
+			throw new DataNotFoundException("The rate with the id `" + id + "` was not found !");
 		
 		
 		return rate;
@@ -82,17 +65,15 @@ public class RateUserService {
 	}
 	
 	
-	public Rate addRate(int value, long id_multimedia) 
+	public Rate addRate(int value, long id_user, long id_multimedia) 
 			throws SQLException{
 		
 		try(DB_web_services db = new DB_web_services()){
     	
 	    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Rate.post);
 	    	
-	    	System.out.printf("INSERT INTO Rate(value, id_user, id_multimedia) VALUES(%d, %d, %d)", value, this.id_user, id_multimedia);
-	    	
 	    	ppsm.setInt(1, value);
-	    	ppsm.setLong(2, this.id_user);
+	    	ppsm.setLong(2, id_user);
 	    	ppsm.setLong(3, id_multimedia);
 	    	
 	    	
@@ -105,12 +86,17 @@ public class RateUserService {
 	    			ppsm = db.getPreparedStatement(Constants.Rate.getByID);
 	    			
 	    			ppsm.setLong(1, generated_id.getLong(1));
-	    	    	ppsm.setLong(2, this.id_user);
 	    			
 	    			ResultSet rs_rate = ppsm.executeQuery();
 	    	    	
 	    	    	if(rs_rate.next()){
-	    	    		Rate rate = new Rate(rs_rate.getLong("ID_rate"), rs_rate.getInt("value"), new Timestamp(rs_rate.getString("date_creation")), rs_rate.getLong("ID_user"), rs_rate.getLong("ID_multimedia"));
+	    	    		Rate rate = new Rate(
+	    	    				rs_rate.getLong("ID_rate"),
+	    	    				rs_rate.getInt("value"),
+	    	    				new Timestamp(rs_rate.getString("date_creation")),
+	    	    				rs_rate.getLong("ID_user"),
+	    	    				rs_rate.getLong("ID_multimedia"));
+	    	    		
 	    	    		this.rates.put(rs_rate.getLong("ID_rate"), rate);
 	    	    		
 	    	    		return rate;
@@ -134,7 +120,6 @@ public class RateUserService {
 				
 			ppsm.setInt(1, value);
 			ppsm.setLong(2, id);
-			ppsm.setLong(3, this.id_user);
 
 			
 			int rs = ppsm.executeUpdate();
@@ -158,7 +143,6 @@ public class RateUserService {
 			PreparedStatement ppsm = db.getPreparedStatement(Constants.Rate.deleteByID);
 	
 	    	ppsm.setLong(1, id);
-	    	ppsm.setLong(2, this.id_user);
 	    	
 	    	int rs = ppsm.executeUpdate();
 	

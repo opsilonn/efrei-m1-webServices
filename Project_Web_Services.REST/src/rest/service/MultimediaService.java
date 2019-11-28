@@ -6,6 +6,7 @@ import java.util.List;
 import rest.model.Multimedia;
 
 public class MultimediaService {
+	
 	public List<Multimedia> filtre (List<Multimedia> filtrage, String filtre){
 		
 		List<Multimedia> result = new ArrayList<Multimedia>();
@@ -18,4 +19,5 @@ public class MultimediaService {
 		
 		return result;
 	}
+	
 }

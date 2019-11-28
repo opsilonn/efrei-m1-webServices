@@ -13,23 +13,17 @@ import rest.model.util.Timestamp;
 import rest.service.util.Constants;
 import rest.util.DB_web_services;
 
-public class CommentUserService {
-	
-	private long id_user;
+public class CommentService {
 	
 	private Map<Long, Comment> comments = DB_web_services.getComments();
 	
 	
-	public CommentUserService(long id_user)
+	public CommentService()
 			throws SQLException
-	{
-		this.id_user = id_user;
-    	
+	{    	
 		try(DB_web_services db = new DB_web_services()){
 	    	
 	    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Comment.getAll);
-	    	
-	    	ppsm.setLong(1, this.id_user);
 	    	
 	    	ResultSet rs = ppsm.executeQuery();
 	    	this.comments.clear();
@@ -45,7 +39,7 @@ public class CommentUserService {
 		List<Comment> return_comments = new ArrayList<Comment>(this.comments.values());
 		
 		if(return_comments.isEmpty())
-			throw new DataNotFoundException("No comments was found for the user `" + this.id_user + "` !");
+			throw new DataNotFoundException("No comments was found !");
 		
 		
     	return return_comments;	
@@ -56,7 +50,7 @@ public class CommentUserService {
 		Comment comment = comments.get(id);
 
 		if(comment == null)
-			throw new DataNotFoundException("The comment with the id `" + id + "` was not found for the user `" + this.id_user + "` !");
+			throw new DataNotFoundException("The comment with the id `" + id + "` was not found !");
 		
 		
 		return comment;
@@ -68,7 +62,7 @@ public class CommentUserService {
 	}
 	
 	
-	public Comment addComment(String value, long id_multimedia) 
+	public Comment addComment(String value, long id_user, long id_multimedia) 
 			throws SQLException{
 		
 		try(DB_web_services db = new DB_web_services()){
@@ -76,7 +70,7 @@ public class CommentUserService {
 	    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Comment.post);
 	    	
 	    	ppsm.setString(1, value);
-	    	ppsm.setLong(2, this.id_user);
+	    	ppsm.setLong(2, id_user);
 	    	ppsm.setLong(3, id_multimedia);
 	    	
 	    	
@@ -89,7 +83,6 @@ public class CommentUserService {
 	    			ppsm = db.getPreparedStatement(Constants.Comment.getByID);
 	    			
 	    			ppsm.setLong(1, genecommentd_id.getLong(1));
-	    	    	ppsm.setLong(2, this.id_user);
 	    			
 	    			ResultSet rs_comment = ppsm.executeQuery();
 	    	    	
@@ -120,7 +113,6 @@ public class CommentUserService {
 	        	
 	    	ppsm.setString(1, value);
 	    	ppsm.setLong(2, id);
-	    	ppsm.setLong(3, this.id_user);
 	
 	    	
 	    	int rs = ppsm.executeUpdate();
@@ -146,7 +138,6 @@ public class CommentUserService {
 			PreparedStatement ppsm = db.getPreparedStatement(Constants.Comment.deleteByID);
 	
 	    	ppsm.setLong(1, id);
-	    	ppsm.setLong(2, this.id_user);
 	    	
 	    	int rs = ppsm.executeUpdate();
 	

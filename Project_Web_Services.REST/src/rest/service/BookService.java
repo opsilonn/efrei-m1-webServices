@@ -9,11 +9,8 @@ import java.util.Map;
 
 import rest.exception.DataNotFoundException;
 import rest.model.Book;
-import rest.model.Film;
 import rest.model.Rate;
-import rest.model.VideoGame;
 import rest.model.util.Date;
-import rest.model.util.Time;
 import rest.model.util.Timestamp;
 import rest.service.util.Constants;
 import rest.util.DB_web_services;

@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.org.glassfish.gmbal.Description;
-
 import rest.exception.DataNotFoundException;
 import rest.model.Comment;
 import rest.model.Film;
@@ -91,7 +89,7 @@ public class FilmService {
 	}
 	
 	public List<Rate> getRates(Long id) throws SQLException{
-		List<Rate> result = new ArrayList();
+		List<Rate> result = new ArrayList<Rate>();
 		
 		Film graded = films.get(id);
 		
@@ -102,9 +100,16 @@ public class FilmService {
 			ResultSet rs = psmt.executeQuery();
 			
 			while(rs.next()){
-				result.add(new Rate(rs.getLong("ID_rate"), rs.getInt("value"), new Timestamp(rs.getString("date_creation")), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
+				result.add(new Rate(
+						rs.getLong("ID_rate"),
+						rs.getInt("value"),
+						new Timestamp(rs.getString("date_creation")),
+						rs.getLong("ID_user"),
+						rs.getLong("ID_multimedia")));
 			}
 		}
+		
+		
 		return result;
 	}
 	
@@ -120,7 +125,12 @@ public class FilmService {
 			ResultSet rs = psmt.executeQuery();
 			
 			while(rs.next()){
-				result.add(new Comment(rs.getLong("ID_comment"), rs.getString("value"), new Timestamp(rs.getString("date_creation")), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
+				result.add(new Comment(
+						rs.getLong("ID_comment"),
+						rs.getString("value"),
+						new Timestamp(rs.getString("date_creation")),
+						rs.getLong("ID_user"),
+						rs.getLong("ID_multimedia")));
 			}
 		}
 		
@@ -128,7 +138,7 @@ public class FilmService {
 	}
 	
 	public List<Film> searchFilm(String filtre) throws SQLException{
-		List<Film> result = new ArrayList();
+		List<Film> result = new ArrayList<Film>();
 		
 		try(DB_web_services db = new DB_web_services()){
 			PreparedStatement psmt = db.getPreparedStatement(Constants.Film.getByName);
