@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">    
+	
+	
+	<!-- ========================================================== -->
+	<!-- General -->
+	<!-- ========================================================== -->
+	
+	<!-- Name of the application -->
+	<display-name>The Otter Market</display-name>
+	<description>A market where you'll buy many wonders !!</description>
+	
+	
+	<!-- Set timeout to 30 minutes -->
+	<session-config>
+                        <session-timeout>30</session-timeout>
+	</session-config>
+	
+	
+	<!-- Page you'll first see on the website -->
+	<welcome-file-list>  
+                        <welcome-file>login</welcome-file>  
+	</welcome-file-list>  
+    
+    		
+	
+	<!-- ========================================================== -->
+	<!-- Servlets -->
+	<!-- ========================================================== -->    
+
+	<!--  LOGIN -->
+	 <servlet>
+                        <servlet-name>Login</servlet-name>
+                        <servlet-class>WebServices.Servlets.Servlet_Login</servlet-class>
+	 </servlet>
+	 
+	 <servlet-mapping>
+                        <servlet-name>Login</servlet-name>
+                        <url-pattern>/login</url-pattern>
+	 </servlet-mapping>
+	 
+</web-app>
