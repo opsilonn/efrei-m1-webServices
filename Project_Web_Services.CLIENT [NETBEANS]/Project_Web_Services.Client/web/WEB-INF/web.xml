@@ -19,7 +19,7 @@
 	
 	<!-- Page you'll first see on the website -->
 	<welcome-file-list>  
-                        <welcome-file>login</welcome-file>  
+                        <welcome-file>home</welcome-file>  
 	</welcome-file-list>  
     
     		
@@ -30,13 +30,26 @@
 
 	<!--  LOGIN -->
 	 <servlet>
-                        <servlet-name>Login</servlet-name>
+                        <servlet-name>login</servlet-name>
                         <servlet-class>WebServices.Servlets.Servlet_Login</servlet-class>
 	 </servlet>
 	 
 	 <servlet-mapping>
-                        <servlet-name>Login</servlet-name>
+                        <servlet-name>login</servlet-name>
                         <url-pattern>/login</url-pattern>
+	 </servlet-mapping>
+         
+         
+         
+	<!--  HOME -->
+	 <servlet>
+                        <servlet-name>home</servlet-name>
+                        <servlet-class>WebServices.Servlets.Servlet_Home</servlet-class>
+	 </servlet>
+	 
+	 <servlet-mapping>
+                        <servlet-name>home</servlet-name>
+                        <url-pattern>/home</url-pattern>
 	 </servlet-mapping>
 	 
 </web-app>

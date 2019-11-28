@@ -43,7 +43,7 @@
                         <div class="card-body">
 
                             <%-- LOGIN FORM CONTENT --%>
-                            <form action="Login" method="post">
+                            <form action="login" method="post">
 
                                 <%-- LOGIN FIELD --%>
                                 <div class="form-group">

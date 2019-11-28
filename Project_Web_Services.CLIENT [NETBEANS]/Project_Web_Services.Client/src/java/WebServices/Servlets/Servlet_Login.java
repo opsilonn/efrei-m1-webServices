@@ -37,46 +37,55 @@ public class Servlet_Login extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
-    {	
+    {                
+        //If we don't have a role in the session, we are in the login page
+        if(request.getSession().getAttribute("role") == null)
+        {
             // We verify that the user has entered input ( != null )
-            if(request.getParameter(FORM_LOGIN_USERNAME) == null || request.getParameter(FORM_LOGIN_PASSWORD) == null)
+            if(request.getParameter(FORM_LOGIN_USERNAME) == null
+                    || request.getParameter(FORM_LOGIN_PASSWORD) == null)
             {
-                System.out.println(" Les champs ne sont pas remplis");
                 request.getRequestDispatcher(PATH_PAGE_LOGIN).forward(request, response);
                 return;
             }
-		
-        /*
-        // Data entered by the user
-        String inputUser = request.getParameter(FORM_LOGIN_USERNAME);
-        String inputPwd = request.getParameter(FORM_LOGIN_PASSWORD);
-        
+            
+            
+            // Data entered by the user
+            String inputUser = request.getParameter(FORM_LOGIN_USERNAME);
+            String inputPwd = request.getParameter(FORM_LOGIN_PASSWORD);
 
-        // WHAT WE COMPARE WITH FOR THE MOMENT
-        String USERNAME = "admin";
-        String PASSWORD = "admin";
-        
-        
-        // If the credentials match, we create an ADMIN session
-        if(USERNAME.equals(inputUser) && PASSWORD.equals(inputPwd))
-        {
-            // Setting the session value
-            HttpSession session = request.getSession();
-            session.setAttribute("role", "admin");
+
+
+            // Checking if the inputs correspond to the ADMIN credentials
+            String USER = "user";
+            String PWD = "user";
+
+            // If true, we create an ADMIN session
+            if(USER.equals(inputUser) && PWD.equals(inputPwd))
+            {
+                // Setting the session value
+                request.getSession().setAttribute("ID_user", 1);
+
+                // Redirecting
+                response.sendRedirect("home");
+                return;
+            }
+
+
+            // Since no match was found
+            request.setAttribute("errKey", ERR_MESSAGE_INVALID);
             
-            // Redirecting
-            request.setAttribute("errKey", "TOUT VA BIEN");
             request.getRequestDispatcher(PATH_PAGE_LOGIN).forward(request, response);
-            
-            //response.sendRedirect("JSP/login");
-            //return;
+            return;
         }
-        
-        
-        // Since no match was found
-        request.setAttribute("errKey", ERR_MESSAGE_INVALID);
-        request.getRequestDispatcher(PATH_PAGE_LOGIN).forward(request, response);
-        */
+        // If we have a Session (=we are already logged-in) -> go back to the Home page
+        else
+        {
+            // request.getSession().invalidate();
+            
+            request.getRequestDispatcher(PATH_PAGE_HOME).forward(request, response);
+            return;
+        }
     }
 
     
@@ -125,6 +134,6 @@ public class Servlet_Login extends HttpServlet
     @Override
     public String getServletInfo()
     {
-        return "This servlet is used to check the Login Credentials (Admin ? Employee ?)";
+        return "This servlet is used to check the Login Credentials";
     }// </editor-fold>
 }

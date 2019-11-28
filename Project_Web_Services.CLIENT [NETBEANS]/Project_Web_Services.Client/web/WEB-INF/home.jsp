@@ -8,7 +8,8 @@
     <body>
             <!-- We always add FIRST the Navbar -->
             <%@include file="JSP/navbar.jsp" %>
-
+            
+            
             <!-- Display some stuff -->
             Welcome to the home page
 
