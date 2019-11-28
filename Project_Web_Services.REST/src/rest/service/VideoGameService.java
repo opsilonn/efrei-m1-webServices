@@ -404,12 +404,14 @@ public class VideoGameService {
 	
 		try(DB_web_services db = new DB_web_services()){
 			
-			if(this.videoGames.get(id) == null)
+			VideoGame videoGame = this.videoGames.get(id);
+			
+			if(videoGame == null)
 				throw new DataNotFoundException("The video game with the id `" + id + "` doesn't exist !");
 
-			PreparedStatement ppsm = db.getPreparedStatement(Constants.VideoGame.deleteByID);
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.deleteByID);
 	
-	    	ppsm.setLong(1, id);
+	    	ppsm.setLong(1, videoGame.getId_multimedia());
 	    	
 	    	int rs = ppsm.executeUpdate();
 	

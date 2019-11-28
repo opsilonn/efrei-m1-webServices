@@ -22,8 +22,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
-import rest.model.Multimedia;
 import rest.model.Rate;
+import rest.service.MultimediaService;
 import rest.service.RateService;
 
 
@@ -62,8 +62,8 @@ public class RateResource {
 	private URI getUriForMultimedia(Rate rate)
 			throws SQLException {			
 		return uriInfo.getBaseUriBuilder()
-				.path( Multimedia.getChildClass(rate.getId_multimedia()) ) 
-				.path( String.valueOf(Multimedia.getChildID(rate.getId_multimedia())) )
+				.path( MultimediaService.getChildClass(rate.getId_multimedia()) ) 
+				.path( String.valueOf(MultimediaService.getChildID(rate.getId_multimedia())) )
 				.build();
 	}
 

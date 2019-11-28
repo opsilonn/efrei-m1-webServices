@@ -24,6 +24,7 @@ import javax.ws.rs.core.UriInfo;
 
 import rest.model.Comment;
 import rest.service.CommentService;
+import rest.service.MultimediaService;
 
 
 @Path("/comments")
@@ -61,8 +62,8 @@ public class CommentResource {
 	private URI getUriForMultimedia(Comment comment)
 			throws SQLException {			
 		return uriInfo.getBaseUriBuilder()
-				.path( rest.model.Multimedia.getChildClass(comment.getId_multimedia()) ) 
-				.path( String.valueOf(rest.model.Multimedia.getChildID(comment.getId_multimedia())) )
+				.path( MultimediaService.getChildClass(comment.getId_multimedia()) ) 
+				.path( String.valueOf(MultimediaService.getChildID(comment.getId_multimedia())) )
 				.build();
 	}
 

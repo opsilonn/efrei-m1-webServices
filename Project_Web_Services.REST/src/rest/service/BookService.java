@@ -351,12 +351,14 @@ public class BookService {
 		
 		try(DB_web_services db = new DB_web_services()){
 			
-			if(this.books.get(id) == null)
+			Book book = this.books.get(id);
+			
+			if(book == null)
 				throw new DataNotFoundException("The book with the id `" + id + "` doesn't exist !");
 
-			PreparedStatement ppsm = db.getPreparedStatement(Constants.Book.deleteByID);
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.deleteByID);
 	
-	    	ppsm.setLong(1, id);
+	    	ppsm.setLong(1, book.getId_multimedia());
 	    	
 	    	int rs = ppsm.executeUpdate();
 	

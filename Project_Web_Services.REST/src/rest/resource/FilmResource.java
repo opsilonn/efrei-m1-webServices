@@ -170,26 +170,29 @@ public class FilmResource
 	 
 	 
 	 @Path("/{film_id}")
+	 @PUT
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 public Response UpdateFilm(@PathParam("film_id") long id, Film film)
+			 throws SQLException{
+		 
+		 this.filmService = new FilmService();
+		 
+		 return Response.status(Status.OK)
+				 .entity(filmService.UpdateFilm(film.getDescription(), film.getLanguage(), film.getGenre(),film.getStatus(), film.getDirector(), film.getProductor(), film.getMainCast(), id))
+				 .build();
+	 }
+	 
+	 
+	 @Path("/{film_id}")
 	 @DELETE
-	 public Response DeleteFilm(@PathParam("film_id") long id) throws SQLException{
+	 public Response DeleteFilm(@PathParam("film_id") long id)
+			 throws SQLException{
 		 
 		 this.filmService = new FilmService();
 		 
 		 return Response
 				 .status(Status.OK)
 				 .entity(filmService.removeFilm(id))
-				 .build();
-	 }
-	 
-	 @Path("/{film_id}")
-	 @PUT
-	 @Consumes(MediaType.APPLICATION_JSON)
-	 public Response UpdateFilm(@PathParam("film_id") long id, Film film) throws SQLException{
-		 
-		 this.filmService = new FilmService();
-		 
-		 return Response.status(Status.OK)
-				 .entity(filmService.UpdateFilm(film.getDescription(), film.getLanguage(), film.getGenre(),film.getStatus(), film.getDirector(), film.getProductor(), film.getMainCast(), id))
 				 .build();
 	 }
 	 

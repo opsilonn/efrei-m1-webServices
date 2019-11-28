@@ -141,9 +141,13 @@ public class FilmService {
 		List<Film> result = new ArrayList<Film>();
 		
 		try(DB_web_services db = new DB_web_services()){
+			
 			PreparedStatement psmt = db.getPreparedStatement(Constants.Film.getByName);
+			
 			psmt.setString(1, "%" + filtre + "%");
+			
 			ResultSet rs = psmt.executeQuery();
+			
 			while(rs.next()){
 				Film film =new Film(
 						rs.getLong("ID_multimedia"),
@@ -164,9 +168,12 @@ public class FilmService {
 						new Time(rs.getString("duration"))
 						);
 				
+				
 				result.add(film);
 			}
 		}		
+		
+		
 		return result;
 	}
 	
@@ -214,32 +221,6 @@ public class FilmService {
 		
 	}
 	
-	public boolean removeFilm(long id)
-			throws SQLException{
-		
-		try(DB_web_services db = new DB_web_services()){
-
-			if(this.films.get(id) == null)
-				throw new DataNotFoundException("The film with the id `" + id + "` doesn't exist !");
-						
-			PreparedStatement psmt = db.getPreparedStatement(Constants.Film.deleteByID);
-			psmt.setLong(1, id);
-			
-			
-			int succes = psmt.executeUpdate();
-			
-			if(succes == 1){
-				films.remove(id);
-				
-				
-				return true;
-			}
-			
-			
-			return false;
-		}
-		
-	}
 	
 	public Film UpdateFilm(String description, String Langue, String genre, int Status, String Director, String Productor, String Cast, long id) throws SQLException{
 		
@@ -304,6 +285,36 @@ public class FilmService {
 		}
 		
 		return films.get(id);
+	}
+	
+	
+	public boolean removeFilm(long id)
+			throws SQLException{
+		
+		try(DB_web_services db = new DB_web_services()){
+
+			Film film = this.films.get(id);
+			
+			if(film == null)
+				throw new DataNotFoundException("The film with the id `" + id + "` doesn't exist !");
+						
+			PreparedStatement psmt = db.getPreparedStatement(Constants.Multimedia.deleteByID);
+			psmt.setLong(1, film.getId_multimedia());
+			
+			
+			int succes = psmt.executeUpdate();
+			
+			if(succes == 1){
+				films.remove(id);
+				
+				
+				return true;
+			}
+			
+			
+			return false;
+		}
+		
 	}
 	
 	
