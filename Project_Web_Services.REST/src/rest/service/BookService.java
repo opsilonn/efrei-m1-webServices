@@ -80,6 +80,39 @@ public class BookService {
 		return book;
 	}
 	
+	public List<Book> searchBook(String filtre) throws SQLException{
+		List<Book> result = new ArrayList<Book>();
+		
+		try(DB_web_services db = new DB_web_services()){
+			PreparedStatement psmt = db.getPreparedStatement(Constants.Book.getByName);
+			psmt.setString(1, "%" + filtre + "%");
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				Book book = new Book(
+						rs.getLong("ID_multimedia"),
+						rs.getString("title"),
+						rs.getString("language"),
+						rs.getString("description"),
+						rs.getString("genre"),
+						rs.getInt("category"),
+						rs.getInt("status"),
+						rs.getLong("ID_uploader"),
+						new Timestamp(rs.getString("date_status")),
+						new Timestamp(rs.getString("date_upload")),
+						new Date(rs.getString("date_release")),
+						rs.getLong("ID_book"),
+						rs.getString("author"),
+						rs.getString("publisher")
+						);
+				
+				result.add(book);
+			}
+		}
+		
+		return result;
+	}
+	
 	public int getBookCount(){
 		return books.size();
 	}

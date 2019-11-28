@@ -12,6 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
@@ -81,18 +82,31 @@ public class BookResource {
 	
     
     @GET
-    public Response getBooks()throws SQLException {
+    public Response getBooks(@QueryParam("start")int start, @QueryParam("end")int end, @QueryParam("filtre")String filtre)throws SQLException {
 		this.bookService = new BookService();
+		List<Book> books;
+		List<Book> result;
 		
-		List<Book> books = bookService.getAllBooks();
+		if(filtre != null){
+			books = bookService.searchBook(filtre);
+		}else{
+			books = bookService.getAllBooks();
+
+		}
 		
 		for(Book book : books){
 			addLinks(book);
 		}
 		
+		 if(start >=0 && end>0 && end>=start && end < books.size()){
+			 result = books.subList(start, end);
+		 }else{
+			 result = books;
+		 }
+		
 		
         return Response.status(Status.OK)
-				.entity(books)
+				.entity(result)
 				.build();
 
     }

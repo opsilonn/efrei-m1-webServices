@@ -81,6 +81,7 @@ public class Constants {
 	public class Book{
 		public static final String getAll = "SELECT * FROM Book_v";
 		public static final String getByID = "SELECT * FROM Book_v WHERE (id_book = ?)";
+		public static final String getByName = "SELECT * FROM Book_v WHERE title LIKE ?";
 		
 		public static final String post = "INSERT INTO `book` (author, publisher, id_multimedia) VALUES(?,?,?)";
 		public static final String putDescriptionByID = "UPDATE Book_v SET description = ? WHERE id_book = ?";
