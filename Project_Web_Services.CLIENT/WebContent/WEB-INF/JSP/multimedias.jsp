@@ -12,6 +12,13 @@
             
             <!-- Display some stuff -->
             Welcome to the home page
+            <br>
+            <%
+	            if(request.getSession().getAttribute("XYZ") != null)
+	            {
+	                out.println( "Bonjour Monsieur " + request.getSession().getAttribute("XYZ") );
+	            }
+           %>
 
 
             <!-- We always add LAST the Footer -->

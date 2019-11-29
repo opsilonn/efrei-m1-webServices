@@ -1,7 +1,10 @@
 package WebServices.util;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.ws.rs.core.UriBuilder;
 
 public class Constants
 {
@@ -77,5 +80,7 @@ public class Constants
     // Form Login fields's names
     public static final String FORM_LOGIN_USERNAME = "Username";
     public static final String FORM_LOGIN_PASSWORD = "Password";
-
+    
+    // Linking to the REST Backend
+    public static URI GET_BASE_URI = UriBuilder.fromUri("http://localhost:8080/Project_Web_Services.REST").build();
 }

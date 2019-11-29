@@ -1,13 +1,21 @@
 package WebServices.Servlets;
 
 import static WebServices.util.Constants.*;
+import static rest.util.REST_Utils.GetREST_List;
+import static rest.util.REST_Utils.GetREST_Service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+
+import rest.model.User;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,40 +58,56 @@ public class Servlet_Login extends HttpServlet
             }
             
             
+            
             // Data entered by the user
             String inputUser = request.getParameter(FORM_LOGIN_USERNAME);
             String inputPwd = request.getParameter(FORM_LOGIN_PASSWORD);
 
 
+            // -----------
+            // REST
+            // -----------
 
-            // Checking if the inputs correspond to the ADMIN credentials
-            String USER = "user";
-            String PWD = "user";
+        	// We get the REST service
+        	WebTarget service = GetREST_Service();
 
-            // If true, we create an ADMIN session
-            if(USER.equals(inputUser) && PWD.equals(inputPwd))
-            {
-                // Setting the session value
-                request.getSession().setAttribute("ID_user", 1);
+    	
+    	    // We get the Users (in a string, JSON format)	    
+    	    String users_String = service.path("rest/v1").
+    				    		path("users").request().
+    				    		accept(MediaType.APPLICATION_JSON).
+    				    		get(String.class);
+    	    
+    	    
+    	    // Convert the String into a list
+    	    List<User> listUsers = GetREST_List(users_String);
+    	    
 
-                // Redirecting
-                response.sendRedirect("home");
-                return;
-            }
+    	    
+    	    // For all the Users
+    	    for(User user : listUsers)
+    	    {
+    	    	String bddUser = user.getPseudo();
+    	    	
+                // If true, we create an ADMIN session
+                if(bddUser.equals(inputUser))
+                {
+                    // Setting the session value
+                    request.getSession().setAttribute("ID_user", 1);
+                    request.getSession().setAttribute("XYZ", bddUser);
+
+                    // Redirecting
+                    response.sendRedirect("home");
+                    return;
+                }
+    	    }
+
 
 
             // Since no match was found
             request.setAttribute("errKey", ERR_MESSAGE_INVALID);
             
             request.getRequestDispatcher(PATH_PAGE_LOGIN).forward(request, response);
-            return;
-        }
-        // If we have a Session (=we are already logged-in) -> go back to the Home page
-        else
-        {
-            // request.getSession().invalidate();
-            
-            request.getRequestDispatcher(PATH_PAGE_HOME).forward(request, response);
             return;
         }
     }
