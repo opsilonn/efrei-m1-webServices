@@ -18,9 +18,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Hugues
  */
-@WebServlet(name = "Servlet_Home", urlPatterns = {"/Servlet_Home"})
-public class Servlet_Home extends HttpServlet
-{
+@WebServlet(name = "Servlet_Logout", urlPatterns = {"/Servlet_Logout"})
+public class Servlet_Logout extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,7 +33,15 @@ public class Servlet_Home extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        // We delete the session
+        request.getSession().invalidate();
+        request.getRequestDispatcher(PATH_PAGE_LOGOUT).forward(request, response);
+
+        // We redirect to the main page
+        /*
         request.getRequestDispatcher(PATH_PAGE_HOME).forward(request, response);
+        return;
+        */
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

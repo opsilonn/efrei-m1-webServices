@@ -7,7 +7,7 @@
 
     <body>
             <!-- We always add FIRST the Navbar -->
-            <%@include file="JSP/navbar.jsp" %>
+            <%@include file="navbar.jsp" %>
             
             
             <!-- Display some stuff -->
@@ -15,6 +15,6 @@
 
 
             <!-- We always add LAST the Footer -->
-            <%@include file="JSP/footer.jsp" %>
+            <%@include file="footer.jsp" %>            
     </body>
 </html>

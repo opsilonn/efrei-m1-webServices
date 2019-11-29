@@ -89,11 +89,13 @@ public class JSP_Navbar
         Boolean isConnected = (r1.getSession().getAttribute("ID_user") != null);
 
 
+        // If connected : My Profile & Logout
         if( isConnected )
         {
                 AddButton(jw, r1, "My Profile", "#");
-                AddButton(jw, r1, "Logout", "#");
+                AddButton(jw, r1, "Logout", "logout");
         }
+        // If not connected : New account & Login
         else
         {
                 AddButton(jw, r1, "Sign up", "#");

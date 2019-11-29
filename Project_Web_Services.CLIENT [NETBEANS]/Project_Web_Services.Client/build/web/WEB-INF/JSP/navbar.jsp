@@ -14,7 +14,7 @@
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 	    <!-- Browser's icon -->
-                        <link rel="icon" type="image/png" href="<%=Constants.PATH_LOGO%>"/>
+                        <link rel="icon" type="image/png" href="<%=Constants.PATH_IMAGE_LOGO%>"/>
 		
 
 	    <!-- Do something -->
@@ -29,7 +29,7 @@
 
                                 <!-- Name of the Website -->
                                   <a class="navbar-brand my-0 mr-md-auto" href="/Project_Web_Services.Client">
-                                    <img src="<%=Constants.PATH_LOGO%>" width="30" height="30" class="d-inline-block align-top" alt="">
+                                    <img src="<%=Constants.PATH_IMAGE_LOGO%>" width="30" height="30" class="d-inline-block align-top" alt="">
                                         <b style="color:white"> <%=Constants.NAME_WEBSITE%> </b>
                                   </a>
 
