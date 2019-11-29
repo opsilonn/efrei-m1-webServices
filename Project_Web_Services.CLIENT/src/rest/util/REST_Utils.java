@@ -1,13 +1,13 @@
 package rest.util;
 
-import static WebServices.util.Constants.GET_BASE_URI;
-
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.UriBuilder;
 import org.glassfish.jersey.client.ClientConfig;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -18,8 +18,12 @@ import rest.model.User;
 
 
 public class REST_Utils<E>
-{
-	public static WebTarget GetREST_Service()
+{	   
+    // Linking to the REST Backend
+    private static URI GET_BASE_URI = UriBuilder.fromUri("http://localhost:8080/Project_Web_Services.REST").build();
+
+	
+	public static WebTarget REST_GetService()
 	{
 	    ClientConfig config = new ClientConfig();
 	    Client client = ClientBuilder.newClient(config);
@@ -31,7 +35,7 @@ public class REST_Utils<E>
 	
 	
 	
-	public static ArrayList<User> GetREST_List(String JSON_string)
+	public static ArrayList<User> REST_GetList(String JSON_string)
 			throws JsonParseException, JsonMappingException, IOException
 	{
 	    ObjectMapper mapper = new ObjectMapper();

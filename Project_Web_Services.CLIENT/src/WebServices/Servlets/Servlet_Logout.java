@@ -7,21 +7,24 @@ package WebServices.Servlets;
 
 import static WebServices.util.Constants.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Hugues
- */
-@WebServlet(name = "Servlet_Logout", urlPatterns = {"/Servlet_Logout"})
-public class Servlet_Logout extends HttpServlet {
 
+
+
+@WebServlet(name = "Servlet_Logout", urlPatterns = {"/Servlet_Logout"})
+public class Servlet_Logout extends HttpServlet
+{
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -36,12 +39,6 @@ public class Servlet_Logout extends HttpServlet {
         // We delete the session
         request.getSession().invalidate();
         request.getRequestDispatcher(PATH_PAGE_LOGOUT).forward(request, response);
-
-        // We redirect to the main page
-        /*
-        request.getRequestDispatcher(PATH_PAGE_HOME).forward(request, response);
-        return;
-        */
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

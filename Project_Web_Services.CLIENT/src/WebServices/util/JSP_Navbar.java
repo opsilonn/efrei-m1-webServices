@@ -87,7 +87,8 @@ public class JSP_Navbar
         // If connected : My Profile & Logout
         if( isConnected )
         {
-                AddButton(jw, r1, "My Profile", "#");
+	            AddButton(jw, r1, "<b>Add a new article !</b>", "#");
+	            AddButton(jw, r1, "My Profile", "#");
                 AddButton(jw, r1, "Logout", "logout");
         }
         // If not connected : New account & Login

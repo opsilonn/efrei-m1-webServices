@@ -19,16 +19,16 @@
                     <div style="color:red; text-align: center">
                         <label>
                             <small>
-                                <%
-	                                if(request.getAttribute("errKey") != null)
-	                                {
-	                                    out.println( request.getAttribute("errKey") );
-	                                }
-	                                else
-	                                {
-	                                    out.println( " " );
-	                                }
-                                %>
+	                            <%
+	                             if(request.getAttribute("errKey") != null)
+	                             {
+	                                 out.println( request.getAttribute("errKey") );
+	                             }
+	                             else
+	                             {
+	                                 out.println( " " );
+	                             }
+	                            %>
                             </small>
                         </label>
                     </div>

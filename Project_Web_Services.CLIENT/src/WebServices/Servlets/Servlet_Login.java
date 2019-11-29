@@ -1,21 +1,15 @@
 package WebServices.Servlets;
 
 import static WebServices.util.Constants.*;
-import static rest.util.REST_Utils.GetREST_List;
-import static rest.util.REST_Utils.GetREST_Service;
-
+import static rest.util.REST_Utils.REST_GetList;
+import static rest.util.REST_Utils.REST_GetService;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-
 import rest.model.User;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,15 +55,18 @@ public class Servlet_Login extends HttpServlet
             
             // Data entered by the user
             String inputUser = request.getParameter(FORM_LOGIN_USERNAME);
-            String inputPwd = request.getParameter(FORM_LOGIN_PASSWORD);
+            // String inputPwd = request.getParameter(FORM_LOGIN_PASSWORD);
 
 
+            
             // -----------
             // REST
             // -----------
+            
+            
 
         	// We get the REST service
-        	WebTarget service = GetREST_Service();
+        	WebTarget service = REST_GetService();
 
     	
     	    // We get the Users (in a string, JSON format)	    
@@ -80,7 +77,7 @@ public class Servlet_Login extends HttpServlet
     	    
     	    
     	    // Convert the String into a list
-    	    List<User> listUsers = GetREST_List(users_String);
+    	    List<User> listUsers = REST_GetList(users_String);
     	    
 
     	    
@@ -107,8 +104,14 @@ public class Servlet_Login extends HttpServlet
             // Since no match was found
             request.setAttribute("errKey", ERR_MESSAGE_INVALID);
             
-            request.getRequestDispatcher(PATH_PAGE_LOGIN).forward(request, response);
+            response.sendRedirect("login");
             return;
+        }
+        //If we have a role in the session, we are redirected to the home page
+        else
+        {
+            response.sendRedirect("home");
+        	return;	
         }
     }
 
@@ -158,6 +161,6 @@ public class Servlet_Login extends HttpServlet
     @Override
     public String getServletInfo()
     {
-        return "This servlet is used to check the Login Credentials";
+        return "I'm the login servlet : I log people in.";
     }// </editor-fold>
 }

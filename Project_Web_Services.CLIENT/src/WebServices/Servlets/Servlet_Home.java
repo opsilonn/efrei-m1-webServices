@@ -1,6 +1,5 @@
 package WebServices.Servlets;
 
-import static rest.util.REST_Utils.*;
 import static WebServices.util.Constants.*;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,24 +8,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import rest.model.User;
 
 
 
-/**
- *
- * @author Hugues
- */
 @WebServlet(name = "Servlet_Home", urlPatterns = {"/Servlet_Home"})
 public class Servlet_Home extends HttpServlet
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
