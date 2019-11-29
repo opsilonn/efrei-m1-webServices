@@ -77,7 +77,7 @@ public class Servlet_Logout extends HttpServlet
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "I'm the logout servlet : I log people out.";
     }// </editor-fold>
 
 }
