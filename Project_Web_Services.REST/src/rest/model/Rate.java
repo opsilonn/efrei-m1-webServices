@@ -23,7 +23,8 @@ public class Rate {
 	
 	private int value;
 	private Timestamp creation_date;
-	
+
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private long id_user;
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private long id_multimedia;
@@ -85,7 +86,6 @@ public class Rate {
 	/**
 	 * @return the user
 	 */
-    @XmlTransient
 	public long getId_user() {
 		return this.id_user;
 	}

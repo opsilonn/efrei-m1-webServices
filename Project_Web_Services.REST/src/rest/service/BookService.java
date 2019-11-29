@@ -9,10 +9,8 @@ import java.util.Map;
 
 import rest.exception.DataNotFoundException;
 import rest.model.Book;
-import rest.model.Film;
-import rest.model.VideoGame;
+import rest.model.Rate;
 import rest.model.util.Date;
-import rest.model.util.Time;
 import rest.model.util.Timestamp;
 import rest.service.util.Constants;
 import rest.util.DB_web_services;
@@ -82,10 +80,61 @@ public class BookService {
 		return book;
 	}
 	
+	public List<Book> searchBook(String filtre) throws SQLException{
+		List<Book> result = new ArrayList<Book>();
+		
+		try(DB_web_services db = new DB_web_services()){
+			PreparedStatement psmt = db.getPreparedStatement(Constants.Book.getByName);
+			psmt.setString(1, "%" + filtre + "%");
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				Book book = new Book(
+						rs.getLong("ID_multimedia"),
+						rs.getString("title"),
+						rs.getString("language"),
+						rs.getString("description"),
+						rs.getString("genre"),
+						rs.getInt("category"),
+						rs.getInt("status"),
+						rs.getLong("ID_uploader"),
+						new Timestamp(rs.getString("date_status")),
+						new Timestamp(rs.getString("date_upload")),
+						new Date(rs.getString("date_release")),
+						rs.getLong("ID_book"),
+						rs.getString("author"),
+						rs.getString("publisher")
+						);
+				
+				result.add(book);
+			}
+		}
+		
+		return result;
+	}
+	
 	public int getBookCount(){
 		return books.size();
 	}
 	
+	public List<Rate> getRates(long id) throws SQLException{
+		List<Rate> result = new ArrayList<Rate>();
+		
+		Book graded = books.get(id);
+		
+		try(DB_web_services db = new DB_web_services()){
+			PreparedStatement psmt = db.getPreparedStatement(Constants.Rate.getByMult);
+			psmt.setLong(1, graded.getId_multimedia());
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				result.add(new Rate(rs.getLong("ID_rate"), rs.getInt("value"), new Timestamp(rs.getString("date_creation")), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
+			}
+		}
+		
+		return result;
+	}
 	
 	public Book addBook(Book book)
 			throws SQLException{
@@ -302,12 +351,14 @@ public class BookService {
 		
 		try(DB_web_services db = new DB_web_services()){
 			
-			if(this.books.get(id) == null)
+			Book book = this.books.get(id);
+			
+			if(book == null)
 				throw new DataNotFoundException("The book with the id `" + id + "` doesn't exist !");
 
-			PreparedStatement ppsm = db.getPreparedStatement(Constants.Book.deleteByID);
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.deleteByID);
 	
-	    	ppsm.setLong(1, id);
+	    	ppsm.setLong(1, book.getId_multimedia());
 	    	
 	    	int rs = ppsm.executeUpdate();
 	

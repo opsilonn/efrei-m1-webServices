@@ -1,7 +1,10 @@
-package fr.WebService.Servlets;
+package fr.WebServices.Servlets;
 
-import static fr.WebService.util.Constants.*;
+import static fr.WebServices.util.Constants.*;
+
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
@@ -17,6 +20,13 @@ import javax.servlet.http.HttpServletResponse;
 public class Servlet_Login extends HttpServlet
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -389100878518890328L;
+
+
+
+	/**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -27,7 +37,23 @@ public class Servlet_Login extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
-    {
+    {	
+		response.setContentType("text/html") ;
+		
+		PrintWriter out = response.getWriter() ;
+		out.println("<html>") ;
+		
+		out.println("	<head>") ;
+		out.println("		<title>Loginator</title>") ;
+		out.println("	</head>") ;
+		
+		out.println("	<body>") ;
+		out.println("		<h1>Bienvenue dans le Loginator !</h1>") ;
+		out.println("	</body>") ;
+		
+		out.println("</html>") ; 
+		
+    	/*
         // We verify that the user has entered input ( != null )
         if(request.getParameter(FORM_LOGIN_USERNAME) == null || request.getParameter(FORM_LOGIN_PASSWORD) == null)
         {
@@ -54,14 +80,18 @@ public class Servlet_Login extends HttpServlet
             session.setAttribute("role", "admin");
             
             // Redirecting
-            response.sendRedirect("employees");
-            return;
+            request.setAttribute("errKey", "TOUT VA BIEN");
+            request.getRequestDispatcher(PATH_PAGE_LOGIN).forward(request, response);
+            
+            //response.sendRedirect("JSP/login");
+            //return;
         }
         
         
         // Since no match was found
         request.setAttribute("errKey", ERR_MESSAGE_INVALID);
         request.getRequestDispatcher(PATH_PAGE_LOGIN).forward(request, response);
+        */
     }
 
     

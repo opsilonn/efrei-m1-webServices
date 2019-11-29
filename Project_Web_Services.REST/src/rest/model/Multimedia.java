@@ -4,15 +4,7 @@ package rest.model;
 import rest.model.util.Date;
 import rest.model.util.Link;
 import rest.model.util.Timestamp;
-import rest.resource.BookResource;
-import rest.resource.FilmResource;
-import rest.resource.VideoGameResource;
-import rest.service.util.Constants;
-import rest.util.DB_web_services;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,14 +41,6 @@ public class Multimedia {
 	private List<Link> links = new ArrayList<Link>();
 	
 	
-	public enum Category{
-		BOOK,
-		FILM,
-		VIDEO_GAME
-	}
-	
-	
-	
 	
 	public Multimedia() { }
 	
@@ -76,6 +60,7 @@ public class Multimedia {
 		this.date_release = release_date;
 		this.ID_uploader = ID_uploader;
 	}
+	
 
 	public Multimedia(String title, String description, String language, String genre, int category,
 			int status, long ID_uploader, Date release){
@@ -88,91 +73,6 @@ public class Multimedia {
 		this.status = status;
 		this.ID_uploader = ID_uploader;
 		this.date_release = release;
-	}
-	
-	
-	public static Category getChildCategory(long id_multimedia) throws SQLException{
-		
-		try(DB_web_services db = new DB_web_services()){
-    	
-	    	PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.getTypeByID);
-	    	    	
-	    	ppsm.setLong(1, id_multimedia);
-	    	
-	    	ResultSet rs = ppsm.executeQuery();
-	    	
-	    	if(rs.next()){
-	    		int type = rs.getInt(1);
-	    		
-	    		switch(type){
-	    		case 1:
-	    			return Category.BOOK;
-	    		case 2:
-	    			return Category.FILM;
-	    		case 3:
-	    			return Category.VIDEO_GAME;
-	    		}
-	    	}
-	    	
-	    	
-	    	return null;
-		}
-		
-	}
-	
-	
-	public static Class getChildClass(long id_multimedia)
-			throws SQLException{
-		Category category = getChildCategory(id_multimedia);
-		
-		switch(category){
-		case BOOK:
-			return BookResource.class;
-		case FILM:
-			return FilmResource.class;
-		case VIDEO_GAME:
-			return VideoGameResource.class;
-		}
-		
-		return null;
-	}
-	
-	
-	public static long getChildID(long id_multimedia)
-			throws SQLException{
-		Category category = getChildCategory(id_multimedia);
-		String query;
-		
-		switch(category){
-		case BOOK:
-			query = Constants.Multimedia.getBookChildID;
-			break;
-		case FILM:
-			query = Constants.Multimedia.getFilmChildID;
-			break;
-		case VIDEO_GAME:
-			query = Constants.Multimedia.getVideoGameChildID;
-			break;
-		default:
-			return 0;
-		}
-		
-		try(DB_web_services db = new DB_web_services()){
-    	
-	    	PreparedStatement ppsm = db.getPreparedStatement(query);
-	    	
-	    	ppsm.setLong(1, id_multimedia);
-	    	
-	    	ResultSet rs = ppsm.executeQuery();
-	    	
-	    	if(rs.next()){
-	    		return rs.getInt(1);
-	    	}
-	    	
-	    	
-	    	return 0;
-		}
-		
 	}
 
 

@@ -3,6 +3,7 @@ package rest.resource;
 
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -22,33 +23,35 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import rest.model.Comment;
-import rest.service.CommentUserService;
+import rest.service.CommentService;
+import rest.service.MultimediaService;
 
 
+@Path("/comments")
 @Produces(MediaType.APPLICATION_JSON)
-public class CommentUserResource {
+public class CommentResource {
 
     // Allows to insert contextual objects into the class,
     // e.g. ServletContext, Request, Response, UriInfo
     @Context
     Request request;
+    @Context
+    UriInfo uriInfo;
     
-    CommentUserService commentService;
+    CommentService commentService;
     
 
 
 
-	private URI getUriForSelf(Comment comment, UriInfo uriInfo) {	
+	private URI getUriForSelf(Comment comment) {	
 		return uriInfo.getBaseUriBuilder()
-				.path(UserResource.class)
-				.path(UserResource.class, "getCommentResource")
+				.path(CommentResource.class)
 				.path(String.valueOf(comment.getId_comment()))
-				.resolveTemplate("id_user", comment.getId_user())
 				.build();
 	}
     
     
-	private URI getUriForParentUser(Comment comment, UriInfo uriInfo) {	
+	private URI getUriForUser(Comment comment) {	
 		return uriInfo.getBaseUriBuilder()
 				.path(UserResource.class)
 				.path(String.valueOf(comment.getId_user()))
@@ -56,36 +59,53 @@ public class CommentUserResource {
 	}
     
     
-	private URI getUriForMultimedia(Comment comment, UriInfo uriInfo)
+	private URI getUriForMultimedia(Comment comment)
 			throws SQLException {			
 		return uriInfo.getBaseUriBuilder()
-				.path( rest.model.Multimedia.getChildClass(comment.getId_multimedia()) ) 
-				.path( String.valueOf(rest.model.Multimedia.getChildID(comment.getId_multimedia())) )
+				.path( MultimediaService.getChildClass(comment.getId_multimedia()) ) 
+				.path( String.valueOf(MultimediaService.getChildID(comment.getId_multimedia())) )
 				.build();
 	}
 
 
-	private void addLinks(Comment comment, UriInfo uriInfo)
+	private void addLinks(Comment comment)
 			throws SQLException {
-		comment.addLink("self", getUriForSelf(comment, uriInfo).toString());
-		comment.addLink("author", getUriForParentUser(comment, uriInfo).toString());
-		comment.addLink("multimedia", getUriForMultimedia(comment, uriInfo).toString());
+		comment.addLink("self", getUriForSelf(comment).toString());
+		comment.addLink("author", getUriForUser(comment).toString());
+		comment.addLink("multimedia", getUriForMultimedia(comment).toString());
 	}
     
 
     
     
     @GET
-    public Response getComments(@PathParam("id_user")long id_user,
-    		@QueryParam("start")int start, @QueryParam("end")int end,
-    		@Context UriInfo uriInfo) 
+    public Response getComments(@QueryParam("id_user")long id_user, @QueryParam("id_multimedia")long id_multimedia, 
+    		@QueryParam("start")int start, @QueryParam("end")int end) 
     		throws SQLException{
-   		this.commentService = new CommentUserService(id_user);
+   		this.commentService = new CommentService();
 		
 		List<Comment> comments = commentService.getAllComments();
+		
 
-		for(Comment comment : comments){
-			addLinks(comment, uriInfo);
+		if(id_user != 0){
+
+			List<Comment> comments_cpy = new ArrayList<Comment>(comments);
+    		for(Comment comment : comments_cpy){
+    			if( comment.getId_user() != id_user ){
+    				comments.remove(comment);
+    			}
+    		}
+			
+		}
+		if(id_multimedia != 0){
+
+			List<Comment> comments_cpy = new ArrayList<Comment>(comments);
+    		for(Comment comment : comments_cpy){
+    			if( comment.getId_multimedia() != id_multimedia ){
+    				comments.remove(comment);
+    			}
+    		}
+			
 		}
 		
 
@@ -96,6 +116,10 @@ public class CommentUserResource {
 			}
 			
 			comments = comments.subList(start, end);
+		}
+
+		for(Comment comment : comments){
+			addLinks(comment);
 		}
 		
 		
@@ -108,14 +132,13 @@ public class CommentUserResource {
 
     @Path("{id_comment}")
     @GET
-    public Response getComment(@PathParam("id_user")long id_user, @PathParam("id_comment") long id,
-    		@Context UriInfo uriInfo) 
+    public Response getComment(@PathParam("id_comment") long id) 
     		throws SQLException{
-		this.commentService = new CommentUserService(id_user);
+		this.commentService = new CommentService();
 		
 		Comment comment = commentService.getComment(id);
 		
-		addLinks(comment, uriInfo);
+		addLinks(comment);
 		
 		
         return Response
@@ -127,9 +150,9 @@ public class CommentUserResource {
 
     @GET
     @Path("count")
-    public Response getCount(@PathParam("id_user")long id_user) 
+    public Response getCount() 
     		throws SQLException{
-		this.commentService = new CommentUserService(id_user);
+		this.commentService = new CommentService();
 		
 		
         return Response
@@ -142,14 +165,13 @@ public class CommentUserResource {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postComment(@PathParam("id_user")long id_user, Comment comment,
-    		@Context UriInfo uriInfo) 
+    public Response postComment(Comment comment) 
     		throws SQLException{
-		this.commentService = new CommentUserService(id_user);
+		this.commentService = new CommentService();
 		
-		Comment new_comment = commentService.addComment(comment.getValue(), comment.getId_multimedia());
-		addLinks(new_comment, uriInfo);
-		URI location = getUriForSelf(new_comment, uriInfo);
+		Comment new_comment = commentService.addComment(comment.getValue(), comment.getId_user(), comment.getId_multimedia());
+		addLinks(new_comment);
+		URI location = getUriForSelf(new_comment);
 
 		
         return Response
@@ -165,7 +187,7 @@ public class CommentUserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response putComment(@PathParam("id_user")long id_user, @PathParam("id_comment")long id_comment, Comment comment) 
     		throws SQLException{
-		this.commentService = new CommentUserService(id_user);
+		this.commentService = new CommentService();
 		
         return Response
 				.status(Status.OK)
@@ -179,7 +201,7 @@ public class CommentUserResource {
     @DELETE
     public Response deleteComment(@PathParam("id_user")long id_user, @PathParam("id_comment")Long id) 
     		throws SQLException{
-		this.commentService = new CommentUserService(id_user);
+		this.commentService = new CommentService();
 		
         return Response
 				.status(Status.OK)

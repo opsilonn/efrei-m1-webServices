@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.org.glassfish.gmbal.Description;
-
 import rest.exception.DataNotFoundException;
 import rest.model.Comment;
 import rest.model.Film;
@@ -91,7 +89,7 @@ public class FilmService {
 	}
 	
 	public List<Rate> getRates(Long id) throws SQLException{
-		List<Rate> result = new ArrayList();
+		List<Rate> result = new ArrayList<Rate>();
 		
 		Film graded = films.get(id);
 		
@@ -102,9 +100,16 @@ public class FilmService {
 			ResultSet rs = psmt.executeQuery();
 			
 			while(rs.next()){
-				result.add(new Rate(rs.getLong("ID_rate"), rs.getInt("value"), new Timestamp(rs.getString("date_creation")), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
+				result.add(new Rate(
+						rs.getLong("ID_rate"),
+						rs.getInt("value"),
+						new Timestamp(rs.getString("date_creation")),
+						rs.getLong("ID_user"),
+						rs.getLong("ID_multimedia")));
 			}
 		}
+		
+		
 		return result;
 	}
 	
@@ -120,7 +125,12 @@ public class FilmService {
 			ResultSet rs = psmt.executeQuery();
 			
 			while(rs.next()){
-				result.add(new Comment(rs.getLong("ID_comment"), rs.getString("value"), new Timestamp(rs.getString("date_creation")), rs.getLong("ID_user"), rs.getLong("ID_multimedia")));
+				result.add(new Comment(
+						rs.getLong("ID_comment"),
+						rs.getString("value"),
+						new Timestamp(rs.getString("date_creation")),
+						rs.getLong("ID_user"),
+						rs.getLong("ID_multimedia")));
 			}
 		}
 		
@@ -128,12 +138,16 @@ public class FilmService {
 	}
 	
 	public List<Film> searchFilm(String filtre) throws SQLException{
-		List<Film> result = new ArrayList();
+		List<Film> result = new ArrayList<Film>();
 		
 		try(DB_web_services db = new DB_web_services()){
+			
 			PreparedStatement psmt = db.getPreparedStatement(Constants.Film.getByName);
+			
 			psmt.setString(1, "%" + filtre + "%");
+			
 			ResultSet rs = psmt.executeQuery();
+			
 			while(rs.next()){
 				Film film =new Film(
 						rs.getLong("ID_multimedia"),
@@ -154,9 +168,12 @@ public class FilmService {
 						new Time(rs.getString("duration"))
 						);
 				
+				
 				result.add(film);
 			}
 		}		
+		
+		
 		return result;
 	}
 	
@@ -204,32 +221,6 @@ public class FilmService {
 		
 	}
 	
-	public boolean removeFilm(long id)
-			throws SQLException{
-		
-		try(DB_web_services db = new DB_web_services()){
-
-			if(this.films.get(id) == null)
-				throw new DataNotFoundException("The film with the id `" + id + "` doesn't exist !");
-						
-			PreparedStatement psmt = db.getPreparedStatement(Constants.Film.deleteByID);
-			psmt.setLong(1, id);
-			
-			
-			int succes = psmt.executeUpdate();
-			
-			if(succes == 1){
-				films.remove(id);
-				
-				
-				return true;
-			}
-			
-			
-			return false;
-		}
-		
-	}
 	
 	public Film UpdateFilm(String description, String Langue, String genre, int Status, String Director, String Productor, String Cast, long id) throws SQLException{
 		
@@ -294,6 +285,36 @@ public class FilmService {
 		}
 		
 		return films.get(id);
+	}
+	
+	
+	public boolean removeFilm(long id)
+			throws SQLException{
+		
+		try(DB_web_services db = new DB_web_services()){
+
+			Film film = this.films.get(id);
+			
+			if(film == null)
+				throw new DataNotFoundException("The film with the id `" + id + "` doesn't exist !");
+						
+			PreparedStatement psmt = db.getPreparedStatement(Constants.Multimedia.deleteByID);
+			psmt.setLong(1, film.getId_multimedia());
+			
+			
+			int succes = psmt.executeUpdate();
+			
+			if(succes == 1){
+				films.remove(id);
+				
+				
+				return true;
+			}
+			
+			
+			return false;
+		}
+		
 	}
 	
 	

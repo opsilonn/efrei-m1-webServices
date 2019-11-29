@@ -1,4 +1,4 @@
-package fr.WebService.util;
+package fr.WebServices.util;
 
 import java.util.ArrayList;
 import java.util.List;

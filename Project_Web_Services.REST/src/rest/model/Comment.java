@@ -23,7 +23,8 @@ public class Comment {
 	
 	private String value;
 	private Timestamp creation_date;
-	
+
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private long id_user;
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private long id_multimedia;
@@ -85,7 +86,6 @@ public class Comment {
 	/**
 	 * @return the user
 	 */
-    @XmlTransient
 	public long getId_user() {
 		return this.id_user;
 	}
@@ -93,7 +93,6 @@ public class Comment {
 	/**
 	 * @return the multimedia
 	 */
-    @XmlTransient
 	public long getId_multimedia() {
 		return this.id_multimedia;
 	}

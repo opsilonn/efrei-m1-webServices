@@ -50,18 +50,16 @@ public class UserResource {
     
 	private URI getUriForRates(User user) {		
 		return this.uriInfo.getBaseUriBuilder()
-				.path(UserResource.class)
-				.path(UserResource.class, "getRateResource")
-				.resolveTemplate("id_user", user.getId_user())
+				.path(RateResource.class)
+				.queryParam("id_user", user.getId_user())
 				.build();
 	}
     
     
-	private URI getUriForComments(User user) {		
+	private URI getUriForComments(User user) {
 		return this.uriInfo.getBaseUriBuilder()
-				.path(UserResource.class)
-				.path(UserResource.class, "getCommentResource")
-				.resolveTemplate("id_user", user.getId_user())
+				.path(CommentResource.class)
+				.queryParam("id_user", user.getId_user())
 				.build();
 	}
 
@@ -195,20 +193,6 @@ public class UserResource {
 				status(Status.OK) 
 				.entity(userService.removeUser(id))
 				.build();
-    }
-
-
-    
-    
-    @Path("/{id_user}/rates")
-    public RateUserResource getRateResource() {
-    	return new RateUserResource();
-    }
-    
-    
-    @Path("/{id_user}/comments")
-    public CommentUserResource getCommentResource() {
-    	return new CommentUserResource();
     }
 
 }

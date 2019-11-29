@@ -1,5 +1,6 @@
 package rest.resource;
 
+import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -10,12 +11,14 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
+
 import rest.model.VideoGame;
 import rest.service.VideoGameService;
 
@@ -34,33 +37,52 @@ public class VideoGameResource
     
     VideoGameService videoGameService;
     
+
+
+
+	private URI getUriForSelf(VideoGame videoGame) {
+		return this.uriInfo.getBaseUriBuilder()
+				.path(BookResource.class)
+				.path(String.valueOf(videoGame.getId_videoGame()))
+				.build();
+	}
+    
+    
+	private URI getUriForUploader(VideoGame videoGame) {		
+		return this.uriInfo.getBaseUriBuilder()
+				.path(UserResource.class)
+				.path(String.valueOf(videoGame.getID_uploader()))
+				.build();
+	}
+    
+    
+	private URI getUriForRates(VideoGame videoGame) {		
+		return this.uriInfo.getBaseUriBuilder()
+				.path(RateResource.class)
+				.queryParam("id_multimedia", videoGame.getId_multimedia())
+				.build();
+	}
+    
+    
+	private URI getUriForComments(VideoGame videoGame) {		
+		return this.uriInfo.getBaseUriBuilder()
+				.path(CommentResource.class)
+				.queryParam("id_multimedia", videoGame.getId_multimedia())
+				.build();
+	}
+
+
+    
 	
 	/** We add links related to the {@VideoGame}
 	 * 
 	 * @param videoGame Current {@VideoGame} of which we want to give the associated links
 	 */
-	private void addLinks(VideoGame videoGame)
-	{
-		this.uriInfo.getBaseUriBuilder();
-		
-		// We add a link to the page of this very {@VideoGame}
-		videoGame.addLink(
-				"self",
-				this.uriInfo.getBaseUriBuilder()
-				.path(VideoGameResource.class)
-				.path(String.valueOf(videoGame.getId_videoGame()))
-				.build()
-				.toString()
-				);
-
-		
-		// We add a link to the page of the {@User} that uploaded this {@VideoGame}
-		videoGame.addLink(
-				"uploader",
-				this.uriInfo.getBaseUriBuilder().toString()
-					+ "users/"
-					+ Long.toString( videoGame.getID_uploader() ) 
-				);
+	private void addLinks(VideoGame videoGame) {
+		videoGame.addLink("self", getUriForSelf(videoGame).toString());
+		videoGame.addLink("uploader", getUriForUploader(videoGame).toString());
+		videoGame.addLink("rates", getUriForRates(videoGame).toString());
+		videoGame.addLink("comments", getUriForComments(videoGame).toString());
 	}
     
     
@@ -72,19 +94,37 @@ public class VideoGameResource
      * @throws SQLException
      */
     @GET
-    public Response getVideoGames()throws SQLException
+    public Response getVideoGames(@QueryParam("start")int start, @QueryParam("end")int end, @QueryParam("filtre")String filtre)throws SQLException
     {
 		this.videoGameService = new VideoGameService();
 
 		// We add the links to all foreign references
-		List<VideoGame> videoGames = videoGameService.getAllVideoGames();
-		for(VideoGame videoGame : videoGames)
+		List<VideoGame> videoGames;
+		List<VideoGame> result;
+		
+		System.out.println(start);
+		System.out.println(end);
+		
+		
+		if(filtre != null){
+			videoGames = videoGameService.filtre(filtre);
+		}else{
+			videoGames = videoGameService.getAllVideoGames();
+		}
+		
+		if(start >=0 && end>0 && end>=start && end<=videoGames.size()){
+			 result = videoGames.subList(start, end);
+		 }else{
+			 result = videoGames;
+		 }
+		
+		for(VideoGame videoGame : result)
 		{
 			addLinks(videoGame);
 		}
 		
 		return Response.status(Status.OK)
-				.entity(videoGames)
+				.entity(result)
 				.build();
     }
 
@@ -112,9 +152,6 @@ public class VideoGameResource
 				.entity(videoGame)
 				.build();
     }
-
-    
-    
 
     /** Displays the number of rows inside the table {@VideoGame}
      * 

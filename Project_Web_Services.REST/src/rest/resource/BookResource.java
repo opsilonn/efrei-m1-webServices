@@ -12,6 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
@@ -52,29 +53,60 @@ public class BookResource {
 				.path(String.valueOf(book.getID_uploader()))
 				.build();
 	}
+    
+    
+	private URI getUriForRates(Book book) {		
+		return this.uriInfo.getBaseUriBuilder()
+				.path(RateResource.class)
+				.queryParam("id_multimedia", book.getId_multimedia())
+				.build();
+	}
+    
+    
+	private URI getUriForComments(Book book) {		
+		return this.uriInfo.getBaseUriBuilder()
+				.path(CommentResource.class)
+				.queryParam("id_multimedia", book.getId_multimedia())
+				.build();
+	}
 
 
 	private void addLinks(Book book) {
 		book.addLink("self", getUriForSelf(book).toString());
 		book.addLink("uploader", getUriForUploader(book).toString());
+		book.addLink("rates", getUriForRates(book).toString());
+		book.addLink("comments", getUriForComments(book).toString());
 	}
 	
 	
 	
     
     @GET
-    public Response getBooks()throws SQLException {
+    public Response getBooks(@QueryParam("start")int start, @QueryParam("end")int end, @QueryParam("filtre")String filtre)throws SQLException {
 		this.bookService = new BookService();
+		List<Book> books;
+		List<Book> result;
 		
-		List<Book> books = bookService.getAllBooks();
+		if(filtre != null){
+			books = bookService.searchBook(filtre);
+		}else{
+			books = bookService.getAllBooks();
+
+		}
 		
 		for(Book book : books){
 			addLinks(book);
 		}
 		
+		 if(start >=0 && end>0 && end>=start && end < books.size()){
+			 result = books.subList(start, end);
+		 }else{
+			 result = books;
+		 }
+		
 		
         return Response.status(Status.OK)
-				.entity(books)
+				.entity(result)
 				.build();
 
     }
@@ -108,7 +140,6 @@ public class BookResource {
         		.entity(bookService.getBookCount())
         		.build();
     }
-
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
