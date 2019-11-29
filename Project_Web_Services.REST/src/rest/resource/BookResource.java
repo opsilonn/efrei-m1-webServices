@@ -137,7 +137,6 @@ public class BookResource {
 				.entity(bookService.updateBook(id, book))
 				.build();
     }
-
     
     @Path("/{id_book}")
     @DELETE
@@ -150,7 +149,4 @@ public class BookResource {
 				.entity(bookService.removeBook(id))
 				.build();
     }
-
-    
-    
 }
