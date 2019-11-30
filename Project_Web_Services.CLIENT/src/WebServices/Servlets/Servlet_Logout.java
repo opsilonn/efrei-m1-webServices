@@ -19,9 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Servlet_Logout", urlPatterns = {"/Servlet_Logout"})
 public class Servlet_Logout extends HttpServlet
 {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -41,6 +38,9 @@ public class Servlet_Logout extends HttpServlet
         request.getRequestDispatcher(PATH_PAGE_LOGOUT).forward(request, response);
     }
 
+    
+    
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -56,6 +56,9 @@ public class Servlet_Logout extends HttpServlet
         processRequest(request, response);
     }
 
+    
+    
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -70,6 +73,9 @@ public class Servlet_Logout extends HttpServlet
         processRequest(request, response);
     }
 
+    
+    
+    
     /**
      * Returns a short description of the servlet.
      *

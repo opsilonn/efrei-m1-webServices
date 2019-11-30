@@ -1,7 +1,7 @@
 package WebServices.Servlets;
 
 import static WebServices.util.Constants.*;
-import static rest.util.REST_Utils.REST_GetList;
+import static rest.util.REST_Utils.REST_GetListUsers;
 import static rest.util.REST_Utils.REST_GetService;
 import java.io.IOException;
 import java.util.List;
@@ -21,13 +21,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Servlet_Login", urlPatterns = {"/Servlet_Login"})
 public class Servlet_Login extends HttpServlet
 {
-    /**
-    * 
-    */
    private static final long serialVersionUID = -389100878518890328L;
 
 
 
+   
    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -77,7 +75,7 @@ public class Servlet_Login extends HttpServlet
     	    
     	    
     	    // Convert the String into a list
-    	    List<User> listUsers = REST_GetList(users_String);
+    	    List<User> listUsers = REST_GetListUsers(users_String);
     	    
 
     	    
@@ -94,23 +92,22 @@ public class Servlet_Login extends HttpServlet
                     request.getSession().setAttribute("XYZ", bddUser);
 
                     // Redirecting
-                    response.sendRedirect("home");
+                    response.sendRedirect("multimedias");
                     return;
                 }
     	    }
 
 
 
-            // Since no match was found
+            // Since no match was found : Error message + redirect to the login
             request.setAttribute("errKey", ERR_MESSAGE_INVALID);
-            
             response.sendRedirect("login");
             return;
         }
         //If we have a role in the session, we are redirected to the home page
         else
         {
-            response.sendRedirect("home");
+            response.sendRedirect("multimedias");
         	return;	
         }
     }
@@ -135,6 +132,7 @@ public class Servlet_Login extends HttpServlet
     }
     
     
+    
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -150,6 +148,7 @@ public class Servlet_Login extends HttpServlet
     {
         processRequest(request, response);
     }
+    
     
     
 

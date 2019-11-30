@@ -1,7 +1,7 @@
 <html lang="en">
     <head>
         <!-- Changing the title of the page -->
-        <title> <%=Constants.NAME_PAGE_HOME%> </title>
+        <title> <%=Constants.NAME_PAGE_LOGOUT%> </title>
     </head>
 
 

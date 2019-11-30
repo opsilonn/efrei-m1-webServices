@@ -18,7 +18,7 @@
   
   <!-- First page you see when browsing the website -->
   <welcome-file-list>
-    <welcome-file>home</welcome-file>
+    <welcome-file>multimedias</welcome-file>
   </welcome-file-list>
   
   
@@ -28,14 +28,14 @@
   <!-- - - - - - - - - - -->
   
   
-  <!-- home -->
+  <!-- multimedias -->
   <servlet>
-    <servlet-name>home</servlet-name>
-    <servlet-class>WebServices.Servlets.Servlet_Home</servlet-class>
+    <servlet-name>multimedias</servlet-name>
+    <servlet-class>WebServices.Servlets.Servlet_Multimedias</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>home</servlet-name>
-    <url-pattern>/home</url-pattern>
+    <servlet-name>multimedias</servlet-name>
+    <url-pattern>/multimedias</url-pattern>
   </servlet-mapping>
   
   

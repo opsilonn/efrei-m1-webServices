@@ -13,16 +13,20 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import rest.model.User;
+import rest.model.*;
 
 
 
-public class REST_Utils<E>
+public class REST_Utils
 {	   
     // Linking to the REST Backend
     private static URI GET_BASE_URI = UriBuilder.fromUri("http://localhost:8080/Project_Web_Services.REST").build();
 
 	
+    /** Sets up the connection to the REST project (Back-end)
+     * 
+     * @return The connection with the REST project
+     */
 	public static WebTarget REST_GetService()
 	{
 	    ClientConfig config = new ClientConfig();
@@ -35,10 +39,36 @@ public class REST_Utils<E>
 	
 	
 	
-	public static ArrayList<User> REST_GetList(String JSON_string)
+	/** Transform a JSON list of {@link User} into a JAVA list of {@link User}
+	 * 
+	 * @param JSON_string JSON list of {@link User}
+	 * @return a JAVA list of {@link User}
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
+	public static ArrayList<User> REST_GetListUsers(String JSON_string)
 			throws JsonParseException, JsonMappingException, IOException
 	{
 	    ObjectMapper mapper = new ObjectMapper();
 	    return mapper.readValue(JSON_string, new TypeReference<List<User>>(){});
+	}	
+	
+	
+	
+	
+	/** Transform a JSON list of {@link Multimedia} into a JAVA list of {@link Multimedia}
+	 * 
+	 * @param JSON_string JSON list of {@link Multimedia}
+	 * @return a JAVA list of {@link Multimedia}
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
+	public static ArrayList<Multimedia> REST_GetListMultimedias(String JSON_string)
+			throws JsonParseException, JsonMappingException, IOException
+	{
+	    ObjectMapper mapper = new ObjectMapper();
+	    return mapper.readValue(JSON_string, new TypeReference<List<Multimedia>>(){});
 	}
 }

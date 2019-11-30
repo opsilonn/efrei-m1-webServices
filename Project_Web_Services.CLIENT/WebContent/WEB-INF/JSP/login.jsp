@@ -24,10 +24,6 @@
 	                             {
 	                                 out.println( request.getAttribute("errKey") );
 	                             }
-	                             else
-	                             {
-	                                 out.println( " " );
-	                             }
 	                            %>
                             </small>
                         </label>

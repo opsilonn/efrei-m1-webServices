@@ -57,14 +57,14 @@ public class Constants
     public static final String NAME_WEBSITE = "The Otter Market";
 
     // The name of the different pages of the website
-    public static final String NAME_PAGE_HOME = "The Otter Market - Homepage";
+    public static final String NAME_PAGE_MULTIMEDIAS = "The Otter Market - Homepage";
     public static final String NAME_PAGE_LOGIN = "The Otter Market - Login";
     public static final String NAME_PAGE_LOGOUT = "The Otter Market - :'(";
 
     public static final String PATH_UTIL_NAVBAR = "navbar.jsp";
     public static final String PATH_UTIL_FOOTER= "JSP/footer.jsp";
 
-    public static final String PATH_PAGE_HOME = "WEB-INF/JSP/multimedias.jsp";
+    public static final String PATH_PAGE_MULTIMEDIAS = "WEB-INF/JSP/multimedias.jsp";
     public static final String PATH_PAGE_LOGIN = "WEB-INF/JSP/login.jsp";
     public static final String PATH_PAGE_LOGOUT = "WEB-INF/JSP/logout.jsp";
 
