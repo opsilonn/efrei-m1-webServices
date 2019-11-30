@@ -11,14 +11,29 @@
             
             
             <!-- Display some stuff -->
-            Welcome to the home page
-            <br>
-            <%
-	            if(request.getSession().getAttribute("XYZ") != null)
-	            {
-	                out.println( "Bonjour Monsieur " + request.getSession().getAttribute("XYZ") );
-	            }
-           %>
+            <div style="text-align:center">
+                
+                <br><br><br><br>
+                
+                <h2>Welcome to the home page !</h2>
+                
+                <br><br><br><br>
+
+				<%
+		            if(request.getSession().getAttribute("XYZ") != null)
+		            {
+		                out.println( "Bonjour Monsieur " + request.getSession().getAttribute("XYZ") + " !");
+		            }
+		            else
+		            {
+		                out.println( "...Voulez-vous vous connecter ? siouplé ?" );
+		            }
+           		%>
+                
+                <br><br><br><br>
+
+            </div>
+
 
 
             <!-- We always add LAST the Footer -->
