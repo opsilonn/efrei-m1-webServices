@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Constants
 {
-    public enum Multimedia
+    public enum EnumMultimedia
     {
       ALL("See all", new ArrayList<>() ),
       BOOK("Book", new ArrayList<>() ),
@@ -19,7 +19,7 @@ public class Constants
       private List<String> values;
 
       // Constructeur
-      Multimedia(String name, List<String> values)
+      EnumMultimedia(String name, List<String> values)
       {
         this.name = name;
         this.values = values;
@@ -52,6 +52,8 @@ public class Constants
       public List<String> getValues() { return values; }
     }
 
+    
+    
 
     // The name of the website
     public static final String NAME_WEBSITE = "The Otter Market";

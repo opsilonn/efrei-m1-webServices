@@ -70,5 +70,77 @@ public class REST_Utils
 	{
 	    ObjectMapper mapper = new ObjectMapper();
 	    return mapper.readValue(JSON_string, new TypeReference<List<Multimedia>>(){});
+	}	
+	
+	
+	
+	
+	/** Transform a JSON list of {@link Book} into a JAVA list of {@link Book}
+	 * 
+	 * @param JSON_string JSON list of {@link Book}
+	 * @return a JAVA list of {@link Book}
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
+	public static ArrayList<Book> REST_GetListBooks(String JSON_string)
+			throws JsonParseException, JsonMappingException, IOException
+	{
+	    ObjectMapper mapper = new ObjectMapper();
+	    return mapper.readValue(JSON_string, new TypeReference<List<Book>>(){});
+	}		
+	
+	
+	
+	
+	/** Transform a JSON list of {@link Film} into a JAVA list of {@link Book}
+	 * 
+	 * @param JSON_string JSON list of {@link Book}
+	 * @return a JAVA list of {@link Book}
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
+	public static ArrayList<Film> REST_GetListFilms(String JSON_string)
+			throws JsonParseException, JsonMappingException, IOException
+	{
+	    ObjectMapper mapper = new ObjectMapper();
+	    return mapper.readValue(JSON_string, new TypeReference<List<Film>>(){});
+	}	
+
+	
+	
+	
+	/** Transform a JSON list of {@link VideoGame} into a JAVA list of {@link Book}
+	 * 
+	 * @param JSON_string JSON list of {@link Book}
+	 * @return a JAVA list of {@link Book}
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
+	public static ArrayList<VideoGame> REST_GetListVideoGames(String JSON_string)
+			throws JsonParseException, JsonMappingException, IOException
+	{
+	    ObjectMapper mapper = new ObjectMapper();
+	    return mapper.readValue(JSON_string, new TypeReference<List<VideoGame>>(){});
+	}	
+	
+	
+	
+	
+	/** Transform a JSON list of {@link Rate} into a JAVA list of {@link Rate}
+	 * 
+	 * @param JSON_string JSON list of {@link Rate}
+	 * @return a JAVA list of {@link Rate}
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
+	public static ArrayList<Rate> REST_GetListRates(String JSON_string)
+			throws JsonParseException, JsonMappingException, IOException
+	{
+	    ObjectMapper mapper = new ObjectMapper();
+	    return mapper.readValue(JSON_string, new TypeReference<List<Rate>>(){});
 	}
 }

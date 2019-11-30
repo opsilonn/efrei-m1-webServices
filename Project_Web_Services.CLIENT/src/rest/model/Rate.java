@@ -120,5 +120,4 @@ public class Rate {
 		Link link = new Link(rel, href);
 		this.links.add(link);
 	}
-	
 }
