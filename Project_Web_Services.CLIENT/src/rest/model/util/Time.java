@@ -2,8 +2,8 @@ package rest.model.util;
 
 import javax.xml.bind.annotation.XmlTransient;
 
-public class Time {
-
+public class Time
+{
 	private int hour;
 	private int minute;
 	private int second;
@@ -11,7 +11,10 @@ public class Time {
 	private String value;
 	
 	
-	public Time(String date_string){
+	// public Time() {}
+	
+	public Time(String date_string)
+	{
 		this.value = date_string;
 		
 		

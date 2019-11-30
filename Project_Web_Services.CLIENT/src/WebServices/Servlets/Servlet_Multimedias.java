@@ -4,6 +4,7 @@ import static WebServices.util.Constants.*;
 import static rest.util.REST_Utils.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +24,7 @@ public class Servlet_Multimedias extends HttpServlet
 	private static final long serialVersionUID = 1L;
 	private List<Multimedia> multimedias;
 	private WebTarget service;
-
+	
 	
 	
 	
@@ -39,7 +40,6 @@ public class Servlet_Multimedias extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {    
-
     	// We get the REST service
     	service = REST_GetService();
     	
@@ -47,16 +47,24 @@ public class Servlet_Multimedias extends HttpServlet
 	    AddBooks();
 	    AddFilms();
 	    AddVideoGames();
-
+	    
+	    // IF YOU WANT TO HAVE AN EMPTY DATABASE :
+	    // UNCOMMENT THE FOLLOWING LINE
+	    // multimedias.clear();
+    	
+    	
 	    if(multimedias.size() != 0)
 	    {
+    		// We shuffle the List
+	    	Collections.shuffle(multimedias);
+	    	
 		    // We put the List into the request scope
 	        request.setAttribute("multimedias", multimedias);
 	    }
 	    else
 	    {
 	    	// We display an error message
-            request.setAttribute("errKey", "Sorry, no database yet :(");
+            request.setAttribute("errKey", "Sorry, the database seems to be empty...");
 	    }
     	
     	
@@ -149,10 +157,10 @@ public class Servlet_Multimedias extends HttpServlet
             System.out.println(e.getMessage());
         }
     }
+
     
     
-    
-    
+     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
