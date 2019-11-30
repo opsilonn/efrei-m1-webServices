@@ -226,6 +226,9 @@ public class FilmService {
 		
 		
 		try(DB_web_services db = new DB_web_services()){
+			
+			db.setAutoCommit(false);
+			
 			if(description !=null){
 				//System.out.println("entering the if");
 				PreparedStatement stmt = db.getPreparedStatement(Constants.Film.putDescriptionByID);
@@ -282,6 +285,8 @@ public class FilmService {
 				
 				stmt7.executeUpdate();
 			}
+			
+			db.commit();
 		}
 		
 		return films.get(id);
