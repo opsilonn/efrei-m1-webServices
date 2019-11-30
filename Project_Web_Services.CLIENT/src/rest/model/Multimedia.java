@@ -14,6 +14,8 @@ import javax.xml.bind.annotation.XmlTransient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import WebServices.util.Constants.EnumMultimedia;
+
 
 
 
@@ -154,6 +156,21 @@ public class Multimedia {
 	public int getCategory() {
 		return category;
 	}
+	
+	/**
+	 * @return the category
+	 */
+	public String getCategoryText()
+	{
+		int index = 0;
+        for(EnumMultimedia media : EnumMultimedia.values())
+        {
+        	if(index++ == category)
+        	return media.getName();
+        }
+
+		return "Category-Text Not Found";
+	}
 
 	/**
 	 * @param category the category to set
@@ -262,5 +279,28 @@ public class Multimedia {
 	{
 		Link link = new Link(rel, href);
 		this.links.add(link);
+	}
+	
+	
+	
+	public String getColor()
+	{
+		String color;
+    	switch( category )
+    	{
+		case 1:
+			color = "#ff8533";
+			break;
+		case 2:
+			color = "#3366ff";
+			break;
+		case 3:
+			color = "#33ff77";
+			break;
+		default:
+			color = "black";
+			break;
+    	}
+    	return color;
 	}
 }

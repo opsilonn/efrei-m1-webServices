@@ -89,21 +89,22 @@ public class JSP_Multimedias
     	// Some useful variables
     	int MAX = 1500;
     	String description = multimedia.getDescription();
-    	// String link = "#" + Long.toString( multimedia.getId_multimedia() );
-    	String link = "#" + multimedia.getTitle();
-    	
     	if(description.length() > MAX)
     	{
         	description = description.substring(0, MAX) + " ...";
     	}
+    	String link = "#" + Long.toString( multimedia.getId_multimedia() );
+    	String color = multimedia.getColor();
     	
     	
-        jw.println("<tr style=\"cursor:hand;vertical-align:middle;\" data-href=\"" + link + "\">");
+
+    	// The proper JSP code
+        jw.println("<tr style=\"cursor:hand;vertical-align:middle;border-left: 4px solid " + color + ";border-right: 2px solid " + color + "\" data-href=\"" + link + "\">");
         
         jw.println("	<td>" + multimedia.getTitle() + "</td>");
         jw.println("	<td style=\"text-align: justify;\">" + description + "</td>");
         jw.println("	<td>" + multimedia.getLanguage() + "</td>");
-        jw.println("	<td>" + multimedia.getCategory() + "</td>");
+        jw.println("	<td style=\"color:" + color + "\">" + multimedia.getCategoryText() + "</td>");
         jw.println("	<td>" + multimedia.getID_uploader() + "</td>");
         jw.println("	<td>" + multimedia.getDate_upload() + "</td>");
 

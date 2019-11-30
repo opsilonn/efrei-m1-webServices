@@ -25,7 +25,7 @@
 	<body>
 	
 	    <!-- Define the Navbar -->
-	    <nav class="navbar navbar-expand-lg navbar-light justify-content-between" style="background-color:cornflowerblue;color:white">
+	    <nav class="navbar sticky-top navbar-expand-lg navbar-light justify-content-between" style="background-color:cornflowerblue;color:white">
 	
 	            <!-- Name of the Website -->
 	              <a class="navbar-brand my-0 mr-md-auto" href="/Project_Web_Services.CLIENT">

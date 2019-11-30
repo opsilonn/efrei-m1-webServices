@@ -11,7 +11,7 @@ public class Time
 	private String value;
 	
 	
-	// public Time() {}
+	public Time() {}
 	
 	public Time(String date_string)
 	{
