@@ -25,7 +25,7 @@ public class JSP_Navbar
     {
         for(EnumMultimedia media : EnumMultimedia.values())
         {
-                AddDropdown(jw, media);
+        	AddDropdown(jw, media);
         }
     }
 
@@ -48,7 +48,7 @@ public class JSP_Navbar
 
 
         jw.println("	<div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdownMenuLink\">");
-        jw.println("		<a class=\"dropdown-item\" href=\"#\">See All</a>");
+        jw.println("		<a class=\"dropdown-item\" href=\" " + multimedia.getURL() + "\">See All</a>");
         jw.println("		<a class=\"dropdown-item\" href=\"#\">Sort by Rates</a>");
         jw.println("		<a class=\"dropdown-item\" href=\"#\">Sort by Comments</a>");
 

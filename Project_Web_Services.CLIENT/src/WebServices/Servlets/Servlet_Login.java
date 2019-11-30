@@ -37,7 +37,7 @@ public class Servlet_Login extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
-    {                
+    {             
         //If we don't have a role in the session, we are in the login page
         if(request.getSession().getAttribute("role") == null)
         {

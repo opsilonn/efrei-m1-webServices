@@ -36,6 +36,9 @@
   <servlet-mapping>
     <servlet-name>multimedias</servlet-name>
     <url-pattern>/multimedias</url-pattern>
+    <url-pattern>/books</url-pattern>
+    <url-pattern>/films</url-pattern>
+    <url-pattern>/videoGames</url-pattern>
   </servlet-mapping>
   
   

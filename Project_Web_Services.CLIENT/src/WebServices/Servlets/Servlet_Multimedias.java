@@ -43,10 +43,36 @@ public class Servlet_Multimedias extends HttpServlet
     	// We get the REST service
     	service = REST_GetService();
     	
+
+    	// Getting the URI and checking where we are
+    	String URI = request.getRequestURI();
+    	Boolean isMultimedia = URI.contains("multimedias");
+    	Boolean isBook = URI.contains("books");
+    	Boolean isFilm = URI.contains("films");
+    	Boolean isVideoGame = URI.contains("videoGames");
+    	
+    	// In the case where none are true, we consider that we should display all
+    	// (Trust me on this one)
+    	if(!isBook && !isFilm && !isVideoGame)
+    	{
+    		isMultimedia = true;
+    	}
+    			
+    	
+    	// Getting all the corresponding Multimedia pieces
 	    multimedias = new ArrayList<rest.model.Multimedia>();
-	    AddBooks();
-	    AddFilms();
-	    AddVideoGames();
+	    if(isMultimedia || isBook)
+	    {
+		    AddBooks();
+	    }
+	    if(isMultimedia || isFilm)
+	    {
+		    AddFilms();
+	    }
+	    if(isMultimedia || isVideoGame)
+	    {
+		    AddVideoGames();
+	    }
 	    
 	    // IF YOU WANT TO HAVE AN EMPTY DATABASE :
 	    // UNCOMMENT THE FOLLOWING LINE

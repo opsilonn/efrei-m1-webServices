@@ -10,18 +10,20 @@ public class Constants
 {
     public enum EnumMultimedia
     {
-      ALL("See all", new ArrayList<>() ),
-      BOOK("Book", new ArrayList<>() ),
-      FILM("Film", new ArrayList<>() ),
-      VIDEOGAME("Video Game", new ArrayList<>() );
+      ALL("See all", "multimedias", new ArrayList<>() ),
+      BOOK("Book", "books", new ArrayList<>() ),
+      FILM("Film", "films", new ArrayList<>() ),
+      VIDEOGAME("Video Game", "videoGames", new ArrayList<>() );
 
-      private String name = "";
+       private String name = "";
+       private String URL = "";
       private List<String> values;
 
       // Constructeur
-      EnumMultimedia(String name, List<String> values)
+      EnumMultimedia(String name, String URL, List<String> values)
       {
-        this.name = name;
+         this.name = name;
+         this.URL = URL;
         this.values = values;
 
         switch(name)
@@ -49,6 +51,7 @@ public class Constants
       }
 
       public String getName() { return name; }
+      public String getURL() { return URL; }
       public List<String> getValues() { return values; }
     }
 
