@@ -10,9 +10,7 @@ public class Date {
 	
 	private String value;
 	
-	public Date(){
-		
-	}
+	public Date(){ }
 	
 	public Date(String date_string){
 		this.value = date_string;
