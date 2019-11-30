@@ -3,6 +3,8 @@ package WebServices.util;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
 
+import WebServices.util.Constants.EnumMultimedia;
+
 /**
  *
  * @author Hugues
@@ -21,7 +23,7 @@ public class JSP_Navbar
      */
     public static void AddAllDropdowns(JspWriter jw) throws Exception
     {
-        for(Constants.Multimedia media : Constants.Multimedia.values())
+        for(EnumMultimedia media : EnumMultimedia.values())
         {
                 AddDropdown(jw, media);
         }
@@ -36,7 +38,7 @@ public class JSP_Navbar
      * @param multimedia The current Multimedia of which we want to create the Dropdown
      * @throws Exception 
      */
-    public static void AddDropdown(JspWriter jw, Constants.Multimedia multimedia) throws Exception
+    public static void AddDropdown(JspWriter jw, EnumMultimedia multimedia) throws Exception
     {
         jw.println("<li class=\"nav-item dropdown\" style=\"margin:0 0 0 25px\">");
 

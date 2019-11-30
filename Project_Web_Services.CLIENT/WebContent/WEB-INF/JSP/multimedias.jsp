@@ -1,3 +1,6 @@
+<%@page import="WebServices.util.JSP_Multimedias"%>
+
+
 <html lang="en">
     <head>
         <!-- Changing the title of the page -->
@@ -41,10 +44,18 @@
            <label>
                <small>
                 <%
-                 if(request.getAttribute("errKey") != null)
-                 {
-                     out.println( request.getAttribute("errKey") );
-                 }
+                if(request.getAttribute("errKey") != null)
+                {
+                    out.println( request.getAttribute("errKey") );
+                }
+                if(request.getAttribute("multimedias") != null)
+                {
+                    out.println( "MULTIMEDIAS EXISTE" );
+                }
+                else
+                {
+                    out.println( "Multimedias n'existe pas" );
+                }
                 %>
                </small>
            </label>
@@ -55,6 +66,7 @@
 		
 		
 		
+        <% JSP_Multimedias.AddAllTableRows(out, request); %>
 		
 		<!-- Display some RELEVANT stuff -->
 		<div class="container" style="padding-top: 4vh">
