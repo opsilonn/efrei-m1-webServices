@@ -47,7 +47,6 @@ public class User {
 	/**
 	 * @return the id_user
 	 */
-    @XmlTransient
 	public long getId_user() {
 		return id_user;
 	}

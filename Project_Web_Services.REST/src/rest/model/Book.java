@@ -34,7 +34,6 @@ public class Book extends Multimedia{
 	/**
 	 * @return the id_book
 	 */
-    @XmlTransient
 	public long getId_book() {
 		return id_book;
 	}

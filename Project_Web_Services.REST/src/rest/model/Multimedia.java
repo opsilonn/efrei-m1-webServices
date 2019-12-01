@@ -80,7 +80,6 @@ public class Multimedia {
 	/**
 	 * @return the id_multimedia
 	 */
-    @XmlTransient
 	public long getId_multimedia() {
 		return id_multimedia;
 	}

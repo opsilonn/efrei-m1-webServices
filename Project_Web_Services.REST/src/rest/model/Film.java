@@ -56,7 +56,6 @@ public class Film extends Multimedia{
 	/**
 	 * @return the id_film
 	 */
-    @XmlTransient
 	public long getId_film() {
 		return id_film;
 	}

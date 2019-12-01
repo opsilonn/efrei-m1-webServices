@@ -48,7 +48,6 @@ public class Comment {
 	/**
 	 * @return the id_comment
 	 */
-    @XmlTransient
 	public long getId_comment() {
 		return id_comment;
 	}
