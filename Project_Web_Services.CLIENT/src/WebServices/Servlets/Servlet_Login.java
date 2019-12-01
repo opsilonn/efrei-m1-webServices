@@ -9,6 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
 import rest.model.User;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Servlet_Login
  */
-@WebServlet(name = "Servlet_Login", urlPatterns = {"/Servlet_Login"})
 public class Servlet_Login extends HttpServlet
 {
    private static final long serialVersionUID = -389100878518890328L;
@@ -53,7 +57,7 @@ public class Servlet_Login extends HttpServlet
             
             // Data entered by the user
             String inputUser = request.getParameter(FORM_LOGIN_USERNAME);
-            // String inputPwd = request.getParameter(FORM_LOGIN_PASSWORD);
+            String inputPwd = request.getParameter(FORM_LOGIN_PASSWORD);
 
 
             
@@ -68,34 +72,27 @@ public class Servlet_Login extends HttpServlet
 
     	
     	    // We get the Users (in a string, JSON format)	    
-    	    String users_String = service.path("rest/v1").
-    				    		path("users").request().
-    				    		accept(MediaType.APPLICATION_JSON).
-    				    		get(String.class);
-    	    
-    	    
-    	    // Convert the String into a list
-    	    List<User> listUsers = REST_GetListUsers(users_String);
-    	    
+    	    Response response2 = service
+    	    		.path("rest/v1")
+    	    		.path("users")
+    	    		.path("login")
+    	    		.queryParam("username", inputUser)
+    	    		.queryParam("password", inputPwd)
+    	    		.request()
+    	    		.accept(MediaType.APPLICATION_JSON)
+    	    		.get();
+	    	
+    	    if(response2.getStatusInfo().toString().equals(Status.OK.toString())){
+    	    	System.out.println("HERE");
+    	    	User user = response2.readEntity(User.class);
 
-    	    
-    	    // For all the Users
-    	    for(User user : listUsers)
-    	    {
-    	    	String bddUser = user.getPseudo();
-    	    	
-                // If true, we create an ADMIN session
-                if(bddUser.equals(inputUser))
-                {
-                    // Setting the session value
-                    request.getSession().setAttribute("ID_user", 1);
+                // Setting the session value
+                request.getSession().setAttribute("user", user);
 
-                    // Redirecting
-                    response.sendRedirect("multimedias");
-                    return;
-                }
+                // Redirecting
+                response.sendRedirect("multimedias");
+                return;
     	    }
-
 
 
             // Since no match was found : Error message + redirect to the login
