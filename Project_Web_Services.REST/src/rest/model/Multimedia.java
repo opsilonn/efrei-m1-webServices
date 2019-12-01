@@ -273,4 +273,5 @@ public class Multimedia{
 		Link link = new Link(rel, href);
 		this.links.add(link);
 	}
+	
 }

@@ -2,6 +2,7 @@ package rest.resource;
 
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -94,7 +95,8 @@ public class VideoGameResource
      * @throws SQLException
      */
     @GET
-    public Response getVideoGames(@QueryParam("start")int start, @QueryParam("end")int end, @QueryParam("filtre")String filtre)throws SQLException
+    public Response getVideoGames(@QueryParam("start")int start, @QueryParam("end")int end,
+    		@QueryParam("filtre")String filtre, @QueryParam("uploader")long id_uploader)throws SQLException
     {
 		this.videoGameService = new VideoGameService();
 
@@ -102,15 +104,21 @@ public class VideoGameResource
 		List<VideoGame> videoGames;
 		List<VideoGame> result;
 		
-		System.out.println(start);
-		System.out.println(end);
-		
 		
 		if(filtre != null){
 			videoGames = videoGameService.filtre(filtre);
 		}else{
 			videoGames = videoGameService.getAllVideoGames();
 		}
+		 if(id_uploader != 0){
+
+				List<VideoGame> videoGames_cpy = new ArrayList<VideoGame>(videoGames);
+	    		for(VideoGame videoGame : videoGames_cpy){
+	    			if( videoGame.getID_uploader() != id_uploader ){
+	    				videoGames.remove(videoGame);
+	    			}
+	    		}
+		 }
 		
 		if(start >=0 && end>0 && end>=start && end<=videoGames.size()){
 			 result = videoGames.subList(start, end);

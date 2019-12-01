@@ -64,12 +64,48 @@ public class UserResource {
 				.queryParam("id_user", user.getId_user())
 				.build();
 	}
+    
+    
+	private URI getUriForMultimedias(User user) {
+		return this.uriInfo.getBaseUriBuilder()
+				.path(MultimediaResource.class)
+				.queryParam("uploader", user.getId_user())
+				.build();
+	}
+    
+    
+	private URI getUriForBooks(User user) {
+		return this.uriInfo.getBaseUriBuilder()
+				.path(BookResource.class)
+				.queryParam("uploader", user.getId_user())
+				.build();
+	}
+    
+    
+	private URI getUriForFilms(User user) {
+		return this.uriInfo.getBaseUriBuilder()
+				.path(FilmResource.class)
+				.queryParam("uploader", user.getId_user())
+				.build();
+	}
+    
+    
+	private URI getUriForVideoGames(User user) {
+		return this.uriInfo.getBaseUriBuilder()
+				.path(VideoGameResource.class)
+				.queryParam("uploader", user.getId_user())
+				.build();
+	}
 
 
 	private void addLinks(User user) {
 		user.addLink("self", getUriForSelf(user).toString());
 		user.addLink("rates", getUriForRates(user).toString());
 		user.addLink("comments", getUriForComments(user).toString());
+		user.addLink("multimedias", getUriForMultimedias(user).toString());
+		user.addLink("books", getUriForBooks(user).toString());
+		user.addLink("films", getUriForFilms(user).toString());
+		user.addLink("videoGames", getUriForVideoGames(user).toString());
 	}
     
     

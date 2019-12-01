@@ -2,6 +2,7 @@ package rest.resource;
 
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -82,7 +83,8 @@ public class BookResource {
 	
     
     @GET
-    public Response getBooks(@QueryParam("start")int start, @QueryParam("end")int end, @QueryParam("filtre")String filtre)throws SQLException {
+    public Response getBooks(@QueryParam("start")int start, @QueryParam("end")int end,
+    		@QueryParam("filtre")String filtre, @QueryParam("uploader")long id_uploader)throws SQLException {
 		this.bookService = new BookService();
 		List<Book> books;
 		List<Book> result;
@@ -93,16 +95,25 @@ public class BookResource {
 			books = bookService.getAllBooks();
 
 		}
-		
-		for(Book book : books){
-			addLinks(book);
-		}
+		 if(id_uploader != 0){
+
+				List<Book> books_cpy = new ArrayList<Book>(books);
+	    		for(Book book : books_cpy){
+	    			if( book.getID_uploader() != id_uploader ){
+	    				books.remove(book);
+	    			}
+	    		}
+		 }
 		
 		 if(start >=0 && end>0 && end>=start && end < books.size()){
 			 result = books.subList(start, end);
 		 }else{
 			 result = books;
 		 }
+			
+		for(Book book : books){
+			addLinks(book);
+		}
 		
 		
         return Response.status(Status.OK)

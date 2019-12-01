@@ -2,6 +2,7 @@ package rest.resource;
 
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -88,7 +89,8 @@ public class FilmResource
      * @throws SQLException
      */
 	 @GET
-	 public Response getFilms(@QueryParam("start")int start, @QueryParam("end")int end, @QueryParam("filtre")String filtre) 
+	 public Response getFilms(@QueryParam("start")int start, @QueryParam("end")int end,
+			 @QueryParam("filtre")String filtre, @QueryParam("uploader")long id_uploader) 
 			 throws SQLException{
 		 this.filmService = new FilmService();
 		 
@@ -105,6 +107,15 @@ public class FilmResource
 		 }
 		 else{
 			 films = filmService.getFilms();
+		 }
+		 if(id_uploader != 0){
+
+				List<Film> films_cpy = new ArrayList<Film>(films);
+	    		for(Film film : films_cpy){
+	    			if( film.getID_uploader() != id_uploader ){
+	    				films.remove(film);
+	    			}
+	    		}
 		 }
 		
 		 if(start >=0 && end>0 && end>=start && end < films.size()){

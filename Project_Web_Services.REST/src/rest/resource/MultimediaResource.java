@@ -2,6 +2,7 @@ package rest.resource;
 
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -87,7 +88,8 @@ public class MultimediaResource
      * @throws SQLException
      */
 	 @GET
-	 public Response getMultimedias(@QueryParam("start")int start, @QueryParam("end")int end, @QueryParam("filtre")String filtre, @QueryParam("sort")String trie) 
+	 public Response getMultimedias(@QueryParam("start")int start, @QueryParam("end")int end,
+			 @QueryParam("filtre")String filtre, @QueryParam("sort")String trie, @QueryParam("uploader")long id_uploader) 
 			 throws SQLException{
 		 this.multimediaService = new MultimediaService();
 		 
@@ -104,8 +106,17 @@ public class MultimediaResource
 		 }else{
 			 multimedias = multimediaService.getMultimedias();
 		 }
+		 if(id_uploader != 0){
+
+				List<Multimedia> multimedias_cpy = new ArrayList<Multimedia>(multimedias);
+	    		for(Multimedia multimedia : multimedias_cpy){
+	    			if( multimedia.getID_uploader() != id_uploader ){
+	    				multimedias.remove(multimedia);
+	    			}
+	    		}
+		 }
 		
-		 if(trie.equals("average")){
+		 if(trie != null && trie.equals("average")){
 			 System.out.println("entrez de le if");
 			 Collections.sort(multimedias, new SorterByAverage());
 		 }

@@ -301,7 +301,7 @@ public class MultimediaService {
 		
 		try(DB_web_services db = new DB_web_services()){
 
-			PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.getByName);
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.Multimedia.getByTitle);
 			ppsm.setString(1,"%" + filtre + "%" );
 	    	ResultSet rs = ppsm.executeQuery();
 

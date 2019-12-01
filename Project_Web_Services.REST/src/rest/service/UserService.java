@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.QueryParam;
-
 import rest.exception.DataNotFoundException;
 import rest.exception.InvalidPasswordException;
 import rest.model.User;
