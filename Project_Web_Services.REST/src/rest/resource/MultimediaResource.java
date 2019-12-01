@@ -2,6 +2,7 @@ package rest.resource;
 
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 import javax.ws.rs.DELETE;
@@ -18,6 +19,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
 import rest.model.Multimedia;
+import rest.model.util.SorterByAverage;
 import rest.service.MultimediaService;
 
 @Path("/multimedias")
@@ -85,7 +87,7 @@ public class MultimediaResource
      * @throws SQLException
      */
 	 @GET
-	 public Response getMultimedias(@QueryParam("start")int start, @QueryParam("end")int end, @QueryParam("filtre")String filtre) 
+	 public Response getMultimedias(@QueryParam("start")int start, @QueryParam("end")int end, @QueryParam("filtre")String filtre, @QueryParam("sort")String trie) 
 			 throws SQLException{
 		 this.multimediaService = new MultimediaService();
 		 
@@ -103,6 +105,11 @@ public class MultimediaResource
 			 multimedias = multimediaService.getMultimedias();
 		 }
 		
+		 if(trie.equals("average")){
+			 System.out.println("entrez de le if");
+			 Collections.sort(multimedias, new SorterByAverage());
+		 }
+		 
 		 if(start >=0 && end>0 && end>=start && end < multimedias.size()){
 			 result = multimedias.subList(start, end);
 		 }else{
@@ -140,6 +147,16 @@ public class MultimediaResource
 	        		.build();
 	 }
 	 
+	 @Path("/{multimedia_id}/average")
+	 @GET
+	 public Response getAverage(@PathParam("multimedia_id") long id) 
+			 throws SQLException{
+			this.multimediaService = new MultimediaService();
+			
+			long ave = multimediaService.CalculatingAverage(id);
+			
+			return Response.status(Status.OK).entity(ave).build();
+	 }
 	 
 	 @Path("/{multimedia_id}")
 	 @DELETE

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @XmlRootElement
-public class Multimedia {
+public class Multimedia{
 
 	private long id_multimedia;
 	
@@ -33,6 +33,8 @@ public class Multimedia {
 	private Timestamp date_upload;
 	private Date date_release;
 
+	private long Average;
+	
 	@JsonIgnore
 	private long ID_uploader;
 	
@@ -250,6 +252,16 @@ public class Multimedia {
 	public void setLinks(List<Link> links)
 	{
 		this.links = links;
+	}
+
+
+	public long getAverage() {
+		return Average;
+	}
+
+
+	public void setAverage(long average) {
+		Average = average;
 	}
 
 
