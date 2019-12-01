@@ -171,6 +171,30 @@ public class UserResource {
     }
 
     
+    
+    /** Returns a given user from the database
+     * 
+     * @param id ID of the user we are returning
+     * @return a specific user row
+     * @throws SQLException
+     */
+    @Path("/login")
+    @GET
+    public Response getLogin(@QueryParam("username")String username, @QueryParam("password")String password) 
+    		throws SQLException {
+		this.userService = new UserService();
+		
+		User user = userService.login(username, password);
+			
+		addLinks(user);
+		
+        return Response
+        		.status(Status.OK)
+				.entity(user)
+				.build();
+    }
+
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postUser(User user) 

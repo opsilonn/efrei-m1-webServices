@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.QueryParam;
+
 import rest.exception.DataNotFoundException;
 import rest.exception.InvalidPasswordException;
 import rest.model.User;
@@ -63,6 +65,30 @@ public class UserService {
 		
 		
 		return users.size();
+	}
+	
+	
+	public User login(String username, String password)
+			throws SQLException{
+
+		try(DB_web_services db = new DB_web_services()){
+			
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.User.checkPasswordByPseudo);
+
+			ppsm.setString(1, username);
+			ppsm.setString(2, password);
+			
+			ResultSet rs = ppsm.executeQuery();
+			
+			if(rs.next()){
+				long id_user = rs.getLong(1);
+				
+				
+				return users.get(id_user);
+			}
+			
+			throw new DataNotFoundException("Invalide credentials !");
+		}
 	}
 	
 	

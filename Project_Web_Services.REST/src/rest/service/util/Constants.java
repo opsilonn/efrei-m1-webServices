@@ -5,6 +5,7 @@ public class Constants {
 	public class User{
 
 		public static final String checkPasswordByID = "SELECT password = PASSWORD(?) FROM User WHERE id_user = ?";
+		public static final String checkPasswordByPseudo = "SELECT id_user FROM User WHERE (pseudo = ? AND password = PASSWORD(?))";
 		
 		public static final String getAll = "SELECT * FROM User";
 		public static final String getByID = "SELECT * FROM User WHERE id_user = ?";
