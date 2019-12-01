@@ -99,7 +99,4 @@ public class Time
 	public String toString() {
 		return value;
 	}
-	
-	
-	
 }

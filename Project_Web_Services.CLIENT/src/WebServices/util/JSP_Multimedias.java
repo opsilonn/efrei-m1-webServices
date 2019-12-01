@@ -36,7 +36,8 @@ public class JSP_Multimedias
         jw.println("				    	<th scope=\"col\">CATEGORY</th>");
         jw.println("				    	<th scope=\"col\">GENRE</th>");
         jw.println("				    	<th scope=\"col\">LANGUAGE</th>");
-        jw.println("				    	<th scope=\"col\">UPLOADER</th>");
+        jw.println("				    	<th scope=\"col\">RATING</th>");
+        jw.println("				    	<th scope=\"col\">COMMENTS</th>");
         jw.println("				    	<th scope=\"col\">DATE</th>");
         jw.println("					</tr>");
         jw.println("				</thead>");
@@ -60,7 +61,9 @@ public class JSP_Multimedias
         
         
         
-        // Adding some javascript
+        // Adding some javascript :
+        // Basically, it makes the whole td tag with data-href clickable
+        // And sends the user to the page of the multimedia
         jw.println("<script>");
         jw.println("	document.addEventListener(\"DOMContentLoaded\", () => {");
         
@@ -107,7 +110,8 @@ public class JSP_Multimedias
         jw.println("	<td style=\"color:" + color + "\">" + multimedia.getCategoryText() + "</td>");
         jw.println("	<td>" + multimedia.getGenre() + "</td>");
         jw.println("	<td>" + multimedia.getLanguage() + "</td>");
-        jw.println("	<td>" + multimedia.getID_uploader() + "</td>");
+        jw.println("	<td>" + "12345" + "</td>");
+        jw.println("	<td>" + "12345" + "</td>");
         jw.println("	<td>" + multimedia.getDate_upload() + "</td>");
 
         jw.println("</tr>");
