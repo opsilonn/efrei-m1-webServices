@@ -1,7 +1,6 @@
 package rest.model;
 
 
-import javax.xml.bind.annotation.XmlTransient;
 
 import rest.model.util.Date;
 import rest.model.util.Timestamp;

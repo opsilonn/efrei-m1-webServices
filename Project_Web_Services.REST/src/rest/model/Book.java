@@ -6,7 +6,6 @@ import rest.model.util.Date;
 import rest.model.util.Timestamp;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 
 
