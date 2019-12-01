@@ -73,6 +73,7 @@ public class Constants
     public static final String PATH_PAGE_MULTIMEDIA = "WEB-INF/JSP/multimedia.jsp";
     public static final String PATH_PAGE_LOGIN = "WEB-INF/JSP/login.jsp";
     public static final String PATH_PAGE_LOGOUT = "WEB-INF/JSP/logout.jsp";
+    public static final String PATH_PAGE_ACCOUNT = "WEB-INF/JSP/logout.jsp";
 
 
     // Logo

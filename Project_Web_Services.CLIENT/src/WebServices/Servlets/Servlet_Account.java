@@ -1,10 +1,8 @@
 package WebServices.Servlets;
 
-import static WebServices.util.Constants.PATH_PAGE_MULTIMEDIA;
-import static rest.util.REST_Utils.REST_GetService;
+import static WebServices.util.Constants.PATH_PAGE_ACCOUNT;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Servlet_Multimedia
+ * Servlet implementation class Servlet_Account
  */
-@WebServlet(name = "Servlet_Multimedia", urlPatterns = {"/Servlet_Multimedia"})
-public class Servlet_Multimedia extends HttpServlet
+@WebServlet(name = "Servlet_Multimedias", urlPatterns = {"/Servlet_Multimedias"})
+public class Servlet_Account extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
        
@@ -32,13 +30,10 @@ public class Servlet_Multimedia extends HttpServlet
             throws ServletException, IOException
     {    
     	System.out.println("yo !!");
-        // response.sendRedirect("multimedia");
-        request.getRequestDispatcher(PATH_PAGE_MULTIMEDIA).forward(request, response);
+        // response.sendRedirect("account");
+        request.getRequestDispatcher(PATH_PAGE_ACCOUNT).forward(request, response);
     }
-    
-    
-    
-    
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
