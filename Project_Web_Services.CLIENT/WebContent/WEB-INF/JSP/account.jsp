@@ -1,13 +1,28 @@
+<%@page import="rest.model.User"%>
+
 <html lang="en">
     <head>
         <!-- Changing the title of the page -->
         <title> <%=Constants.NAME_PAGE_ACCOUNT%> </title>
     </head>
-
+    
 
     <body>
             <!-- We always add FIRST the Navbar -->
             <%@include file="navbar.jsp" %>
+            
+                <%
+			    	User user = new User();
+			    	if(Constants.IS_CONNECTED(request))
+			    	{
+			    		user = (User)request.getSession().getAttribute("user");
+			    	}
+			    	else
+			    	{
+			    		user.setPseudo("your username");
+			    		user.setEmail("your email");
+			    	}
+			    %>
             
             
             <!-- Display some stuff -->
@@ -32,17 +47,36 @@
                         </c:otherwise>
                                 
                     </c:choose>
-                                
+                        <%--
+                        <c:if test="${not empty employee}">value="${employee.last_name}"</c:if>
+                        <c:if test="${role != 'admin'}">disabled</c:if>
+                        --%> 
                             
                         <%-- USERNAME FIELD --%>
                         <div class="form-group row">
                             <div class="col-sm-1"></div>
-                            <label for="WOLOLO" class="col-sm-2 col-form-label" style="text-align: right;">Username</label>
+                            <label for="Username" class="col-sm-2 col-form-label" style="text-align: right;">Username</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="WOLOLO" id="0" placeholder="Username" 
-                                       <c:if test="${not empty employee}">value="${employee.last_name}"</c:if>
-                                       <c:if test="${role != 'admin'}">disabled</c:if>
-                                    required pattern="\w(\w| \w)*">
+                                <input
+                                type="text"
+                                class="form-control"
+                                name="Username" id="0"
+                                placeholder=<% out.println("\"" + user.getPseudo() + "\""); %>
+                                disabled>
+                            </div>
+                        </div>
+                            
+                        <%-- EMAIL FIELD --%>
+                        <div class="form-group row">
+                            <div class="col-sm-1"></div>
+                            <label for="Email" class="col-sm-2 col-form-label" style="text-align: right;">Email</label>
+                            <div class="col-sm-8">
+                                <input
+                                type="text"
+                                class="form-control"
+                                name="Email" id="0"
+                                placeholder=<% out.println("\"" + user.getEmail() + "\""); %>
+                                disabled>
                             </div>
                         </div>
                 	</form>
