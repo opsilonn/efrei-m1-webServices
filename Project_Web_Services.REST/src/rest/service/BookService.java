@@ -232,7 +232,7 @@ public class BookService {
 		    	int rs = ppsm.executeUpdate();
 
 		    	if(rs == 1){
-		    		this.books.get(id).setDescription(book.getTitle());
+		    		this.books.get(id).setTitle(book.getTitle());
 		    	}
 		    	
 		    	return_value = (rs == 1 && return_value == true) ? true : false;
