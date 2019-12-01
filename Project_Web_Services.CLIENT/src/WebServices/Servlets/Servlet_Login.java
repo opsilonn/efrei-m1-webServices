@@ -37,9 +37,9 @@ public class Servlet_Login extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
-    {             
+    {     
         //If we don't have a role in the session, we are in the login page
-        if(request.getSession().getAttribute("role") == null)
+        if(request.getSession().getAttribute("ID_user") == null)
         {
             // We verify that the user has entered input ( != null )
             if(request.getParameter(FORM_LOGIN_USERNAME) == null
@@ -89,7 +89,6 @@ public class Servlet_Login extends HttpServlet
                 {
                     // Setting the session value
                     request.getSession().setAttribute("ID_user", 1);
-                    request.getSession().setAttribute("XYZ", bddUser);
 
                     // Redirecting
                     response.sendRedirect("multimedias");

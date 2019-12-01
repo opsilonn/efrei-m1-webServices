@@ -15,15 +15,15 @@ public class Constants
       FILM("Film", "films", new ArrayList<>() ),
       VIDEOGAME("Video Game", "videoGames", new ArrayList<>() );
 
-       private String name = "";
-       private String URL = "";
+      private String name = "";
+      private String URL = "";
       private List<String> values;
 
       // Constructeur
       EnumMultimedia(String name, String URL, List<String> values)
       {
-         this.name = name;
-         this.URL = URL;
+        this.name = name;
+        this.URL = URL;
         this.values = values;
 
         switch(name)
@@ -70,6 +70,7 @@ public class Constants
     public static final String PATH_UTIL_FOOTER= "JSP/footer.jsp";
 
     public static final String PATH_PAGE_MULTIMEDIAS = "WEB-INF/JSP/multimedias.jsp";
+    public static final String PATH_PAGE_MULTIMEDIA = "WEB-INF/JSP/multimedia.jsp";
     public static final String PATH_PAGE_LOGIN = "WEB-INF/JSP/login.jsp";
     public static final String PATH_PAGE_LOGOUT = "WEB-INF/JSP/logout.jsp";
 

@@ -33,8 +33,9 @@ public class JSP_Multimedias
         jw.println("					<tr>");
         jw.println("				    	<th scope=\"col\">TITLE</th>");
         jw.println("				    	<th scope=\"col\">DESCRIPTION</th>");
-        jw.println("				    	<th scope=\"col\">LANGUAGE</th>");
         jw.println("				    	<th scope=\"col\">CATEGORY</th>");
+        jw.println("				    	<th scope=\"col\">GENRE</th>");
+        jw.println("				    	<th scope=\"col\">LANGUAGE</th>");
         jw.println("				    	<th scope=\"col\">UPLOADER</th>");
         jw.println("				    	<th scope=\"col\">DATE</th>");
         jw.println("					</tr>");
@@ -103,8 +104,9 @@ public class JSP_Multimedias
         
         jw.println("	<td>" + multimedia.getTitle() + "</td>");
         jw.println("	<td style=\"text-align: justify;\">" + description + "</td>");
-        jw.println("	<td>" + multimedia.getLanguage() + "</td>");
         jw.println("	<td style=\"color:" + color + "\">" + multimedia.getCategoryText() + "</td>");
+        jw.println("	<td>" + multimedia.getGenre() + "</td>");
+        jw.println("	<td>" + multimedia.getLanguage() + "</td>");
         jw.println("	<td>" + multimedia.getID_uploader() + "</td>");
         jw.println("	<td>" + multimedia.getDate_upload() + "</td>");
 
