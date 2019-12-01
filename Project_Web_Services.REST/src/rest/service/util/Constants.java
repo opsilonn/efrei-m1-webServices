@@ -50,6 +50,7 @@ public class Constants {
 	public class Multimedia{
 		public static final String getAll = "SELECT * FROM Multimedia";
 		public static final String getByID = "SELECT * FROM Multimedia WHERE ID_multimedia = ?";
+		public static final String getByName = "SELECT * FROM Multimedia WHERE title LIKE ?";
 		
 		public static final String getTypeByID = "SELECT category FROM Multimedia WHERE ID_multimedia = ?";
 		public static final String getBookChildID = "SELECT id_book FROM book WHERE ID_multimedia = ?";

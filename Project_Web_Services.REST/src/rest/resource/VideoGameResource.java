@@ -42,7 +42,7 @@ public class VideoGameResource
 
 	private URI getUriForSelf(VideoGame videoGame) {
 		return this.uriInfo.getBaseUriBuilder()
-				.path(BookResource.class)
+				.path(VideoGameResource.class)
 				.path(String.valueOf(videoGame.getId_videoGame()))
 				.build();
 	}

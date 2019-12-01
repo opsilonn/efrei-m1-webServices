@@ -97,7 +97,11 @@ public class MultimediaResource
 		 System.out.println(start);
 		 System.out.println(end);
 		 
-		 multimedias = multimediaService.getMultimedias();
+		 if(filtre != null){
+			 multimedias = multimediaService.filtre(filtre);
+		 }else{
+			 multimedias = multimediaService.getMultimedias();
+		 }
 		
 		 if(start >=0 && end>0 && end>=start && end < multimedias.size()){
 			 result = multimedias.subList(start, end);
