@@ -108,8 +108,7 @@ public class Servlet_Multimedias extends HttpServlet
     	try
         {
     	    // We get the {@link Book} (in a string, JSON format)	    
-    	    String JSON = service.path("rest/v1").
-		    		path("books").request().
+    	    String JSON = service.path("rest/v1/books").request().
 		    		accept(MediaType.APPLICATION_JSON).
 		    		get(String.class); 
 
@@ -137,8 +136,7 @@ public class Servlet_Multimedias extends HttpServlet
     	try
         {
     	    // We get the {@link Films} (in a string, JSON format)	    
-    	    String JSON = service.path("rest/v1").
-		    		path("films").request().
+    	    String JSON = service.path("rest/v1/films").request().
 		    		accept(MediaType.APPLICATION_JSON).
 		    		get(String.class); 
 
@@ -166,8 +164,7 @@ public class Servlet_Multimedias extends HttpServlet
     	try
         {
     	    // We get the {@link Films} (in a string, JSON format)	    
-    	    String JSON = service.path("rest/v1").
-		    		path("videoGames").request().
+    	    String JSON = service.path("rest/v1/videoGames").request().
 		    		accept(MediaType.APPLICATION_JSON).
 		    		get(String.class); 
 

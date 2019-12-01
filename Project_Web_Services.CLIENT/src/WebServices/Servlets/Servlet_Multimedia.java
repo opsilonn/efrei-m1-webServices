@@ -30,9 +30,8 @@ public class Servlet_Multimedia extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
-    {    
-    	System.out.println("yo !!");
-        // response.sendRedirect("multimedia");
+    {
+    	
         request.getRequestDispatcher(PATH_PAGE_MULTIMEDIA).forward(request, response);
     }
     

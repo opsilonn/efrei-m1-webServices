@@ -1,16 +1,10 @@
 package WebServices.util;
 
-import static WebServices.util.Constants.IS_CONNECTED;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
-
 import WebServices.util.Constants.EnumMultimedia;
 
-/**
- *
- * @author Hugues
- */
+
 public class JSP_Navbar
 {
     // DROPDOWNS
@@ -21,7 +15,7 @@ public class JSP_Navbar
     /** A method that dynamically adds Dropdown to the navbar
     *
      * @param jw the JSP Writer used to write the file
-     * @throws Exception 
+	 * @throws Exception If something goes wrong
      */
     public static void AddAllDropdowns(JspWriter jw) throws Exception
     {
@@ -38,7 +32,7 @@ public class JSP_Navbar
     *
      * @param jw the JSP Writer used to write the file
      * @param multimedia The current Multimedia of which we want to create the Dropdown
-     * @throws Exception 
+	 * @throws Exception If something goes wrong
      */
     public static void AddDropdown(JspWriter jw, EnumMultimedia multimedia) throws Exception
     {
@@ -81,7 +75,7 @@ public class JSP_Navbar
     *
      * @param jw the JSP Writer used to write the file
      * @param r1 The request scope used to access request / session / etc ... variables
-     * @throws Exception 
+	 * @throws Exception If something goes wrong
      */
     public static void AddAllButtons(JspWriter jw, HttpServletRequest r1) throws Exception
     {
@@ -109,7 +103,7 @@ public class JSP_Navbar
      * @param r1 The request scope used to access request / session / etc ... variables
      * @param name Name of the button to add
      * @param path Path to go to when the button is pressed
-     * @throws Exception 
+	 * @throws Exception If something goes wrong
      */
     public static void AddButton(JspWriter jw, HttpServletRequest r1, String name, String path) throws Exception
     {

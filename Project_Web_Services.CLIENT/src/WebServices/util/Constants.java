@@ -92,6 +92,14 @@ public class Constants
     public static final String FORM_LOGIN_USERNAME = "Username";
     public static final String FORM_LOGIN_PASSWORD = "Password";
     
+    
+    // Form Account fields's names
+    public static final String FORM_ACCOUNT_USERNAME = "Username";
+    public static final String FORM_ACCOUNT_PASSWORD = "Password";
+    public static final String FORM_ACCOUNT_PASSWORD_VERIF = "PasswordVerification";
+    public static final String FORM_ACCOUNT_EMAIL = "Email";
+    public static final String FORM_ACCOUNT_DATE = "CreationDate";
+    
     // Is a user connected ?
     public static boolean IS_CONNECTED(HttpServletRequest request)
     {
