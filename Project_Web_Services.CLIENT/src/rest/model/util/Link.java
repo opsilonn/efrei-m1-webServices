@@ -41,7 +41,4 @@ public class Link {
 	public void setHref(String href) {
 		this.href = href;
 	}
-	
-	
-	
 }

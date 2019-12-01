@@ -3,6 +3,8 @@ package WebServices.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 
 
@@ -63,8 +65,10 @@ public class Constants
 
     // The name of the different pages of the website
     public static final String NAME_PAGE_MULTIMEDIAS = "The Otter Market - Homepage";
+    public static final String NAME_PAGE_MULTIMEDIA = "The Otter Market - object";
     public static final String NAME_PAGE_LOGIN = "The Otter Market - Login";
     public static final String NAME_PAGE_LOGOUT = "The Otter Market - :'(";
+    public static final String NAME_PAGE_ACCOUNT = "The Otter Market - my Account";
 
     public static final String PATH_UTIL_NAVBAR = "navbar.jsp";
     public static final String PATH_UTIL_FOOTER= "JSP/footer.jsp";
@@ -73,7 +77,7 @@ public class Constants
     public static final String PATH_PAGE_MULTIMEDIA = "WEB-INF/JSP/multimedia.jsp";
     public static final String PATH_PAGE_LOGIN = "WEB-INF/JSP/login.jsp";
     public static final String PATH_PAGE_LOGOUT = "WEB-INF/JSP/logout.jsp";
-    public static final String PATH_PAGE_ACCOUNT = "WEB-INF/JSP/logout.jsp";
+    public static final String PATH_PAGE_ACCOUNT = "WEB-INF/JSP/account.jsp";
 
 
     // Logo
@@ -87,4 +91,10 @@ public class Constants
     // Form Login fields's names
     public static final String FORM_LOGIN_USERNAME = "Username";
     public static final String FORM_LOGIN_PASSWORD = "Password";
+    
+    // Is a user connected ?
+    public static boolean IS_CONNECTED(HttpServletRequest request)
+    {
+    	return (request.getSession().getAttribute("user") != null);
+	}
  }

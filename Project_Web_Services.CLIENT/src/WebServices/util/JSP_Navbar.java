@@ -1,5 +1,7 @@
 package WebServices.util;
 
+import static WebServices.util.Constants.IS_CONNECTED;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
 
@@ -83,11 +85,8 @@ public class JSP_Navbar
      */
     public static void AddAllButtons(JspWriter jw, HttpServletRequest r1) throws Exception
     {
-        Boolean isConnected = (r1.getSession().getAttribute("ID_user") != null);
-
-
         // If connected : My Profile & Logout
-        if( isConnected )
+        if( Constants.IS_CONNECTED(r1) )
         {
 	            AddButton(jw, r1, "<b>Add a new article !</b>", "multimedias/0");
 	            AddButton(jw, r1, "My Profile", "account");
@@ -96,7 +95,7 @@ public class JSP_Navbar
         // If not connected : New account & Login
         else
         {
-                AddButton(jw, r1, "Sign up", "#");
+                AddButton(jw, r1, "Sign up", "account");
                 AddButton(jw, r1, "Log in", "login");	
         }
     }

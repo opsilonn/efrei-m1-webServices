@@ -42,8 +42,14 @@ public class Servlet_Login extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {     
+        //If we have a role in the session, we are redirected to the home page
+        if(IS_CONNECTED(request))
+        {
+            response.sendRedirect("multimedias");
+        	return;	
+        }
         //If we don't have a role in the session, we are in the login page
-        if(request.getSession().getAttribute("ID_user") == null)
+        else
         {
             // We verify that the user has entered input ( != null )
             if(request.getParameter(FORM_LOGIN_USERNAME) == null
@@ -99,12 +105,6 @@ public class Servlet_Login extends HttpServlet
             request.setAttribute("errKey", ERR_MESSAGE_INVALID);
             response.sendRedirect("login");
             return;
-        }
-        //If we have a role in the session, we are redirected to the home page
-        else
-        {
-            response.sendRedirect("multimedias");
-        	return;	
         }
     }
 
