@@ -3,6 +3,8 @@ package WebServices.util;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
 
+import WebServices.util.Constants.EnumMultimedia;
+
 /**
  *
  * @author Hugues
@@ -21,9 +23,9 @@ public class JSP_Navbar
      */
     public static void AddAllDropdowns(JspWriter jw) throws Exception
     {
-        for(Constants.Multimedia media : Constants.Multimedia.values())
+        for(EnumMultimedia media : EnumMultimedia.values())
         {
-                AddDropdown(jw, media);
+        	AddDropdown(jw, media);
         }
     }
 
@@ -36,7 +38,7 @@ public class JSP_Navbar
      * @param multimedia The current Multimedia of which we want to create the Dropdown
      * @throws Exception 
      */
-    public static void AddDropdown(JspWriter jw, Constants.Multimedia multimedia) throws Exception
+    public static void AddDropdown(JspWriter jw, EnumMultimedia multimedia) throws Exception
     {
         jw.println("<li class=\"nav-item dropdown\" style=\"margin:0 0 0 25px\">");
 
@@ -46,7 +48,7 @@ public class JSP_Navbar
 
 
         jw.println("	<div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdownMenuLink\">");
-        jw.println("		<a class=\"dropdown-item\" href=\"#\">See All</a>");
+        jw.println("		<a class=\"dropdown-item\" href=\" " + multimedia.getURL() + "\">See All</a>");
         jw.println("		<a class=\"dropdown-item\" href=\"#\">Sort by Rates</a>");
         jw.println("		<a class=\"dropdown-item\" href=\"#\">Sort by Comments</a>");
 
@@ -87,8 +89,8 @@ public class JSP_Navbar
         // If connected : My Profile & Logout
         if( isConnected )
         {
-	            AddButton(jw, r1, "<b>Add a new article !</b>", "#");
-	            AddButton(jw, r1, "My Profile", "#");
+	            AddButton(jw, r1, "<b>Add a new article !</b>", "multimedias/0");
+	            AddButton(jw, r1, "My Profile", "account");
                 AddButton(jw, r1, "Logout", "logout");
         }
         // If not connected : New account & Login

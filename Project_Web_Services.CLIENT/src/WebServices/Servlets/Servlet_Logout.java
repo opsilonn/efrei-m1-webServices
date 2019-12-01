@@ -33,9 +33,20 @@ public class Servlet_Logout extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        // We delete the session
-        request.getSession().invalidate();
-        request.getRequestDispatcher(PATH_PAGE_LOGOUT).forward(request, response);
+        
+      //If we have a session, we can be logged out
+      if(request.getSession().getAttribute("ID_user") != null)
+      {
+          // We delete the session
+          request.getSession().invalidate();
+          request.getRequestDispatcher(PATH_PAGE_LOGOUT).forward(request, response);  
+      }
+      // If we don't have a session... well, why whould you be logged out ?
+      else
+      {
+          // We are redirected to the homepage
+          response.sendRedirect("multimedias");
+      }
     }
 
     

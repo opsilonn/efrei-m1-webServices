@@ -8,20 +8,22 @@ import java.util.List;
 
 public class Constants
 {
-    public enum Multimedia
+    public enum EnumMultimedia
     {
-      ALL("See all", new ArrayList<>() ),
-      BOOK("Book", new ArrayList<>() ),
-      FILM("Film", new ArrayList<>() ),
-      VIDEOGAME("Video Game", new ArrayList<>() );
+      ALL("See all", "multimedias", new ArrayList<>() ),
+      BOOK("Book", "books", new ArrayList<>() ),
+      FILM("Film", "films", new ArrayList<>() ),
+      VIDEOGAME("Video Game", "videoGames", new ArrayList<>() );
 
       private String name = "";
+      private String URL = "";
       private List<String> values;
 
       // Constructeur
-      Multimedia(String name, List<String> values)
+      EnumMultimedia(String name, String URL, List<String> values)
       {
         this.name = name;
+        this.URL = URL;
         this.values = values;
 
         switch(name)
@@ -49,9 +51,12 @@ public class Constants
       }
 
       public String getName() { return name; }
+      public String getURL() { return URL; }
       public List<String> getValues() { return values; }
     }
 
+    
+    
 
     // The name of the website
     public static final String NAME_WEBSITE = "The Otter Market";
@@ -65,8 +70,10 @@ public class Constants
     public static final String PATH_UTIL_FOOTER= "JSP/footer.jsp";
 
     public static final String PATH_PAGE_MULTIMEDIAS = "WEB-INF/JSP/multimedias.jsp";
+    public static final String PATH_PAGE_MULTIMEDIA = "WEB-INF/JSP/multimedia.jsp";
     public static final String PATH_PAGE_LOGIN = "WEB-INF/JSP/login.jsp";
     public static final String PATH_PAGE_LOGOUT = "WEB-INF/JSP/logout.jsp";
+    public static final String PATH_PAGE_ACCOUNT = "WEB-INF/JSP/logout.jsp";
 
 
     // Logo

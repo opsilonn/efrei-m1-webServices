@@ -4,11 +4,12 @@ package rest.resource;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -19,6 +20,7 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
+
 import rest.service.UserService;
 import rest.model.User;
 
@@ -136,7 +138,7 @@ public class UserResource {
      * @throws SQLException
      */
     @GET
-    @Path("count")
+    @Path("/count")
     public Response getCount() 
     		throws SQLException {
 		this.userService = new UserService();
@@ -149,13 +151,33 @@ public class UserResource {
     }
 
     
+    
+    /** Displays the number of rows inside the table user
+     * 
+     * @return the number of rows inside the table user
+     * @throws SQLException
+     */
+    @GET
+    @Path("/{id_user}/checkPassword")
+    public Response getCheckPassword(@PathParam("id_user")long id, @QueryParam("password")String password) 
+    		throws SQLException {
+		this.userService = new UserService();
+		
+		
+        return Response
+        		.status(Status.OK)
+        		.entity(userService.checkUserPassword(id, password))
+        		.build();
+    }
+
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postUser(User user) 
     		throws SQLException {
 		this.userService = new UserService();
 				
-		User new_user = userService.addUser(user.getPseudo(), user.getPassword(), user.getEmail());
+		User new_user = userService.addUser(user);
 		addLinks(new_user);
 		URI location = getUriForSelf(new_user);
 		

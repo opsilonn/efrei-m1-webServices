@@ -1,9 +1,9 @@
 package rest.service;
 
+import java.security.InvalidParameterException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,20 +66,20 @@ public class UserService {
 	}
 	
 	
-	public User addUser(String pseudo, String password, String email)
+	public User addUser(User user)
 			throws SQLException{
 		
 		try(DB_web_services db = new DB_web_services()){
 			
-			if(password == null || password == ""){
-				throw new SQLIntegrityConstraintViolationException("Le champ 'password' ne peut être vide (null)");
+			if(user == null){
+				throw new InvalidParameterException("Un user doit être donné en paramètre !");
 			}
 	    	
 			PreparedStatement ppsm = db.getPreparedStatement(Constants.User.post);
 	    	
-	    	ppsm.setString(1, pseudo);
-	    	ppsm.setString(2, password);
-	    	ppsm.setString(3, email);
+	    	ppsm.setString(1, user.getPseudo());
+	    	ppsm.setString(2, user.getPassword());
+	    	ppsm.setString(3, user.getEmail());
 	    	
 	    	int rs = ppsm.executeUpdate();
 
@@ -112,6 +112,29 @@ public class UserService {
 	}
 	
 	
+	public boolean checkUserPassword(long id, String password)
+			throws SQLException{
+
+		try(DB_web_services db = new DB_web_services()){
+
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.User.checkPasswordByID);
+
+			ppsm.setString(1, password);
+			ppsm.setLong(2, id);
+			
+			ResultSet rs_check = ppsm.executeQuery();
+			
+			
+			if(rs_check.next() && rs_check.getInt(1) == 1){
+				return true;
+			}
+			
+			
+			return false;
+		}
+	}
+	
+	
 	public boolean updateUser(long id, String password, String new_password, String email) 
 			throws SQLException, InvalidPasswordException{
 		
@@ -127,31 +150,24 @@ public class UserService {
 				if(new_password == null){
 					throw new SQLException("Le champ 'new_password' ne peut être vide (null)");
 				}
-				
 
-				PreparedStatement ppsm = db.getPreparedStatement(Constants.User.checkPasswordByID);
-
-				ppsm.setString(1, password);
-				ppsm.setLong(2, id);
 				
-				ResultSet rs_check = ppsm.executeQuery();
-				
-				if(rs_check.next() && rs_check.getInt(1) == 1){
+				if(checkUserPassword(id, password)){
 					
 			    	PreparedStatement ppsm2 = db.getPreparedStatement(Constants.User.putPasswordByID);
 			    	
 			    	ppsm2.setString(1, new_password);
 			    	ppsm2.setLong(2, id);
 			    	
-			    	int rs = ppsm2.executeUpdate();
+			    	int succes = ppsm2.executeUpdate();
 
-			    	if(rs == 1){
+			    	if(succes == 1){
 			    		User user = this.users.get(id);
 
 			    		user.setPassword(new_password);
 			    	}
 			    	
-			    	return_value = (rs == 1 && return_value == true) ? true : false;
+			    	return_value = (succes == 1 && return_value == true) ? true : false;
 			    	change = return_value;
 				}
 				
@@ -166,16 +182,16 @@ public class UserService {
 				ppsm3.setString(1, email);
 				ppsm3.setLong(2, id);
 				
-				int rs = ppsm3.executeUpdate();
+				int succes = ppsm3.executeUpdate();
 
-				if(rs == 1){
+				if(succes == 1){
 					User user = this.users.get(id);
 
 					user.setEmail(email);
 				}
 				
 
-				return_value = (rs == 1 && return_value == true) ? true : false;
+				return_value = (succes == 1 && return_value == true) ? true : false;
 				change = return_value;
 			}
 
