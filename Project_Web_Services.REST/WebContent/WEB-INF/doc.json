@@ -24,7 +24,7 @@ tags:
 - name: "videoGames"
   description: "Operations about videoGames"
 - name: "users"
-  description: "Operations about user"
+  description: "Operations about users"
 - name: "rates"
   description: "Operations about rates"
 - name: "comments"
@@ -107,7 +107,7 @@ paths:
           schema:
             $ref: '#/definitions/Book'
         404:
-          description: "The multimedia with the id `{id_multimedia}` was not found !"
+          description: "The Multimedia with the id `{id_multimedia}` was not found !"
     delete:
       tags:
       - "multimedias"
@@ -586,6 +586,503 @@ paths:
       tags:
       - "videoGames"
       summary: "Find the number of VideoGames"
+      description: ""
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            type: "integer"
+  /users:
+    get:
+      tags:
+      - "users"
+      summary: "Finds Users"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "start"
+        type: "integer"
+        minimum: 0.0
+        format: "int64"
+        description: "start index for the pagging"
+        required: false
+      - in: "query"
+        name: "end"
+        type: "integer"
+        minimum: 0.0
+        format: "int64"
+        description: "end index for the pagging"
+        required: false
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/User'
+        404:
+          description: "No Users was found !"
+    post:
+      tags:
+      - "users"
+      summary: "Add User"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "user"
+        schema:
+          $ref: '#/definitions/User'
+        required: true
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: '#/definitions/User'
+        500:
+          description: "Un user doit être donné en paramètre !"
+  /users/{id_user}:
+    get:
+      tags:
+      - "users"
+      summary: "Find User by ID"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_user"
+        in: "path"
+        description: "ID of the User that we want to find"
+        required: true
+        type: "integer"
+        minimum: 1.0
+        format: "int64"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: '#/definitions/User'
+        404:
+          description: "The User with the id `{id_user}` was not found !"
+    put:
+      tags:
+      - "users"
+      summary: "Update User by ID"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_user"
+        in: "path"
+        description: "ID of the User that we want to update"
+        required: true
+        type: "integer"
+        minimum: 1.0
+        format: "int64"
+      - in: "body"
+        name: "user"
+        schema:
+          $ref: '#/definitions/User'
+        required: true
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: '#/definitions/User'
+        500:
+          description: ""
+    delete:
+      tags:
+      - "users"
+      summary: "Delete User by ID"
+      description: "For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_user"
+        in: "path"
+        description: "ID of the User that needs to be deleted"
+        required: true
+        type: "integer"
+        minimum: 1.0
+        format: "int64"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            type: "boolean"
+        404:
+          description: "The User with the id `{id_user}` was not found !"
+  /users/{id_user}/checkPassword:
+    get:
+      tags:
+      - "users"
+      summary: "Check the password for a User"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_user"
+        in: "path"
+        description: "ID of the User that we want to check its password"
+        required: true
+        type: "integer"
+        minimum: 1.0
+        format: "int64"
+      - name: "password"
+        in: "query"
+        description: "password of the User to be checked"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            type: "boolean"
+  /users/login:
+    get:
+      tags:
+      - "users"
+      summary: "Check the credentials for a User"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "query"
+        description: "username of the User to be checked"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "password of the User to be checked"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: '#/definitions/User'
+        404:
+          description: "Invalide credentials !"
+  /users/count:
+    get:
+      tags:
+      - "users"
+      summary: "Find the number of Users"
+      description: ""
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            type: "integer"
+  /rates:
+    get:
+      tags:
+      - "rates"
+      summary: "Finds Rates"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "start"
+        type: "integer"
+        minimum: 0.0
+        format: "int64"
+        description: "start index for the pagging"
+        required: false
+      - in: "query"
+        name: "end"
+        type: "integer"
+        minimum: 0.0
+        format: "int64"
+        description: "end index for the pagging"
+        required: false
+      - in: "query"
+        name: "id_user"
+        type: "integer"
+        minimum: 0.0
+        format: "int64"
+        description: "filter by a User ID"
+        required: false
+      - in: "query"
+        name: "id_multimedia"
+        type: "integer"
+        minimum: 0.0
+        format: "int64"
+        description: "filter by a Multimedia ID"
+        required: false
+      - in: "query"
+        name: "value"
+        type: "integer"
+        description: "filter by a value"
+        required: false
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: '#/definitions/Rate'
+        404:
+          description: "No Rates was found !"
+    post:
+      tags:
+      - "rates"
+      summary: "Add Rate"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "rate"
+        schema:
+          $ref: '#/definitions/Rate'
+        required: true
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: '#/definitions/Rate'
+        500:
+          description: "Un Rate doit être donné en paramètre !"
+  /rates/{id_rate}:
+    get:
+      tags:
+      - "rates"
+      summary: "Find Rate by ID"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_rate"
+        in: "path"
+        description: "ID of the Rate that we want to find"
+        required: true
+        type: "integer"
+        minimum: 1.0
+        format: "int64"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: '#/definitions/Rate'
+        404:
+          description: "The Rate with the id `{id_rate}` was not found !"
+    put:
+      tags:
+      - "rates"
+      summary: "Update Rate by ID"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_rate"
+        in: "path"
+        description: "ID of the Rate that we want to update"
+        required: true
+        type: "integer"
+        minimum: 1.0
+        format: "int64"
+      - in: "body"
+        name: "rate"
+        schema:
+          $ref: '#/definitions/Rate'
+        required: true
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: '#/definitions/Rate'
+        500:
+          description: ""
+    delete:
+      tags:
+      - "rates"
+      summary: "Delete Rate by ID"
+      description: "For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_rate"
+        in: "path"
+        description: "ID of the Rate that needs to be deleted"
+        required: true
+        type: "integer"
+        minimum: 1.0
+        format: "int64"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            type: "boolean"
+        404:
+          description: "The Rate with the id `{id_rate}` was not found !"
+  /rates/count:
+    get:
+      tags:
+      - "rates"
+      summary: "Find the number of Rates"
+      description: ""
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            type: "integer"
+  /comments:
+    get:
+      tags:
+      - "comments"
+      summary: "Finds Rates"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "start"
+        type: "integer"
+        minimum: 0.0
+        format: "int64"
+        description: "start index for the pagging"
+        required: false
+      - in: "query"
+        name: "end"
+        type: "integer"
+        minimum: 0.0
+        format: "int64"
+        description: "end index for the pagging"
+        required: false
+      - in: "query"
+        name: "id_user"
+        type: "integer"
+        minimum: 0.0
+        format: "int64"
+        description: "filter by a User ID"
+        required: false
+      - in: "query"
+        name: "id_multimedia"
+        type: "integer"
+        minimum: 0.0
+        format: "int64"
+        description: "filter by a Multimedia ID"
+        required: false
+      - in: "query"
+        name: "value"
+        type: "string"
+        description: "filter by a value"
+        required: false
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: '#/definitions/Comment'
+        404:
+          description: "No Rates was found !"
+    post:
+      tags:
+      - "comments"
+      summary: "Add Comment"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "comment"
+        schema:
+          $ref: '#/definitions/Comment'
+        required: true
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: '#/definitions/Comment'
+        500:
+          description: "Un Comment doit être donné en paramètre !"
+  /comments/{id_comment}:
+    get:
+      tags:
+      - "comments"
+      summary: "Find Comment by ID"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_comment"
+        in: "path"
+        description: "ID of the Comment that we want to find"
+        required: true
+        type: "integer"
+        minimum: 1.0
+        format: "int64"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: '#/definitions/Comment'
+        404:
+          description: "The Comment with the id `{id_comment}` was not found !"
+    put:
+      tags:
+      - "comments"
+      summary: "Update Comment by ID"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_comment"
+        in: "path"
+        description: "ID of the Comment that we want to update"
+        required: true
+        type: "integer"
+        minimum: 1.0
+        format: "int64"
+      - in: "body"
+        name: "comment"
+        schema:
+          $ref: '#/definitions/Comment'
+        required: true
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: '#/definitions/Comment'
+        500:
+          description: ""
+    delete:
+      tags:
+      - "comments"
+      summary: "Delete Comment by ID"
+      description: "For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_comment"
+        in: "path"
+        description: "ID of the Comment that needs to be deleted"
+        required: true
+        type: "integer"
+        minimum: 1.0
+        format: "int64"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            type: "boolean"
+        404:
+          description: "The Comment with the id `{id_comment}` was not found !"
+  /comments/count:
+    get:
+      tags:
+      - "comments"
+      summary: "Find the number of Comments"
       description: ""
       produces:
       - "application/json"
