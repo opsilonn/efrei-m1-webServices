@@ -3,6 +3,7 @@ package rest.resource;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
 import rest.model.VideoGame;
+import rest.model.util.SorterByAverage;
 import rest.service.VideoGameService;
 
 
@@ -96,7 +98,7 @@ public class VideoGameResource
      */
     @GET
     public Response getVideoGames(@QueryParam("start")int start, @QueryParam("end")int end,
-    		@QueryParam("filtre")String filtre, @QueryParam("uploader")long id_uploader)throws SQLException
+    		@QueryParam("filtre")String filtre, @QueryParam("uploader")long id_uploader, @QueryParam("sort")String trie)throws SQLException
     {
 		this.videoGameService = new VideoGameService();
 
@@ -120,6 +122,11 @@ public class VideoGameResource
 	    		}
 		 }
 		
+		 if(trie != null && trie.equals("average")){
+			 System.out.println("entrez de le if");
+			 Collections.sort(videoGames, new SorterByAverage());
+		 }
+		 
 		if(start >=0 && end>0 && end>=start && end<=videoGames.size()){
 			 result = videoGames.subList(start, end);
 		 }else{

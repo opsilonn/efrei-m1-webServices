@@ -10,6 +10,7 @@ import java.util.Map;
 
 import rest.exception.DataNotFoundException;
 import rest.model.Comment;
+import rest.model.Multimedia;
 import rest.model.Rate;
 import rest.model.VideoGame;
 import rest.model.util.Date;
@@ -61,7 +62,7 @@ public class VideoGameService {
 				videoGames.put(rs.getLong("ID_videoGame"), videoGame);
 			}
 		}
-		
+		SetallAverage();
 	}
 
 	
@@ -427,4 +428,35 @@ public class VideoGameService {
 		}
 	}
 	
+	public Long CalculatingAverage (Long id) throws SQLException{
+		
+		long average = 0;
+		long tot = 0;
+				
+		try(DB_web_services db = new DB_web_services()){
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.Rate.getByMult);
+			ppsm.setLong(1, id);
+			ResultSet rs = ppsm.executeQuery();
+			
+			while(rs.next()){
+				average += rs.getLong("value");
+				tot++;
+			}
+			
+			if(tot>0){
+				average = average/tot;
+			}
+			
+		}
+		
+		return average;
+	}
+	
+	public void SetallAverage() throws SQLException{
+		List<VideoGame> listTodo = new ArrayList<VideoGame>(this.videoGames.values());
+		
+		for(VideoGame iterator : listTodo){
+			iterator.setAverage(this.CalculatingAverage(iterator.getId_multimedia()));
+		}
+	}
 }

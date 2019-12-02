@@ -9,6 +9,7 @@ import java.util.Map;
 
 import rest.exception.DataNotFoundException;
 import rest.model.Book;
+import rest.model.Multimedia;
 import rest.model.Rate;
 import rest.model.util.Date;
 import rest.model.util.Timestamp;
@@ -56,7 +57,7 @@ public class BookService {
 
 	    	}
 		}
-		
+		SetallAverage();
 	}
 	
 	public List<Book> getAllBooks()
@@ -372,7 +373,36 @@ public class BookService {
 		
 	}
 	
+	public Long CalculatingAverage (Long id) throws SQLException{
+		
+		long average = 0;
+		long tot = 0;
+				
+		try(DB_web_services db = new DB_web_services()){
+			PreparedStatement ppsm = db.getPreparedStatement(Constants.Rate.getByMult);
+			ppsm.setLong(1, id);
+			ResultSet rs = ppsm.executeQuery();
+			
+			while(rs.next()){
+				average += rs.getLong("value");
+				tot++;
+			}
+			
+			if(tot>0){
+				average = average/tot;
+			}
+			
+		}
+		
+		return average;
+	}
 	
+	public void SetallAverage() throws SQLException{
+		List<Book> listTodo = new ArrayList<Book>(this.books.values());
+		
+		for(Book iterator : listTodo){
+			iterator.setAverage(this.CalculatingAverage(iterator.getId_multimedia()));
+		}
+	}
 	
-
 }
