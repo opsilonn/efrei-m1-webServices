@@ -295,7 +295,7 @@ public class MultimediaService {
 	}
 	
 	
-	public List<Multimedia> filtre (String filtre) throws SQLException{
+	public List<Multimedia> filtreByTitle (String filtre) throws SQLException{
 		
 		List<Multimedia> result = new ArrayList<Multimedia>();
 		

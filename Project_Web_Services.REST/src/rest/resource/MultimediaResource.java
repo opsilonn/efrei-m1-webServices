@@ -89,7 +89,7 @@ public class MultimediaResource
      */
 	 @GET
 	 public Response getMultimedias(@QueryParam("start")int start, @QueryParam("end")int end,
-			 @QueryParam("filtre")String filtre, @QueryParam("sort")String trie, @QueryParam("uploader")long id_uploader) 
+			 @QueryParam("title")String title, @QueryParam("sort")String trie, @QueryParam("uploader")long id_uploader) 
 			 throws SQLException{
 		 this.multimediaService = new MultimediaService();
 		 
@@ -101,8 +101,8 @@ public class MultimediaResource
 		 System.out.println(start);
 		 System.out.println(end);
 		 
-		 if(filtre != null){
-			 multimedias = multimediaService.filtre(filtre);
+		 if(title != null){
+			 multimedias = multimediaService.filtreByTitle(title);
 		 }else{
 			 multimedias = multimediaService.getMultimedias();
 		 }
