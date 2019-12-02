@@ -46,6 +46,8 @@ public class Servlet_Multimedias extends HttpServlet
 
     	// Getting the URI and checking where we are
     	String URI = request.getRequestURI();
+    	System.out.println(URI);
+    	
     	Boolean isMultimedia = URI.contains("multimedias");
     	Boolean isBook = URI.contains("books");
     	Boolean isFilm = URI.contains("films");

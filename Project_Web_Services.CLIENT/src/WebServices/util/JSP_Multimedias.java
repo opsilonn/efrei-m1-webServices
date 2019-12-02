@@ -36,7 +36,7 @@ public class JSP_Multimedias
         jw.println("				    	<th scope=\"col\">CATEGORY</th>");
         jw.println("				    	<th scope=\"col\">GENRE</th>");
         jw.println("				    	<th scope=\"col\">LANGUAGE</th>");
-        jw.println("				    	<th scope=\"col\">RATING</th>");
+        jw.println("				    	<th scope=\"col\">RATINGS</th>");
         jw.println("				    	<th scope=\"col\">COMMENTS</th>");
         jw.println("				    	<th scope=\"col\">DATE</th>");
         jw.println("					</tr>");
@@ -105,12 +105,12 @@ public class JSP_Multimedias
     	// The proper JSP code
         jw.println("<tr style=\"cursor:hand;vertical-align:middle;border-left: 4px solid " + color + ";border-right: 2px solid " + color + "\" data-href=\"" + link + "\">");
         
-        jw.println("	<td>" + multimedia.getTitle() + "</td>");
+        jw.println("	<td><b>" + multimedia.getTitle() + "</b></td>");
         jw.println("	<td style=\"text-align: justify;\">" + description + "</td>");
-        jw.println("	<td style=\"color:" + color + "\">" + multimedia.getCategoryText() + "</td>");
+        jw.println("	<td style=\"color:" + color + "\"><b>" + multimedia.getCategoryText() + "</b></td>");
         jw.println("	<td>" + multimedia.getGenre() + "</td>");
         jw.println("	<td>" + multimedia.getLanguage() + "</td>");
-        jw.println("	<td>" + "12345" + "</td>");
+        jw.println("	<td>" + multimedia.getAverage() + "</td>");
         jw.println("	<td>" + "12345" + "</td>");
         jw.println("	<td>" + multimedia.getDate_upload() + "</td>");
 

@@ -1,18 +1,13 @@
 package WebServices.Servlets;
 
 import static WebServices.util.Constants.*;
-import static rest.util.REST_Utils.REST_GetListUsers;
 import static rest.util.REST_Utils.REST_GetService;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
-import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import rest.model.User;
 import javax.servlet.http.HttpServlet;
@@ -88,8 +83,8 @@ public class Servlet_Login extends HttpServlet
     	    		.accept(MediaType.APPLICATION_JSON)
     	    		.get();
 	    	
-    	    if(response2.getStatusInfo().toString().equals(Status.OK.toString())){
-    	    	System.out.println("HERE");
+    	    if(response2.getStatusInfo().toString().equals(Status.OK.toString()))
+    	    {
     	    	User user = response2.readEntity(User.class);
 
                 // Setting the session value

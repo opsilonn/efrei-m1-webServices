@@ -217,6 +217,23 @@ public class Multimedia{
 	public void setDate_release(Date date_release) {
 		this.date_release = date_release;
 	}
+	
+	/**
+	 * 
+	 * @return the Average rate
+	 */
+	public long getAverage() {
+		return Average;
+	}
+
+	/**
+	 * 
+	 * @param average the averate rate to set
+	 */
+	public void setAverage(long average) {
+		Average = average;
+	}
+	
 
 	/**
 	 * @return the uploader's ID
@@ -252,16 +269,6 @@ public class Multimedia{
 	public void setLinks(List<Link> links)
 	{
 		this.links = links;
-	}
-
-
-	public long getAverage() {
-		return Average;
-	}
-
-
-	public void setAverage(long average) {
-		Average = average;
 	}
 
 
