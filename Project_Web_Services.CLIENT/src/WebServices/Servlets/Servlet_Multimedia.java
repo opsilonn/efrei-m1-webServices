@@ -1,10 +1,7 @@
 package WebServices.Servlets;
 
 import static WebServices.util.Constants.PATH_PAGE_MULTIMEDIA;
-import static rest.util.REST_Utils.REST_GetService;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
