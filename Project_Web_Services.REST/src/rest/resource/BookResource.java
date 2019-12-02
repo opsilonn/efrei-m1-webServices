@@ -3,6 +3,7 @@ package rest.resource;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -22,6 +23,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
 import rest.model.Book;
+import rest.model.util.SorterByAverage;
 import rest.service.BookService;
 
 @Path("/books")
@@ -84,7 +86,7 @@ public class BookResource {
     
     @GET
     public Response getBooks(@QueryParam("start")int start, @QueryParam("end")int end,
-    		@QueryParam("filtre")String filtre, @QueryParam("uploader")long id_uploader)throws SQLException {
+    		@QueryParam("filtre")String filtre, @QueryParam("uploader")long id_uploader, @QueryParam("sort")String trie)throws SQLException {
 		this.bookService = new BookService();
 		List<Book> books;
 		List<Book> result;
@@ -105,6 +107,11 @@ public class BookResource {
 	    		}
 		 }
 		
+		 if(trie != null && trie.equals("average")){
+			 System.out.println("entrez de le if");
+			 Collections.sort(books, new SorterByAverage());
+		 }
+		 
 		 if(start >=0 && end>0 && end>=start && end < books.size()){
 			 result = books.subList(start, end);
 		 }else{
