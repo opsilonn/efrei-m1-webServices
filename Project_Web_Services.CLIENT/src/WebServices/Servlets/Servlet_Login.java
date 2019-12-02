@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import WebServices.util.ServiceAuthorization;
 import rest.model.User;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -73,16 +74,20 @@ public class Servlet_Login extends HttpServlet
 
     	
     	    // We get the Users (in a string, JSON format)	    
-    	    Response response2 = service
+    	    Response response2 = ServiceAuthorization.getWebTarget(
+    	    		service
     	    		.path("rest/v1")
     	    		.path("users")
     	    		.path("login")
     	    		.queryParam("username", inputUser)
     	    		.queryParam("password", inputPwd)
-    	    		.request()
+    	    		.request())
     	    		.accept(MediaType.APPLICATION_JSON)
     	    		.get();
 	    	
+    	    System.out.println(response2.getStatusInfo().toString());
+    	    
+    	    
     	    if(response2.getStatusInfo().toString().equals(Status.OK.toString()))
     	    {
     	    	User user = response2.readEntity(User.class);

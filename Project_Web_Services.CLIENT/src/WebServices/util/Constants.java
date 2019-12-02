@@ -57,7 +57,9 @@ public class Constants
       public List<String> getValues() { return values; }
     }
 
-    
+
+	public final static String username = "test_username";
+	public final static String password = "test_password";
     
 
     // The name of the website

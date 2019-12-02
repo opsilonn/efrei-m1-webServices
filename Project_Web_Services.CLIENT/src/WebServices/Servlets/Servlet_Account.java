@@ -14,6 +14,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import WebServices.util.ServiceAuthorization;
 import rest.model.Multimedia;
 import rest.model.User;
 import rest.model.util.Link;
@@ -116,8 +117,8 @@ public class Servlet_Account extends HttpServlet
 		    	
 		    	// Add it to the database
 				service = REST_GetService();
-			    Response resp = service.path("rest/v1/users").
-			    		request(MediaType.APPLICATION_JSON).
+			    Response resp = ServiceAuthorization.getWebTarget(service.path("rest/v1/users").
+			    		request(MediaType.APPLICATION_JSON)).
 			    		put(Entity.entity(newUser, MediaType.APPLICATION_JSON),Response.class);
 
 

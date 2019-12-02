@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import WebServices.util.ServiceAuthorization;
 import rest.model.*;
 
 
@@ -110,7 +111,7 @@ public class Servlet_Multimedias extends HttpServlet
     	try
         {
     	    // We get the {@link Book} (in a string, JSON format)	    
-    	    String JSON = service.path("rest/v1/books").request().
+    	    String JSON = ServiceAuthorization.getWebTarget(service.path("rest/v1/books").request()).
 		    		accept(MediaType.APPLICATION_JSON).
 		    		get(String.class); 
 
@@ -138,7 +139,7 @@ public class Servlet_Multimedias extends HttpServlet
     	try
         {
     	    // We get the {@link Films} (in a string, JSON format)	    
-    	    String JSON = service.path("rest/v1/films").request().
+    	    String JSON = ServiceAuthorization.getWebTarget(service.path("rest/v1/films").request()).
 		    		accept(MediaType.APPLICATION_JSON).
 		    		get(String.class); 
 
@@ -166,7 +167,7 @@ public class Servlet_Multimedias extends HttpServlet
     	try
         {
     	    // We get the {@link Films} (in a string, JSON format)	    
-    	    String JSON = service.path("rest/v1/videoGames").request().
+    	    String JSON = ServiceAuthorization.getWebTarget(service.path("rest/v1/videoGames").request()).
 		    		accept(MediaType.APPLICATION_JSON).
 		    		get(String.class); 
 

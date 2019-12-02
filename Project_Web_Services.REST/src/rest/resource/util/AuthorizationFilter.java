@@ -16,7 +16,7 @@ import org.glassfish.jersey.internal.util.Base64;
 import rest.util.Constants;
 
 
-
+@Provider
 public class AuthorizationFilter implements ContainerRequestFilter{
 
 	private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
