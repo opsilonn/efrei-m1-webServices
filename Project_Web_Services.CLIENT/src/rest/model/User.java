@@ -8,10 +8,6 @@ import rest.model.util.Timestamp;
 import rest.model.util.Link;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 
 
@@ -24,9 +20,7 @@ public class User {
 	private String pseudo;
 	private String email;
 	
-	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
-	@JsonProperty(access = Access.WRITE_ONLY)
 	private String new_password;
 	
 	private Timestamp creation_date;
@@ -47,7 +41,6 @@ public class User {
 	/**
 	 * @return the id_user
 	 */
-    @XmlTransient
 	public long getId_user() {
 		return id_user;
 	}

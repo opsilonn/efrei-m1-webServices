@@ -5,10 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import rest.model.util.Link;
 import rest.model.util.Timestamp;
@@ -24,9 +20,7 @@ public class Rate {
 	private int value;
 	private Timestamp creation_date;
 
-	@JsonProperty(access = Access.WRITE_ONLY)
 	private long id_user;
-	@JsonProperty(access = Access.WRITE_ONLY)
 	private long id_multimedia;
 	
 	private List<Link> links = new ArrayList<Link>();
@@ -48,7 +42,6 @@ public class Rate {
 	/**
 	 * @return the id_rate
 	 */
-    @XmlTransient
 	public long getId_rate() {
 		return id_rate;
 	}

@@ -2,7 +2,6 @@ package rest.model;
 
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import rest.model.util.Date;
 import rest.model.util.Time;
@@ -56,7 +55,6 @@ public class Film extends Multimedia{
 	/**
 	 * @return the id_film
 	 */
-    @XmlTransient
 	public long getId_film() {
 		return id_film;
 	}

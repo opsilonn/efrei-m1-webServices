@@ -6,7 +6,6 @@ import rest.model.util.Date;
 import rest.model.util.Timestamp;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 
 
@@ -34,7 +33,6 @@ public class Book extends Multimedia{
 	/**
 	 * @return the id_book
 	 */
-    @XmlTransient
 	public long getId_book() {
 		return id_book;
 	}
