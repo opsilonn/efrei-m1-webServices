@@ -11,10 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
-import WebServices.util.ServiceAuthorization;
 import rest.model.*;
 
 
@@ -23,9 +19,7 @@ import rest.model.*;
 public class Servlet_Multimedias extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-	private List<Multimedia> multimedias;
-	private WebTarget service;
-	
+	private List<Multimedia> multimedias;	
 	
 	
 	
@@ -41,13 +35,8 @@ public class Servlet_Multimedias extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {    
-    	// We get the REST service
-    	service = REST_GetService();
-    	
-
     	// Getting the URI and checking where we are
     	String URI = request.getRequestURI();
-    	System.out.println(URI);
     	
     	Boolean isMultimedia = URI.contains("multimedias");
     	Boolean isBook = URI.contains("books");
@@ -110,13 +99,8 @@ public class Servlet_Multimedias extends HttpServlet
     {
     	try
         {
-    	    // We get the {@link Book} (in a string, JSON format)	    
-    	    String JSON = ServiceAuthorization.getWebTarget(service.path("rest/v1/books").request()).
-		    		accept(MediaType.APPLICATION_JSON).
-		    		get(String.class); 
-
-    	    // Convert the String into a list
-    		List<Book> books = REST_GetListBooks(JSON);
+    	    // GET the list of {@link Book}
+    		List<Book> books = REST_Books_GET();
     		for(Book book : books)
     		{
     			multimedias.add(book);
@@ -138,13 +122,8 @@ public class Servlet_Multimedias extends HttpServlet
     {
     	try
         {
-    	    // We get the {@link Films} (in a string, JSON format)	    
-    	    String JSON = ServiceAuthorization.getWebTarget(service.path("rest/v1/films").request()).
-		    		accept(MediaType.APPLICATION_JSON).
-		    		get(String.class); 
-
-    	    // Convert the String into a list
-    		List<Film> films = REST_GetListFilms(JSON);
+    	    // GET the list of {@link Film}
+    		List<Film> films = REST_Films_GET();
     		for(Film film : films)
     		{
     			multimedias.add(film);
@@ -166,13 +145,8 @@ public class Servlet_Multimedias extends HttpServlet
     {
     	try
         {
-    	    // We get the {@link Films} (in a string, JSON format)	    
-    	    String JSON = ServiceAuthorization.getWebTarget(service.path("rest/v1/videoGames").request()).
-		    		accept(MediaType.APPLICATION_JSON).
-		    		get(String.class); 
-
-    	    // Convert the String into a list
-    		List<VideoGame> videoGames = REST_GetListVideoGames(JSON);
+    	    // GET the list of {@link VideoGames}
+    		List<VideoGame> videoGames = REST_VideoGames_GET();  	
     		for(VideoGame videoGame : videoGames)
     		{
     			multimedias.add(videoGame);

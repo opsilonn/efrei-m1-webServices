@@ -1,7 +1,7 @@
 package WebServices.Servlets;
 
 import static WebServices.util.Constants.*;
-import static rest.util.REST_Utils.REST_GetService;
+import static rest.util.REST_Utils.REST_User_POST;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -9,15 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import WebServices.util.ServiceAuthorization;
 import rest.model.Multimedia;
 import rest.model.User;
 import rest.model.util.Link;
+
 
 /**
  * Servlet implementation class Servlet_Account
@@ -46,18 +42,6 @@ public class Servlet_Account extends HttpServlet
        {
 	       	// We get the User and the link to its data
 	       	User user = (User)request.getSession().getAttribute("user");
-	       	String Href = "";
-	       	for(Link link : user.getLinks())
-	       	{
-	       		if( link.getRel().equals("self") )
-	       		{
-	       			Href = link.getHref();		
-	       		}
-	       	}
-	       	
-	       	// We get the REST service
-	       	service = REST_GetService();
-	       	System.out.println(Href);
        	
            request.setAttribute("title", "My Account");
        }
@@ -116,10 +100,7 @@ public class Servlet_Account extends HttpServlet
 		    	newUser.setEmail(inputEmail);
 		    	
 		    	// Add it to the database
-				service = REST_GetService();
-			    Response resp = ServiceAuthorization.getWebTarget(service.path("rest/v1/users").
-			    		request(MediaType.APPLICATION_JSON)).
-			    		put(Entity.entity(newUser, MediaType.APPLICATION_JSON),Response.class);
+		    	REST_User_POST(newUser);
 
 
                 // Setting the session value

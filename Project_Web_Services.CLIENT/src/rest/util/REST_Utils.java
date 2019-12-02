@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.jersey.client.ClientConfig;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -18,7 +21,9 @@ import rest.model.*;
 
 
 public class REST_Utils
-{	   
+{	 
+	private static WebTarget service;
+	
     // Linking to the REST Backend
     private static URI GET_BASE_URI = UriBuilder.fromUri("http://localhost:8080/Project_Web_Services.REST").build();
 
@@ -47,9 +52,13 @@ public class REST_Utils
 	 * @throws JsonMappingException
 	 * @throws IOException
 	 */
-	public static ArrayList<User> REST_GetListUsers(String JSON_string)
+	public static ArrayList<User> REST_Users_GET(String JSON_string)
 			throws JsonParseException, JsonMappingException, IOException
 	{
+		// service = REST_GetService();
+		
+		
+		
 	    ObjectMapper mapper = new ObjectMapper();
 	    return mapper.readValue(JSON_string, new TypeReference<List<User>>(){});
 	}	
@@ -77,17 +86,22 @@ public class REST_Utils
 	
 	/** Transform a JSON list of {@link Book} into a JAVA list of {@link Book}
 	 * 
-	 * @param JSON_string JSON list of {@link Book}
 	 * @return a JAVA list of {@link Book}
 	 * @throws JsonParseException
 	 * @throws JsonMappingException
 	 * @throws IOException
 	 */
-	public static ArrayList<Book> REST_GetListBooks(String JSON_string)
+	public static ArrayList<Book> REST_Books_GET()
 			throws JsonParseException, JsonMappingException, IOException
 	{
+		service = REST_GetService();
+		
+		String JSON = service.path("rest/v1/books").request().
+	    		accept(MediaType.APPLICATION_JSON).
+	    		get(String.class);
+		
 	    ObjectMapper mapper = new ObjectMapper();
-	    return mapper.readValue(JSON_string, new TypeReference<List<Book>>(){});
+	    return mapper.readValue(JSON, new TypeReference<List<Book>>(){});
 	}		
 	
 	
@@ -95,17 +109,22 @@ public class REST_Utils
 	
 	/** Transform a JSON list of {@link Film} into a JAVA list of {@link Book}
 	 * 
-	 * @param JSON_string JSON list of {@link Book}
 	 * @return a JAVA list of {@link Book}
 	 * @throws JsonParseException
 	 * @throws JsonMappingException
 	 * @throws IOException
 	 */
-	public static ArrayList<Film> REST_GetListFilms(String JSON_string)
+	public static ArrayList<Film> REST_Films_GET()
 			throws JsonParseException, JsonMappingException, IOException
 	{
+		service = REST_GetService();
+		
+		String JSON = service.path("rest/v1/films").request().
+	    		accept(MediaType.APPLICATION_JSON).
+	    		get(String.class);
+		
 	    ObjectMapper mapper = new ObjectMapper();
-	    return mapper.readValue(JSON_string, new TypeReference<List<Film>>(){});
+	    return mapper.readValue(JSON, new TypeReference<List<Film>>(){});
 	}	
 
 	
@@ -113,34 +132,37 @@ public class REST_Utils
 	
 	/** Transform a JSON list of {@link VideoGame} into a JAVA list of {@link Book}
 	 * 
-	 * @param JSON_string JSON list of {@link Book}
 	 * @return a JAVA list of {@link Book}
 	 * @throws JsonParseException
 	 * @throws JsonMappingException
 	 * @throws IOException
 	 */
-	public static ArrayList<VideoGame> REST_GetListVideoGames(String JSON_string)
+	public static ArrayList<VideoGame> REST_VideoGames_GET()
 			throws JsonParseException, JsonMappingException, IOException
 	{
+		service = REST_GetService();
+		
+		String JSON = service.path("rest/v1/videoGames").request().
+	    		accept(MediaType.APPLICATION_JSON).
+	    		get(String.class);
+		
 	    ObjectMapper mapper = new ObjectMapper();
-	    return mapper.readValue(JSON_string, new TypeReference<List<VideoGame>>(){});
+	    return mapper.readValue(JSON, new TypeReference<List<VideoGame>>(){});
 	}	
+
 	
 	
-	
-	
-	/** Transform a JSON list of {@link Rate} into a JAVA list of {@link Rate}
+	/** Adds a new User to the Database
 	 * 
-	 * @param JSON_string JSON list of {@link Rate}
-	 * @return a JAVA list of {@link Rate}
-	 * @throws JsonParseException
-	 * @throws JsonMappingException
-	 * @throws IOException
+	 * @param newUser User to add to the database
 	 */
-	public static ArrayList<Rate> REST_GetListRates(String JSON_string)
-			throws JsonParseException, JsonMappingException, IOException
+	public static void REST_User_POST(User newUser)
 	{
-	    ObjectMapper mapper = new ObjectMapper();
-	    return mapper.readValue(JSON_string, new TypeReference<List<Rate>>(){});
+		// Add it to the database
+		service = REST_GetService();
+		
+	    Response resp = service.path("rest/v1/users").
+	    		request(MediaType.APPLICATION_JSON).
+	    		post(Entity.entity(newUser, MediaType.APPLICATION_JSON),Response.class);
 	}
 }
