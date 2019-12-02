@@ -76,6 +76,13 @@ paths:
       responses:
         200:
           description: "Ok"
+          schema:
+            type: "array"
+            items:
+              anyOf:
+              - $ref: '#/definitions/Book'
+              - $ref: '#/definitions/Film'
+              - $ref: '#/definitions/VideoGame'
         404:
           description: "No Multimedias was found !"
   /multimedias/{id_multimedia}:
@@ -97,6 +104,8 @@ paths:
       responses:
         200:
           description: "Ok"
+          schema:
+            $ref: '#/definitions/Book'
         404:
           description: "The multimedia with the id `{id_multimedia}` was not found !"
     delete:
@@ -117,27 +126,8 @@ paths:
       responses:
         200:
           description: "Ok"
-        404:
-          description: "The Multimedia with the id `{id_multimedia}` was not found !"
-  /multimedias/{id_multimedia}/average:
-    get:
-      tags:
-      - "multimedias"
-      summary: "Find the average rates of a Multimedia"
-      description: ""
-      produces:
-      - "application/json"
-      parameters:
-      - name: "id_multimedia"
-        in: "path"
-        description: "The id of the Multimedia we want to find the average"
-        required: true
-        type: "integer"
-        minimum: 1.0
-        format: "int64"
-      responses:
-        200:
-          description: "Ok"
+          schema:
+            type: "boolean"
         404:
           description: "The Multimedia with the id `{id_multimedia}` was not found !"
   /books:
@@ -183,8 +173,32 @@ paths:
       responses:
         200:
           description: "Ok"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/Book'
         404:
           description: "No Books was found !"
+    post:
+      tags:
+      - "books"
+      summary: "Add Book"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "book"
+        schema:
+          $ref: '#/definitions/Book'
+        required: true
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: '#/definitions/Book'
+        500:
+          description: "Le champ 'title' ne peut être vide (null)"
   /books/{id_book}:
     get:
       tags:
@@ -204,8 +218,37 @@ paths:
       responses:
         200:
           description: "Ok"
+          schema:
+            $ref: '#/definitions/Book'
         404:
           description: "The Book with the id `{id_book}` was not found !"
+    put:
+      tags:
+      - "books"
+      summary: "Update Book by ID"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_book"
+        in: "path"
+        description: "ID of the Book that we want to update"
+        required: true
+        type: "integer"
+        minimum: 1.0
+        format: "int64"
+      - in: "body"
+        name: "book"
+        schema:
+          $ref: '#/definitions/Book'
+        required: true
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: '#/definitions/Book'
+        500:
+          description: ""
     delete:
       tags:
       - "books"
@@ -224,6 +267,8 @@ paths:
       responses:
         200:
           description: "Ok"
+          schema:
+            type: "boolean"
         404:
           description: "The Book with the id `{id_book}` was not found !"
   /books/count:
@@ -237,27 +282,8 @@ paths:
       responses:
         200:
           description: "Ok"
-  /books/{id_book}/average:
-    get:
-      tags:
-      - "books"
-      summary: "Find the average rates of a Book"
-      description: ""
-      produces:
-      - "application/json"
-      parameters:
-      - name: "id_book"
-        in: "path"
-        description: "The id of the Book we want to find the average"
-        required: true
-        type: "integer"
-        minimum: 1.0
-        format: "int64"
-      responses:
-        200:
-          description: "Ok"
-        404:
-          description: "The Book with the id `{id_book}` was not found !"
+          schema:
+            type: "integer"
   /films:
     get:
       tags:
@@ -301,8 +327,32 @@ paths:
       responses:
         200:
           description: "Ok"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/Film'
         404:
           description: "No Films was found !"
+    post:
+      tags:
+      - "films"
+      summary: "Add Film"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "film"
+        schema:
+          $ref: '#/definitions/Film'
+        required: true
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: '#/definitions/Film'
+        500:
+          description: "Le champ 'title' ne peut être vide (null)"
   /films/{id_film}:
     get:
       tags:
@@ -322,8 +372,37 @@ paths:
       responses:
         200:
           description: "Ok"
+          schema:
+            $ref: '#/definitions/Film'
         404:
           description: "The Film with the id `{id_film}` was not found !"
+    put:
+      tags:
+      - "films"
+      summary: "Update Film by ID"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_film"
+        in: "path"
+        description: "ID of the Film that we want to update"
+        required: true
+        type: "integer"
+        minimum: 1.0
+        format: "int64"
+      - in: "body"
+        name: "book"
+        schema:
+          $ref: '#/definitions/Film'
+        required: true
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: '#/definitions/Film'
+        500:
+          description: ""
     delete:
       tags:
       - "films"
@@ -342,6 +421,8 @@ paths:
       responses:
         200:
           description: "Ok"
+          schema:
+            type: "boolean"
         404:
           description: "The Film with the id `{id_film}` was not found !"
   /films/count:
@@ -355,27 +436,8 @@ paths:
       responses:
         200:
           description: "Ok"
-  /films/{id_film}/average:
-    get:
-      tags:
-      - "films"
-      summary: "Find the average rates of a Film"
-      description: ""
-      produces:
-      - "application/json"
-      parameters:
-      - name: "id_film"
-        in: "path"
-        description: "The id of the Film we want to find the average"
-        required: true
-        type: "integer"
-        minimum: 1.0
-        format: "int64"
-      responses:
-        200:
-          description: "Ok"
-        404:
-          description: "The Film with the id `{id_film}` was not found !"
+          schema:
+            type: "integer"
   /videoGames:
     get:
       tags:
@@ -419,9 +481,33 @@ paths:
       responses:
         200:
           description: "Ok"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/VideoGame'
         404:
           description: "No VideoGames was found !"
-  /videoGames/{id_videoGames}:
+    post:
+      tags:
+      - "videoGames"
+      summary: "Add VideoGame"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "book"
+        schema:
+          $ref: '#/definitions/VideoGame'
+        required: true
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: '#/definitions/VideoGame'
+        500:
+          description: "Le champ 'title' ne peut être vide (null)"
+  /videoGames/{id_videoGame}:
     get:
       tags:
       - "videoGames"
@@ -430,9 +516,9 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "id_videoGames"
+      - name: "id_videoGame"
         in: "path"
-        description: "ID of the VideoGames that we want to find"
+        description: "ID of the VideoGame that we want to find"
         required: true
         type: "integer"
         minimum: 1.0
@@ -440,8 +526,39 @@ paths:
       responses:
         200:
           description: "Ok"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/VideoGame'
         404:
-          description: "The VideoGames with the id `{id_videoGames}` was not found !"
+          description: "The VideoGames with the id `{id_videoGame}` was not found !"
+    put:
+      tags:
+      - "videoGames"
+      summary: "Update VideoGame by ID"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_videoGame"
+        in: "path"
+        description: "ID of the VideoGame that we want to update"
+        required: true
+        type: "integer"
+        minimum: 1.0
+        format: "int64"
+      - in: "body"
+        name: "book"
+        schema:
+          $ref: '#/definitions/VideoGame'
+        required: true
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: '#/definitions/VideoGame'
+        500:
+          description: ""
     delete:
       tags:
       - "videoGames"
@@ -450,7 +567,7 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "id_videoGames"
+      - name: "id_videoGame"
         in: "path"
         description: "ID of the VideoGames that needs to be deleted"
         required: true
@@ -460,6 +577,8 @@ paths:
       responses:
         200:
           description: "Ok"
+          schema:
+            type: "boolean"
         404:
           description: "The VideoGames with the id `{id_videoGames}` was not found !"
   /videoGames/count:
@@ -473,285 +592,8 @@ paths:
       responses:
         200:
           description: "Ok"
-  /videoGames/{id_videoGames}/average:
-    get:
-      tags:
-      - "videoGames"
-      summary: "Find the average rates of a VideoGames"
-      description: ""
-      produces:
-      - "application/json"
-      parameters:
-      - name: "id_videoGames"
-        in: "path"
-        description: "The id of the VideoGames we want to find the average"
-        required: true
-        type: "integer"
-        minimum: 1.0
-        format: "int64"
-      responses:
-        200:
-          description: "Ok"
-        404:
-          description: "The VideoGames with the id `{id_videoGames}` was not found !"
-  /store/inventory:
-    get:
-      tags:
-      - "store"
-      summary: "Returns pet inventories by status"
-      description: "Returns a map of status codes to quantities"
-      operationId: "getInventory"
-      produces:
-      - "application/json"
-      parameters: []
-      responses:
-        200:
-          description: "successful operation"
           schema:
-            type: "object"
-            additionalProperties:
-              type: "integer"
-              format: "int32"
-      security:
-      - api_key: []
-  /store/order:
-    post:
-      tags:
-      - "store"
-      summary: "Place an order for a pet"
-      description: ""
-      operationId: "placeOrder"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "order placed for purchasing the pet"
-        required: true
-        schema:
-          $ref: "#/definitions/Order"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/Order"
-        400:
-          description: "Invalid Order"
-  /store/order/{orderId}:
-    get:
-      tags:
-      - "store"
-      summary: "Find purchase order by ID"
-      description: "For valid response try integer IDs with value >= 1 and <= 10.         Other values will generated exceptions"
-      operationId: "getOrderById"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "orderId"
-        in: "path"
-        description: "ID of pet that needs to be fetched"
-        required: true
-        type: "integer"
-        maximum: 10.0
-        minimum: 1.0
-        format: "int64"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/Order"
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Order not found"
-  /user:
-    post:
-      tags:
-      - "user"
-      summary: "Create user"
-      description: "This can only be done by the logged in user."
-      operationId: "createUser"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Created user object"
-        required: true
-        schema:
-          $ref: "#/definitions/User"
-      responses:
-        default:
-          description: "successful operation"
-  /user/createWithArray:
-    post:
-      tags:
-      - "user"
-      summary: "Creates list of users with given input array"
-      description: ""
-      operationId: "createUsersWithArrayInput"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "List of user object"
-        required: true
-        schema:
-          type: "array"
-          items:
-            $ref: "#/definitions/User"
-      responses:
-        default:
-          description: "successful operation"
-  /user/createWithList:
-    post:
-      tags:
-      - "user"
-      summary: "Creates list of users with given input array"
-      description: ""
-      operationId: "createUsersWithListInput"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "List of user object"
-        required: true
-        schema:
-          type: "array"
-          items:
-            $ref: "#/definitions/User"
-      responses:
-        default:
-          description: "successful operation"
-  /user/login:
-    get:
-      tags:
-      - "user"
-      summary: "Logs user into the system"
-      description: ""
-      operationId: "loginUser"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "query"
-        description: "The user name for login"
-        required: true
-        type: "string"
-      - name: "password"
-        in: "query"
-        description: "The password for login in clear text"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "string"
-          headers:
-            X-Rate-Limit:
-              type: "integer"
-              format: "int32"
-              description: "calls per hour allowed by the user"
-            X-Expires-After:
-              type: "string"
-              format: "date-time"
-              description: "date in UTC when token expires"
-        400:
-          description: "Invalid username/password supplied"
-  /user/logout:
-    get:
-      tags:
-      - "user"
-      summary: "Logs out current logged in user session"
-      description: ""
-      operationId: "logoutUser"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters: []
-      responses:
-        default:
-          description: "successful operation"
-  /user/{username}:
-    get:
-      tags:
-      - "user"
-      summary: "Get user by user name"
-      description: ""
-      operationId: "getUserByName"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        400:
-          description: "Invalid username supplied"
-        404:
-          description: "User not found"
-    put:
-      tags:
-      - "user"
-      summary: "Updated user"
-      description: "This can only be done by the logged in user."
-      operationId: "updateUser"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "name that need to be updated"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "Updated user object"
-        required: true
-        schema:
-          $ref: "#/definitions/User"
-      responses:
-        400:
-          description: "Invalid user supplied"
-        404:
-          description: "User not found"
-    delete:
-      tags:
-      - "user"
-      summary: "Delete user"
-      description: "This can only be done by the logged in user."
-      operationId: "deleteUser"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be deleted"
-        required: true
-        type: "string"
-      responses:
-        400:
-          description: "Invalid username supplied"
-        404:
-          description: "User not found"
+            type: "integer"
 definitions:
   Link:
     type: "object"
@@ -761,7 +603,7 @@ definitions:
       href:
         type: "string"
         format: "url"
-  Books:
+  Book:
     type: "object"
     properties:
       id_multimedia:
@@ -810,6 +652,112 @@ definitions:
         type: "string"
       average:
         type: "number"
+  Film:
+    type: "object"
+    properties:
+      id_multimedia:
+        type: "integer"
+        format: "int64"
+      title:
+        type: "string"
+      description:
+        type: "string"
+      language:
+        type: "string"
+      genre:
+        type: "string"
+      category:
+        type: "integer"
+      status:
+        type: "integer"
+      date_status:
+        type: "object"
+        properties:
+          value:
+            type: "string"
+            format: "date-time"
+      date_upload:
+        type: "object"
+        properties:
+          value:
+            type: "string"
+            format: "date-time"
+      date_release:
+        type: "object"
+        properties:
+          value:
+            type: "string"
+            format: "date"
+      links:
+        type: "array"
+        items:
+          $ref: "#/definitions/Link"
+      id_films:
+        type: "integer"
+        format: "int64"
+      director:
+        type: "string"
+      productor:
+        type: "string"
+      mainCast:
+        type: "string"
+      duration:
+        type: "object"
+        properties:
+          value:
+            type: "string"
+            format: "time"
+      average:
+        type: "number"
+  VideoGame:
+    type: "object"
+    properties:
+      id_multimedia:
+        type: "integer"
+        format: "int64"
+      title:
+        type: "string"
+      description:
+        type: "string"
+      language:
+        type: "string"
+      genre:
+        type: "string"
+      category:
+        type: "integer"
+      status:
+        type: "integer"
+      date_status:
+        type: "object"
+        properties:
+          value:
+            type: "string"
+            format: "date-time"
+      date_upload:
+        type: "object"
+        properties:
+          value:
+            type: "string"
+            format: "date-time"
+      date_release:
+        type: "object"
+        properties:
+          value:
+            type: "string"
+            format: "date"
+      links:
+        type: "array"
+        items:
+          $ref: "#/definitions/Link"
+      id_videoGame:
+        type: "integer"
+        format: "int64"
+      developer:
+        type: "string"
+      publisher:
+        type: "string"
+      average:
+        type: "number"
   User:
     type: "object"
     properties:
@@ -831,70 +779,39 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/Link"
-  Category:
+  Rate:
     type: "object"
     properties:
-      id:
+      id_rate:
         type: "integer"
         format: "int64"
-      name:
-        type: "string"
-    xml:
-      name: "Category"
-  Tag:
-    type: "object"
-    properties:
-      id:
+      value:
         type: "integer"
-        format: "int64"
-      name:
-        type: "string"
-    xml:
-      name: "Tag"
-  Pet:
-    type: "object"
-    required:
-    - "name"
-    - "photoUrls"
-    properties:
-      id:
-        type: "integer"
-        format: "int64"
-      category:
-        $ref: "#/definitions/Category"
-      name:
-        type: "string"
-        example: "doggie"
-      photoUrls:
+      creation_date:
+        type: "object"
+        properties:
+          value:
+            type: "string"
+            format: "date-time"
+      links:
         type: "array"
-        xml:
-          name: "photoUrl"
-          wrapped: true
         items:
-          type: "string"
-      tags:
-        type: "array"
-        xml:
-          name: "tag"
-          wrapped: true
-        items:
-          $ref: "#/definitions/Tag"
-      status:
-        type: "string"
-        description: "pet status in the store"
-        enum:
-        - "available"
-        - "pending"
-        - "sold"
-    xml:
-      name: "Pet"
-  ApiResponse:
+          $ref: "#/definitions/Link"
+  Comment:
     type: "object"
     properties:
-      code:
+      id_comment:
         type: "integer"
-        format: "int32"
-      type:
+        format: "int64"
+      value:
         type: "string"
-      message:
-        type: "string"
+      creation_date:
+        type: "object"
+        properties:
+          value:
+            type: "string"
+            format: "date-time"
+      links:
+        type: "array"
+        items:
+          $ref: "#/definitions/Link"
