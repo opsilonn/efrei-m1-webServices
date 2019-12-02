@@ -104,9 +104,9 @@ public class Servlet_Account extends HttpServlet
                 // Setting the session value
                 request.getSession().setAttribute("user", newUser);
 
-	           // request.getRequestDispatcher(PATH_PAGE_MULTIMEDIAS).forward(request, response);
-	           response.sendRedirect("multimedias");
-	           return;
+                // Returning to the home page
+	            response.sendRedirect("multimedias");
+	            return;
 			}
 		}
 		// user seeing its data : WANTS TO BE ABLE TO MODIFY THEM
@@ -133,19 +133,30 @@ public class Servlet_Account extends HttpServlet
 			// We verify that the inputs are valid
 			if(inputUsername.length() == 0 || inputEmail.length() == 0)
 			{
-				// PAS CONTENT
-				
-				// redirect to the Account page : do it again !
+				// BAD : redirect to the Account page : do it again !
 	            request.getRequestDispatcher(PATH_PAGE_ACCOUNT).forward(request, response);
 	            return;
 			}
 			else
 			{
+				// GOOD : we remove the Session attribute
 				request.getSession().removeAttribute("modifyUser");
-				// CONTENT
+				
+				
+				// We change the {@link User}'s value
+				User user = (User)request.getSession().getAttribute("user");
+				user.setPseudo(inputUsername);
+				user.setEmail(inputEmail);
+				
+				// We modify the database
+				REST_User_PUT(user);
 				
 				// redirect to the Home page : well done !
-	            request.getRequestDispatcher(PATH_PAGE_MULTIMEDIA).forward(request, response);
+	            //request.getRequestDispatcher(PATH_PAGE_MULTIMEDIA).forward(request, response);
+	            //return;
+
+                // Returning to the home page
+	            response.sendRedirect("multimedias");
 	            return;
 			}
 		}

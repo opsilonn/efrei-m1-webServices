@@ -9,6 +9,7 @@ import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import WebServices.util.ServiceAuthorization;
+import rest.model.Film;
 import rest.model.VideoGame;
 
 
@@ -54,5 +55,23 @@ public class REST_VideoGame extends REST_Utils
 	    		post(Entity.entity(newVideoGame, MediaType.APPLICATION_JSON), Response.class);
 		
 		return resp.readEntity( VideoGame.class );
-	}	
+	}		
+	
+	
+	
+	
+	/** Modifies a given {@link VideoGame} in the Database
+	 * 
+	 * @param newUser {@link VideoGame} to modify
+	 */
+	public static void REST_VideoGame_PUT(VideoGame newVideoGame)
+	{
+		// Add it to the database
+		service = REST_GetService();
+		
+		Response resp = ServiceAuthorization.
+				getWebTarget( service.path("rest/v1/videoGame").request() ).
+				accept(MediaType.APPLICATION_JSON).
+	    		put(Entity.entity(newVideoGame, MediaType.APPLICATION_JSON), Response.class);
+	}
 }

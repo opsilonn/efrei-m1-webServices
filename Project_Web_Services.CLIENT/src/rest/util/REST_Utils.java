@@ -5,7 +5,6 @@ import java.net.URI;
 import java.util.ArrayList;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -62,28 +61,5 @@ public class REST_Utils
 	    		get();
 
 		return resp.readEntity( new GenericType<ArrayList<Multimedia>>() {} );
-	}
-
-	
-	
-	
-	/** Transform a JSON list of {@link VideoGame} into a JAVA list of {@link Book}
-	 * 
-	 * @return a JAVA list of {@link Book}
-	 * @throws JsonParseException
-	 * @throws JsonMappingException
-	 * @throws IOException
-	 */
-	public static ArrayList<VideoGame> REST_VideoGames_GET()
-			throws JsonParseException, JsonMappingException, IOException
-	{
-		service = REST_GetService();
-		
-		Response resp = ServiceAuthorization.
-				getWebTarget( service.path("rest/v1/videoGames").request() ).
-				accept(MediaType.APPLICATION_JSON).
-	    		get();
-
-		return resp.readEntity( new GenericType<ArrayList<VideoGame>>() {} );
 	}
 }

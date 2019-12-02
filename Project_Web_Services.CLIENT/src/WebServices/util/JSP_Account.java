@@ -93,7 +93,7 @@ public class JSP_Account
         {
             jw.println("disabled");
         }
-        jw.println(">");
+        jw.println(" required>");
         
         jw.println("	</div>");
         jw.println("</div>");

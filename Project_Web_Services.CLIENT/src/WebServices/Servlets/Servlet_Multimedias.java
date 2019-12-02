@@ -1,7 +1,6 @@
 package WebServices.Servlets;
 
 import static WebServices.util.Constants.*;
-import static rest.util.REST_Utils.*;
 import static rest.util.REST_Book.*;
 import static rest.util.REST_Film.*;
 import static rest.util.REST_VideoGame.*;

@@ -9,6 +9,7 @@ import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import WebServices.util.ServiceAuthorization;
+import rest.model.Book;
 import rest.model.Film;
 
 
@@ -54,5 +55,23 @@ public class REST_Film extends REST_Utils
 	    		post(Entity.entity(newFilm, MediaType.APPLICATION_JSON), Response.class);
 		
 		return resp.readEntity( Film.class );
+	}	
+	
+	
+	
+	
+	/** Modifies a given {@link Film} in the Database
+	 * 
+	 * @param newUser {@link Film} to modify
+	 */
+	public static void REST_Film_PUT(Film newFilm)
+	{
+		// Add it to the database
+		service = REST_GetService();
+		
+		Response resp = ServiceAuthorization.
+				getWebTarget( service.path("rest/v1/films").request() ).
+				accept(MediaType.APPLICATION_JSON).
+	    		put(Entity.entity(newFilm, MediaType.APPLICATION_JSON), Response.class);
 	}	
 }

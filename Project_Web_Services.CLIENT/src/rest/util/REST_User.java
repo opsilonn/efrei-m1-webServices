@@ -55,4 +55,22 @@ public class REST_User extends REST_Utils
 		
 		return resp.readEntity( User.class );
 	}	
+	
+	
+	
+	
+	/** Modifies a given {@link User} in the Database
+	 * 
+	 * @param newUser {@link User} to modify
+	 */
+	public static void REST_User_PUT(User newUser)
+	{
+		// Add it to the database
+		service = REST_GetService();
+		
+		Response resp = ServiceAuthorization.
+				getWebTarget( service.path("rest/v1/users").request() ).
+				accept(MediaType.APPLICATION_JSON).
+	    		put(Entity.entity(newUser, MediaType.APPLICATION_JSON), Response.class);
+	}	
 }

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import WebServices.util.ServiceAuthorization;
 import rest.model.Book;
+import rest.model.User;
 
 
 
@@ -54,5 +55,23 @@ public class REST_Book extends REST_Utils
 	    		post(Entity.entity(newBook, MediaType.APPLICATION_JSON), Response.class);
 		
 		return resp.readEntity( Book.class );
+	}	
+	
+	
+	
+	
+	/** Modifies a given {@link Book} in the Database
+	 * 
+	 * @param newUser {@link Book} to modify
+	 */
+	public static void REST_Book_PUT(Book newBook)
+	{
+		// Add it to the database
+		service = REST_GetService();
+		
+		Response resp = ServiceAuthorization.
+				getWebTarget( service.path("rest/v1/books").request() ).
+				accept(MediaType.APPLICATION_JSON).
+	    		put(Entity.entity(newBook, MediaType.APPLICATION_JSON), Response.class);
 	}	
 }
