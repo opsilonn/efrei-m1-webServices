@@ -1,14 +1,13 @@
 package WebServices.Servlets;
 
 import static WebServices.util.Constants.*;
-import static rest.util.REST_Utils.REST_GetService;
+import static rest.util.REST_User.*;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
 import WebServices.util.ServiceAuthorization;
 import rest.model.User;
 import javax.servlet.http.HttpServlet;

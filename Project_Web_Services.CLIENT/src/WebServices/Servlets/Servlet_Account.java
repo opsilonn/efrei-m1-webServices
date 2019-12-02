@@ -1,7 +1,7 @@
 package WebServices.Servlets;
 
 import static WebServices.util.Constants.*;
-import static rest.util.REST_Utils.REST_User_POST;
+import static rest.util.REST_User.*;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -9,10 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.client.WebTarget;
 import rest.model.Multimedia;
 import rest.model.User;
-import rest.model.util.Link;
 
 
 /**
@@ -23,8 +21,8 @@ public class Servlet_Account extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 	private List<Multimedia> multimedias;
-	private WebTarget service;
-       
+
+	
 	/**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -100,7 +98,7 @@ public class Servlet_Account extends HttpServlet
 		    	newUser.setEmail(inputEmail);
 		    	
 		    	// Add it to the database
-		    	REST_User_POST(newUser);
+		    	newUser = REST_User_POST(newUser);
 
 
                 // Setting the session value
