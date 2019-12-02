@@ -1,8 +1,8 @@
 package rest.resource.util;
 
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.sql.SQLException;
+
+
+
 import java.util.Scanner;
 
 import javax.servlet.ServletContext;
@@ -15,6 +15,7 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
+
 
 
 

@@ -10,7 +10,6 @@ import java.util.Map;
 
 import rest.exception.DataNotFoundException;
 import rest.model.Comment;
-import rest.model.Multimedia;
 import rest.model.Rate;
 import rest.model.VideoGame;
 import rest.model.util.Date;

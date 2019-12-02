@@ -9,7 +9,6 @@ import java.util.Map;
 
 import rest.exception.DataNotFoundException;
 import rest.model.Book;
-import rest.model.Multimedia;
 import rest.model.Rate;
 import rest.model.util.Date;
 import rest.model.util.Timestamp;
