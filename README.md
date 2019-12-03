@@ -1,3 +1,8 @@
+### Where to find the project
+Here is the Github repository :
+https://github.com/opsilonn/Project_WebServices
+
+
 ### The structure of the project
 The project consists of a multitude of folders, most notably :
 * SQL scripts - files used to create and fill the Database (more on that later)
@@ -5,7 +10,7 @@ The project consists of a multitude of folders, most notably :
 * Project_Web_Services.CLIENT : Front-End side of the project, the website if you will
 
 Please note that we focused more on having all services available instead of having a proper interface.
-This is why BLABLA interface pas super joli, mais 100% fonctionnel
+This is why you can perform 100% of the requirements with POSTMAN, but only some of them are available and fully implemented on the front website.
 
 
 
@@ -25,6 +30,10 @@ Import the databaseCreation.sql FIRST, then the databaseFill.sql
 
 Nice, we are now ready to go !
 ```
+
+Another element is that you can test the REST api :
+- with the website (no installation required), but not everything is implemented
+- with POSTMAN, but you'll need to use the following credentials (??? and ???)
 
 
 ## Blabla titre blabla
@@ -51,10 +60,3 @@ It was made by the following Efrei Paris students :
 See also the list of [contributors](https://github.com/opsilonn/Project_WebServices/graphs/contributors) who participated in this project.
 
 Note : we are currently in our 4th year, in a Software Engineering cursus.
-
-
-
-## Acknowledgments
-
-* Lololol
-* Lalulol
