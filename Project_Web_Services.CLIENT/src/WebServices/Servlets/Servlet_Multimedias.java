@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import rest.model.*;
+import rest.util.REST_Comment;
 
 
 
@@ -80,7 +81,23 @@ public class Servlet_Multimedias extends HttpServlet
 
 					@Override
 					public int compare(Multimedia arg0, Multimedia arg1) {
-						return (int)(arg0.getAverage() - arg1.getAverage());
+						return (int)(arg1.getAverage() - arg0.getAverage());
+					}
+		    		
+		    	});
+	    	}else if( (String)request.getParameter("sort") != null && ((String)request.getParameter("sort")).equals("comment") ){
+		    	Collections.sort(multimedias, new Comparator<Multimedia>(){
+
+					@Override
+					public int compare(Multimedia arg0, Multimedia arg1) {
+				    	try {
+							int comments_count0 = REST_Comment.REST_Comments_GET_countByMultimedia(arg0.getId_multimedia());
+							int comments_count1 = REST_Comment.REST_Comments_GET_countByMultimedia(arg1.getId_multimedia());
+							return comments_count1 - comments_count0;
+						} catch (IOException e) {
+							e.printStackTrace();
+							return 0;
+						}
 					}
 		    		
 		    	});
