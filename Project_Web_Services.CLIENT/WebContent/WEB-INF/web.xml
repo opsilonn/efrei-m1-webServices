@@ -48,7 +48,7 @@
   
   <servlet-mapping>
     <servlet-name>multimedia</servlet-name>
-    <url-pattern>/multimedias/*</url-pattern>
+    <url-pattern>/multimedia</url-pattern>
   </servlet-mapping>
   
   

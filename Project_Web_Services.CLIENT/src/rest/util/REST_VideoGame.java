@@ -24,13 +24,19 @@ public class REST_VideoGame extends REST_Utils
 	 * @throws JsonMappingException
 	 * @throws IOException
 	 */
-	public static ArrayList<VideoGame> REST_VideoGames_GET()
+	public static ArrayList<VideoGame> REST_VideoGames_GET(String search)
 			throws JsonParseException, JsonMappingException, IOException
 	{
 		service = REST_GetService();
 		
+		service.path("rest/v1/videoGames");
+		
+		if(search != null){
+			service.queryParam("title", search);
+		}
+		
 		Response resp = ServiceAuthorization.
-				getWebTarget( service.path("rest/v1/videoGames").request() ).
+				getWebTarget( service.request() ).
 				accept(MediaType.APPLICATION_JSON).
 	    		get();
 

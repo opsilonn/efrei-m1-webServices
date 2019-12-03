@@ -25,6 +25,11 @@ public class AuthorizationFilter implements ContainerRequestFilter{
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 
+		System.out.println(requestContext.getUriInfo().getAbsolutePath().toURL().toString());
+		
+		if(requestContext.getUriInfo().getAbsolutePath().toURL().toString().equals(Constants.documentation))
+			return;
+		
 		List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
 				
 		if(authHeader != null && authHeader.size() > 0){

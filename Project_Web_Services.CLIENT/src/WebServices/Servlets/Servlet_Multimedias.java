@@ -17,7 +17,6 @@ import rest.model.*;
 
 
 
-@WebServlet(name = "Servlet_Multimedias", urlPatterns = {"/Servlet_Multimedias"})
 public class Servlet_Multimedias extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
@@ -57,15 +56,15 @@ public class Servlet_Multimedias extends HttpServlet
 	    multimedias = new ArrayList<rest.model.Multimedia>();
 	    if(isMultimedia || isBook)
 	    {
-		    AddBooks();
+		    AddBooks((String)request.getAttribute("search"));
 	    }
 	    if(isMultimedia || isFilm)
 	    {
-		    AddFilms();
+		    AddFilms((String)request.getAttribute("search"));
 	    }
 	    if(isMultimedia || isVideoGame)
 	    {
-		    AddVideoGames();
+		    AddVideoGames((String)request.getAttribute("search"));
 	    }
 	    
 	    // IF YOU WANT TO HAVE AN EMPTY DATABASE :
@@ -97,12 +96,12 @@ public class Servlet_Multimedias extends HttpServlet
     /** Add all the {@link Book} from the database to the List of {@Multimedia}
      * 
      */
-    private void AddBooks()
+    private void AddBooks(String search)
     {
     	try
         {
     	    // GET the list of {@link Book}
-    		List<Book> books = REST_Books_GET();
+    		List<Book> books = REST_Books_GET(search);
     		for(Book book : books)
     		{
     			multimedias.add(book);
@@ -120,12 +119,12 @@ public class Servlet_Multimedias extends HttpServlet
     /** Add all the {@link Film} from the database to the List of {@Multimedia}
      * 
      */
-    private void AddFilms()
+    private void AddFilms(String search)
     {
     	try
         {
     	    // GET the list of {@link Film}
-    		List<Film> films = REST_Films_GET();
+    		List<Film> films = REST_Films_GET(search);
     		for(Film film : films)
     		{
     			multimedias.add(film);
@@ -143,12 +142,12 @@ public class Servlet_Multimedias extends HttpServlet
     /** Add all the {@link VideoGame} from the database to the List of {@Multimedia}
      * 
      */
-    private void AddVideoGames()
+    private void AddVideoGames(String search)
     {
     	try
         {
     	    // GET the list of {@link VideoGames}
-    		List<VideoGame> videoGames = REST_VideoGames_GET();  	
+    		List<VideoGame> videoGames = REST_VideoGames_GET(search);  	
     		for(VideoGame videoGame : videoGames)
     		{
     			multimedias.add(videoGame);

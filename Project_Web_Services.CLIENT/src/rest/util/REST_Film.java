@@ -24,13 +24,19 @@ public class REST_Film extends REST_Utils
 	 * @throws JsonMappingException
 	 * @throws IOException
 	 */
-	public static ArrayList<Film> REST_Films_GET()
+	public static ArrayList<Film> REST_Films_GET(String search)
 			throws JsonParseException, JsonMappingException, IOException
 	{
 		service = REST_GetService();
 		
+		service.path("rest/v1/films");
+		
+		if(search != null){
+			service.queryParam("title", search);
+		}
+		
 		Response resp = ServiceAuthorization.
-				getWebTarget( service.path("rest/v1/films").request() ).
+				getWebTarget( service.request() ).
 				accept(MediaType.APPLICATION_JSON).
 	    		get();
 

@@ -24,13 +24,19 @@ public class REST_Book extends REST_Utils
 	 * @throws JsonMappingException
 	 * @throws IOException
 	 */
-	public static ArrayList<Book> REST_Books_GET()
+	public static ArrayList<Book> REST_Books_GET(String search)
 			throws JsonParseException, JsonMappingException, IOException
 	{
 		service = REST_GetService();
 		
+		service.path("rest/v1/books");
+		
+		if(search != null){
+			service.queryParam("title", search);
+		}
+		
 		Response resp = ServiceAuthorization.
-				getWebTarget( service.path("rest/v1/books").request() ).
+				getWebTarget( service.request() ).
 				accept(MediaType.APPLICATION_JSON).
 	    		get();
 
