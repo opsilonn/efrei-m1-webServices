@@ -1,7 +1,10 @@
+#####Project RST - Web Services
+
 ### Where to find the project
 Here is the Github repository :
+ ```
 https://github.com/opsilonn/Project_WebServices
-
+ ```
 
 ### The structure of the project
 The project consists of a multitude of folders, most notably :
@@ -16,7 +19,7 @@ This is why you can perform 100% of the requirements with POSTMAN, but only some
 
 ## Getting Started
 The programmation is fully completed, but we have a small requirement : creating the database.
-Don't worry ! We got you covered.
+Don't worry ! We've got you covered.
 
 
 ```
@@ -33,18 +36,21 @@ Nice, we are now ready to go !
 
 Another element is that you can test the REST api :
 - with the website (no installation required), but not everything is implemented
-- with POSTMAN, but you'll need to use the following Authorization : Basic Auth; Username = test_username; Password = test_password
-
+- with POSTMAN, but you'll need to use the following Authorization :
+   Basic Auth
+   Username = test_username
+   Password = test_password
+ 
 
 ## Using the REST API Documentation
-The API will give you the link to it's documentation in each error it return.
+Whenever an error occurs within the API, it will display you a link to its documentation.
  ```
  http://localhost:8080/Project_Web_Services.REST/rest/v1/api-doc
  ```
 
  To use it, please go to the following link `https://petstore.swagger.io/#/` and put in the search bar the link to the documentation. The Swagger website will then render the Swagger UI documentation.
 
- From this documentation, you may want to try some request by cliking on the button `Try it out` and by filling the forms. Please, be aware that if the class rest.resource.util.AuthorizationFilter is provide to JAX-RS, the website will not be able to access to the resources of the API. In this case, you should first disable for a moment this class for your tests.
+From this documentation, you may want to try some requests by cliking on the button `Try it out` and by filling the forms. Please, be aware that if the class rest.resource.util.AuthorizationFilter is provided to JAX-RS, the website will not be able to access to the API's resources. In this case, you should first disable for a moment this class for your tests.
 
 
 ## Built With
@@ -65,4 +71,4 @@ It was made by the following Efrei Paris students :
 
 See also the list of [contributors](https://github.com/opsilonn/Project_WebServices/graphs/contributors) who participated in this project.
 
-Note : we are currently in our 4th year, in a Software Engineering cursus.
+Note : we are currently in our 4th year (2019-20), in a Software Engineering cursus.
