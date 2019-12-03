@@ -11,19 +11,15 @@ public class JSP_Account
 {
 	private static int cpt_ID = 0;
 	private static JspWriter jw;
+	private static HttpServletRequest request;
 	private static boolean isConnected;
 	private static boolean allowedToModify;
 	
-	/** Adds all the Fields correctly, whether the user is logged in or not
-	 * 
-     * @param JW the JSP Writer used to write the file
-     * @param r1 The request scope used to access request / session / etc ... variables
-	 * @param ISCONNECTED Whether the user has logged in or not
-	 * @throws Exception If something goes wrong
-	 */
-	public static void AddAllFields(JspWriter JW, HttpServletRequest request, boolean ISCONNECTED) throws Exception
+	
+	public static void AddFields(JspWriter JW, HttpServletRequest REQUEST, boolean ISCONNECTED) throws Exception
 	{
 		jw = JW;
+		request = REQUEST;
 		isConnected = ISCONNECTED;
 		allowedToModify = false;
 		if( !isConnected || request.getSession().getAttribute("modifyUser") != null)
@@ -32,6 +28,24 @@ public class JSP_Account
 		}
 
 		
+		AddAllInputFields();
+		
+		jw.println("<hr class=\"theme\" />");
+		
+		AddAllButtons();
+	}
+	
+	
+	
+	/** Adds all the Fields correctly, whether the user is logged in or not
+	 * 
+     * @param JW the JSP Writer used to write the file
+     * @param r1 The request scope used to access request / session / etc ... variables
+	 * @param ISCONNECTED Whether the user has logged in or not
+	 * @throws Exception If something goes wrong
+	 */
+	private static void AddAllInputFields() throws Exception
+	{
 		String Username = "Username";
 		String Email = "Email";
 		String CreationDate = "Creation Date";
@@ -69,7 +83,7 @@ public class JSP_Account
 	 * @param content Text displayed within the field
 	 * @throws Exception If something goes wrong
 	 */
-	public static void AddField(String type, String name, String label, String content) throws Exception
+	private static void AddField(String type, String name, String label, String content) throws Exception
 	{
         jw.println("<div class=\"form-group row\">");
         
@@ -108,12 +122,8 @@ public class JSP_Account
 	 * @param ISCONNECTED Whether the user has logged in or not
 	 * @throws Exception If something goes wrong
 	 */
-	public static void AddAllButtons(JspWriter JW, HttpServletRequest request, boolean ISCONNECTED) throws Exception
+	private static void AddAllButtons() throws Exception
 	{
-		jw = JW;
-		isConnected = ISCONNECTED;
-		
-		
 		if( isConnected )
 		{
 			if( request.getAttribute("modifyUser") != null )
@@ -138,7 +148,7 @@ public class JSP_Account
      * @param value Text inside the button
 	 * @throws Exception If something goes wrong
 	 */
-	public static void AddButton(String value) throws Exception
+	private static void AddButton(String value) throws Exception
 	{
         jw.println("<div class=\"col-sm-11\" style=\"text-align: center\">");
         jw.println("	<div class=\"float-right\">");
