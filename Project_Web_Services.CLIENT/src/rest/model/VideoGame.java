@@ -44,7 +44,6 @@ public class VideoGame extends Multimedia
 	/**
 	 * @return the id_videoGame
 	 */
-    @XmlTransient
 	public long getId_videoGame() { return id_videoGame; }
 	/**
 	 * @param id_videoGame the id_videoGame to set
