@@ -56,15 +56,15 @@ public class Servlet_Multimedias extends HttpServlet
 	    multimedias = new ArrayList<rest.model.Multimedia>();
 	    if(isMultimedia || isBook)
 	    {
-		    AddBooks((String)request.getAttribute("search"));
+		    AddBooks((String)request.getParameter("search"));
 	    }
 	    if(isMultimedia || isFilm)
 	    {
-		    AddFilms((String)request.getAttribute("search"));
+		    AddFilms((String)request.getParameter("search"));
 	    }
 	    if(isMultimedia || isVideoGame)
 	    {
-		    AddVideoGames((String)request.getAttribute("search"));
+		    AddVideoGames((String)request.getParameter("search"));
 	    }
 	    
 	    // IF YOU WANT TO HAVE AN EMPTY DATABASE :

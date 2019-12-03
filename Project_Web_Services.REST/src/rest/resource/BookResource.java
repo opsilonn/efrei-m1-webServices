@@ -86,13 +86,13 @@ public class BookResource {
     
     @GET
     public Response getBooks(@QueryParam("start")int start, @QueryParam("end")int end,
-    		@QueryParam("filtre")String filtre, @QueryParam("uploader")long id_uploader, @QueryParam("sort")String trie)throws SQLException {
+    		@QueryParam("title")String title, @QueryParam("uploader")long id_uploader, @QueryParam("sort")String trie)throws SQLException {
 		this.bookService = new BookService();
 		List<Book> books;
 		List<Book> result;
 		
-		if(filtre != null){
-			books = bookService.searchBook(filtre);
+		if(title != null){
+			books = bookService.searchBook(title);
 		}else{
 			books = bookService.getAllBooks();
 

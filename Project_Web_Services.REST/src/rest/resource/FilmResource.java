@@ -92,7 +92,7 @@ public class FilmResource
      */
 	 @GET
 	 public Response getFilms(@QueryParam("start")int start, @QueryParam("end")int end,
-			 @QueryParam("filtre")String filtre, @QueryParam("uploader")long id_uploader, @QueryParam("sort")String trie) 
+			 @QueryParam("title")String title, @QueryParam("uploader")long id_uploader, @QueryParam("sort")String trie) 
 			 throws SQLException{
 		 this.filmService = new FilmService();
 		 
@@ -104,8 +104,8 @@ public class FilmResource
 		 System.out.println(start);
 		 System.out.println(end);
 		 
-		 if(filtre!=null){
-			films = filmService.searchFilm(filtre); 
+		 if(title!=null){
+			films = filmService.searchFilm(title); 
 		 }
 		 else{
 			 films = filmService.getFilms();
