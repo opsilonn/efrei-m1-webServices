@@ -8,7 +8,6 @@ import WebServices.util.Constants.EnumMultimedia;
 public class JSP_Navbar
 {
     // DROPDOWNS
-
     
     
 
@@ -45,7 +44,7 @@ public class JSP_Navbar
 
         jw.println("	<div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdownMenuLink\">");
         jw.println("		<a class=\"dropdown-item\" href=\" " + multimedia.getURL() + "\">See All</a>");
-        jw.println("		<a class=\"dropdown-item\" href=\"#\">Sort by Rates</a>");
+        jw.println("		<a class=\"dropdown-item\" href=\"" + multimedia.getURL() + "?sort=rate\">Sort by Rates</a>");
         jw.println("		<a class=\"dropdown-item\" href=\"#\">Sort by Comments</a>");
 
         if(multimedia.getValues().size() != 0)

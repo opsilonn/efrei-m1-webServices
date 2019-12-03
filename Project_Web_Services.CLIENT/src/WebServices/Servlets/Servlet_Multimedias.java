@@ -7,6 +7,7 @@ import static rest.util.REST_VideoGame.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -74,8 +75,20 @@ public class Servlet_Multimedias extends HttpServlet
     	
 	    if(multimedias.size() != 0)
 	    {
-    		// We shuffle the List
-	    	Collections.shuffle(multimedias);
+	    	if( (String)request.getParameter("sort") != null && ((String)request.getParameter("sort")).equals("rate") ){
+		    	Collections.sort(multimedias, new Comparator<Multimedia>(){
+
+					@Override
+					public int compare(Multimedia arg0, Multimedia arg1) {
+						return (int)(arg0.getAverage() - arg1.getAverage());
+					}
+		    		
+		    	});
+	    	}else{
+	    		// We shuffle the List
+		    	Collections.shuffle(multimedias);
+	    	}
+	    	
 	    	
 		    // We put the List into the request scope
 	        request.setAttribute("multimedias", multimedias);
