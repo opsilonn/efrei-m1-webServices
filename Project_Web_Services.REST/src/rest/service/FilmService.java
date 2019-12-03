@@ -209,8 +209,35 @@ public class FilmService {
 					psmt2.setString(4, film.getDuration().toString());
 					psmt2.setLong(5, film.getId_multimedia());
 					
-					psmt2.executeUpdate();
+					int success2 = psmt2.executeUpdate();
 					
+					if(success2 == 2){
+						PreparedStatement psmt3 = db.getPreparedStatement(Constants.Film.getByIDMultimedia);
+						psmt3.setLong(1, film.getId_multimedia());
+						ResultSet rs = psmt3.executeQuery();
+						
+						if(rs.next()){
+							Film result = new Film(
+									rs.getLong("ID_multimedia"),
+									rs.getString("title"),
+									rs.getString("description"),
+									rs.getString("language"),
+									rs.getString("genre"),
+									rs.getInt("category"),
+									rs.getInt("status"),
+									rs.getLong("ID_uploader"),
+									new Timestamp(rs.getString("date_status")),
+									new Timestamp(rs.getString("date_upload")),
+									new Date(rs.getString("date_release")),
+									rs.getLong("ID_film"),
+									rs.getString("director"),
+									rs.getString("productor"),
+									rs.getString("mainCast"),
+									new Time(rs.getString("duration"))
+									);
+							return result;
+						}
+					}
 					
 					return film;
 				}
