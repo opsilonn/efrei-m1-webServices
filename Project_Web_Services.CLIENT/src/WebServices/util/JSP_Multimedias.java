@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
 import rest.model.Multimedia;
+import rest.util.REST_Comment;
+import rest.util.REST_Rate;
 
 
 
@@ -92,6 +94,8 @@ public class JSP_Multimedias
     {
     	// Some useful variables
     	int MAX = 1500;
+    	int comments_count = REST_Comment.REST_Comments_GET_countByMultimedia(multimedia.getId_multimedia());
+    	int rates_count = REST_Rate.REST_Rates_GET_countByMultimedia(multimedia.getId_multimedia());
     	String description = multimedia.getDescription();
     	if(description.length() > MAX)
     	{
@@ -110,8 +114,8 @@ public class JSP_Multimedias
         jw.println("	<td style=\"color:" + color + "\"><b>" + multimedia.getCategoryText() + "</b></td>");
         jw.println("	<td>" + multimedia.getGenre() + "</td>");
         jw.println("	<td>" + multimedia.getLanguage() + "</td>");
-        jw.println("	<td>" + multimedia.getAverage() + "</td>");
-        jw.println("	<td>" + "12345" + "</td>");
+        jw.println("	<td>" + multimedia.getAverage() + " | (" + rates_count + ")</td>");
+        jw.println("	<td>(" + comments_count + ")</td>");
         jw.println("	<td>" + multimedia.getDate_upload() + "</td>");
 
         jw.println("</tr>");

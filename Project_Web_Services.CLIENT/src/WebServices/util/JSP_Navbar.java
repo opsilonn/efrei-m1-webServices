@@ -48,7 +48,8 @@ public class JSP_Navbar
         jw.println("		<a class=\"dropdown-item\" href=\"#\">Sort by Rates</a>");
         jw.println("		<a class=\"dropdown-item\" href=\"#\">Sort by Comments</a>");
 
-        jw.println("	<div class=\"dropdown-divider\"></div>");
+        if(multimedia.getValues().size() != 0)
+        	jw.println("	<div class=\"dropdown-divider\"></div>");
 
 
 
