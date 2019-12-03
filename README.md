@@ -33,7 +33,7 @@ Nice, we are now ready to go !
 
 Another element is that you can test the REST api :
 - with the website (no installation required), but not everything is implemented
-- with POSTMAN, but you'll need to use the following credentials (??? and ???)
+- with POSTMAN, but you'll need to use the following Authorization : Basic Auth; Username = test_username; Password = test_password
 
 
 ## Blabla titre blabla
