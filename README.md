@@ -26,7 +26,7 @@ Creating the Database : Project_WebServices\SQL scripts\databaseCreation.sql
 Filling the Database : Project_WebServices\SQL scripts\databaseFill.sql
 
 You'll need to open phpMyAdmin (and, notably, also open Wamp / Wamp / whatever you use).
-Import the databaseCreation.sql FIRST, then the databaseFill.sql
+Import the databaseCreation.sql FIRST, then the databaseFill.sql in the database web_services newly created.
 
 Nice, we are now ready to go !
 ```
@@ -36,9 +36,15 @@ Another element is that you can test the REST api :
 - with POSTMAN, but you'll need to use the following Authorization : Basic Auth; Username = test_username; Password = test_password
 
 
-## Blabla titre blabla
-Blablabla
+## Using the REST API Documentation
+The API will give you the link to it's documentation in each error it return.
+ ```
+ http://localhost:8080/Project_Web_Services.REST/rest/v1/api-doc
+ ```
 
+ To use it, please go to the following link `https://petstore.swagger.io/#/` and put in the search bar the link to the documentation. The Swagger website will then render the Swagger UI documentation.
+
+ From this documentation, you may want to try some request by cliking on the button `Try it out` and by filling the forms. Please, be aware that if the class rest.resource.util.AuthorizationFilter is provide to JAX-RS, the website will not be able to access to the resources of the API. In this case, you should first disable for a moment this class for your tests.
 
 
 ## Built With
