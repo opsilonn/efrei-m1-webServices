@@ -3,17 +3,13 @@ package WebServices.Servlets;
 import static rest.util.REST_Book.*;
 import static rest.util.REST_Film.*;
 import static rest.util.REST_VideoGame.*;
-import static rest.util.REST_Multimedia.*;
 import static WebServices.util.Constants.PATH_PAGE_MULTIMEDIA;
-
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import rest.model.Multimedia;
-import rest.model.User;
-
 
 
 /**
@@ -35,7 +31,6 @@ public class Servlet_Multimedia extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-    	System.out.println("YO");
     	// Getting the URI and checking where we are
     	String URI = request.getRequestURI();
     	
