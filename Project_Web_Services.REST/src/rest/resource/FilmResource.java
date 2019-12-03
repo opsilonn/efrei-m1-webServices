@@ -101,9 +101,6 @@ public class FilmResource
 		 
 		 List<Film> result;
 		 
-		 System.out.println(start);
-		 System.out.println(end);
-		 
 		 if(title!=null){
 			films = filmService.searchFilm(title); 
 		 }

@@ -35,7 +35,6 @@ public class DB_web_services implements AutoCloseable{
         	System.out.println(ex.getMessage());
         }
         this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/web_services?serverTimezone=UTC", "root", "");
-        System.out.println("connection réussie\n");
     }
     
     

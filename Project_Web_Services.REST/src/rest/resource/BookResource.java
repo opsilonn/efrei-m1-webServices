@@ -108,7 +108,6 @@ public class BookResource {
 		 }
 		
 		 if(trie != null && trie.equals("average")){
-			 System.out.println("entrez de le if");
 			 Collections.sort(books, new SorterByAverage());
 		 }
 		 
