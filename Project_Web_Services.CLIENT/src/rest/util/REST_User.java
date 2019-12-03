@@ -9,6 +9,8 @@ import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import WebServices.util.ServiceAuthorization;
+import rest.model.Book;
+import rest.model.Film;
 import rest.model.User;
 
 
@@ -34,6 +36,28 @@ public class REST_User extends REST_Utils
 	    		get();
 
 		return resp.readEntity( new GenericType<ArrayList<User>>() {} );
+	}	
+	
+	
+	/** Transform a JSON  {@link User} into an instance of {@link User}
+	 * 
+	 * @param ID ID of the {@link User} we search
+	 * @return a JAVA list of {@link User}
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
+	public static User REST_Users_GET_byID(long ID)
+			throws JsonParseException, JsonMappingException, IOException
+	{
+		service = REST_GetService();
+		
+		Response resp = ServiceAuthorization.
+				getWebTarget( service.path("rest/v1/users/" + Long.toString(ID)).request() ).
+				accept(MediaType.APPLICATION_JSON).
+	    		get();
+
+		return resp.readEntity( User.class );
 	}	
 	
 	

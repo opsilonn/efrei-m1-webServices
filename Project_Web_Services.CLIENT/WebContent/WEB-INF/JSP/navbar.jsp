@@ -28,7 +28,7 @@
 	    <nav class="navbar sticky-top navbar-expand-lg navbar-light justify-content-between" style="background-color:cornflowerblue;color:white">
 	
 	            <!-- Name of the Website -->
-	              <a class="navbar-brand my-0 mr-md-auto" href="/Project_Web_Services.CLIENT">
+	              <a class="navbar-brand my-0 mr-md-auto" href="/Project_Web_Services.CLIENT/multimedias">
 	                <img src="<%=Constants.PATH_IMAGE_LOGO%>" width="30" height="30" class="d-inline-block align-top" alt="">
 	                    <b style="color:white"> <%=Constants.NAME_WEBSITE%> </b>
 	              </a>

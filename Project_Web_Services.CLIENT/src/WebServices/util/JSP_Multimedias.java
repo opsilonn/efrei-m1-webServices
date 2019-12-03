@@ -97,7 +97,7 @@ public class JSP_Multimedias
     	{
         	description = description.substring(0, MAX) + " ...";
     	}
-    	String link = "#" + Long.toString( multimedia.getId_multimedia() );
+    	String link = "multimedia?ID=" + Long.toString( multimedia.getId_multimedia() );
     	String color = multimedia.getColor();
     	
     	
