@@ -146,6 +146,8 @@ public class RateResource {
 		
 		Rate rate = rateService.getRate(id);
 		
+		
+		
 		addLinks(rate);
 		
 		
@@ -158,14 +160,28 @@ public class RateResource {
 
     @GET
     @Path("count")
-    public Response getCount() 
+    public Response getCount(@QueryParam("id_multimedia")long id_multimedia) 
     		throws SQLException{
-		this.rateService = new RateService();
+   		this.rateService = new RateService();
+
+   		List<Rate> rates = rateService.getAllRates();
+		
+
+		if(id_multimedia != 0){
+
+			List<Rate> rates_cpy = new ArrayList<Rate>(rates);
+    		for(Rate rate : rates_cpy){
+    			if( rate.getId_multimedia() != id_multimedia ){
+    				rates.remove(rate);
+    			}
+    		}
+			
+		}
 		
 		
         return Response
 				.status(Status.OK)
-				.entity(rateService.getRateCount())
+				.entity(rates.size())
 				.build();
 	   	
     }

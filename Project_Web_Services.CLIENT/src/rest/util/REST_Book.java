@@ -10,8 +10,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import WebServices.util.ServiceAuthorization;
 import rest.model.Book;
-import rest.model.Film;
-import rest.model.User;
 
 
 

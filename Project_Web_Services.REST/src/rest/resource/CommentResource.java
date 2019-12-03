@@ -150,14 +150,28 @@ public class CommentResource {
 
     @GET
     @Path("count")
-    public Response getCount() 
+    public Response getCount(@QueryParam("id_multimedia")long id_multimedia) 
     		throws SQLException{
 		this.commentService = new CommentService();
+		
+		List<Comment> comments = commentService.getAllComments();
+		
+
+		if(id_multimedia != 0){
+
+			List<Comment> comments_cpy = new ArrayList<Comment>(comments);
+    		for(Comment comment : comments_cpy){
+    			if( comment.getId_multimedia() != id_multimedia ){
+    				comments.remove(comment);
+    			}
+    		}
+			
+		}
 		
 		
         return Response
 				.status(Status.OK)
-				.entity(commentService.getCommentCount())
+				.entity(comments.size())
 				.build();
 	   	
     }

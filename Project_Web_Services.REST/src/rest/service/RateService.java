@@ -60,11 +60,6 @@ public class RateService {
 	}
 	
 	
-	public int getRateCount(){
-		return this.rates.size();
-	}
-	
-	
 	public Rate addRate(int value, long id_user, long id_multimedia) 
 			throws SQLException{
 		

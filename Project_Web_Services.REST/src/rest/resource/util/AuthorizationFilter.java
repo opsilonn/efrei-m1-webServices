@@ -15,7 +15,6 @@ import org.glassfish.jersey.internal.util.Base64;
 
 import rest.util.Constants;
 
-
 @Provider
 public class AuthorizationFilter implements ContainerRequestFilter{
 
