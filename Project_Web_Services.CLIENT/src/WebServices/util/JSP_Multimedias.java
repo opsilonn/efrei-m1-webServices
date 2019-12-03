@@ -9,6 +9,8 @@ import rest.model.Book;
 import rest.model.Film;
 import rest.model.Multimedia;
 import rest.model.VideoGame;
+import rest.util.REST_Comment;
+import rest.util.REST_Rate;
 
 
 
