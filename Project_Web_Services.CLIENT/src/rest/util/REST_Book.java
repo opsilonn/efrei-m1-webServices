@@ -33,17 +33,12 @@ public class REST_Book extends REST_Utils
 		Response resp;
 		
 		if(search != null){
-			System.out.println("searching : " + search);
-			String test_url = service.path("rest/v1/books").queryParam("title", search).toString();
-
-			System.out.println("searching at : " + test_url);
 			resp = ServiceAuthorization
 			.getWebTarget( service.path("rest/v1/books").queryParam("title", search).request())
 			.accept(MediaType.APPLICATION_JSON)
     		.get();
 		}
 		else{
-			System.out.println("not searching");
 			resp = ServiceAuthorization
 			.getWebTarget( service.path("rest/v1/books").request())
 			.accept(MediaType.APPLICATION_JSON)
