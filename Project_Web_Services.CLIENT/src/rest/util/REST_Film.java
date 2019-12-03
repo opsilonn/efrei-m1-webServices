@@ -39,6 +39,29 @@ public class REST_Film extends REST_Utils
 	
 	
 	
+	/** Transform a JSON  {@link Film} into an instance of {@link Book}
+	 * 
+	 * @param ID ID of the {@link Film} we search
+	 * @return a JAVA list of {@link Film}
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
+	public static Film REST_Films_GET_byID(long ID)
+			throws JsonParseException, JsonMappingException, IOException
+	{
+		service = REST_GetService();
+		
+		Response resp = ServiceAuthorization.
+				getWebTarget( service.path("rest/v1/films/" + Long.toString(ID)).request() ).
+				accept(MediaType.APPLICATION_JSON).
+	    		get();
+
+		return resp.readEntity( Film.class );
+	}	
+	
+	
+	
 	
 	/** Adds a new {@link Film} to the Database
 	 * 

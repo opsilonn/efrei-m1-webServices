@@ -17,7 +17,6 @@ import rest.model.*;
 
 
 
-@WebServlet(name = "Servlet_Multimedias", urlPatterns = {"/Servlet_Multimedias"})
 public class Servlet_Multimedias extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;

@@ -95,5 +95,4 @@ public class Servlet_Logout extends HttpServlet
     public String getServletInfo() {
         return "I'm the logout servlet : I log people out.";
     }// </editor-fold>
-
 }
