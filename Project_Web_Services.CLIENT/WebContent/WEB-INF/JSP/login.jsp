@@ -43,12 +43,12 @@
 
                                 <%-- LOGIN FIELD --%>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="<%=Constants.FORM_LOGIN_USERNAME%>" placeholder="Username" required>
+                                    <input type="text" class="form-control" name="<%=Constants.FORM_LOGIN_USERNAME%>" placeholder="Username" maxlength="45" required>
                                 </div>
 
                                 <%-- PASSWORD FIELD --%>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" name="<%=Constants.FORM_LOGIN_PASSWORD%>" placeholder="Password" required>
+                                    <input type="password" class="form-control" name="<%=Constants.FORM_LOGIN_PASSWORD%>" placeholder="Password" maxlength="225" required>
                                 </div>
 
                               <button type="submit" class="btn btn-primary">Login</button>
