@@ -43,14 +43,9 @@
 						<hr class="theme" />
 						<%-- ALL FIELDS --%>
 						<%
-							JSP_Account.AddAllFields(out, request, isConnected);
+							JSP_Account.AddFields(out, request, isConnected);
 						%>
-						<hr class="theme" />
-	
-						<%-- ALL BUTTONS --%>
-						<%
-							JSP_Account.AddAllButtons(out, request, isConnected);
-						%>
+						
 	
 					</form>
 	

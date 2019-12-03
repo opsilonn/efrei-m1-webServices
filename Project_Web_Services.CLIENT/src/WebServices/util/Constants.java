@@ -101,6 +101,20 @@ public class Constants
     public static final String FORM_ACCOUNT_PASSWORD_VERIF = "PasswordVerification";
     public static final String FORM_ACCOUNT_EMAIL = "Email";
     public static final String FORM_ACCOUNT_DATE = "CreationDate";
+
+    
+    // Form Account fields's names
+    public static final String FORM_MULTIMEDIA_TITLE = "Title";
+    public static final String FORM_MULTIMEDIA_DESCRIPTION = "Description";
+    public static final String FORM_MULTIMEDIA_LANGUAGE = "Language";
+    public static final String FORM_MULTIMEDIA_GENRE = "Genre";
+    public static final String FORM_MULTIMEDIA_CATEGORY = "Category";
+    public static final String FORM_MULTIMEDIA_STATUS = "Status";
+    public static final String FORM_MULTIMEDIA_DATE_STATUS = "Date Status";
+    public static final String FORM_MULTIMEDIA_DATE_RELEASE = "Date Release";
+    public static final String FORM_MULTIMEDIA_DATE_UPLOAD = "Date Upload";
+    
+    
     
     // Is a user connected ?
     public static boolean IS_CONNECTED(HttpServletRequest request)

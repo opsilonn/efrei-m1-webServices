@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
+
+import rest.model.Book;
+import rest.model.Film;
 import rest.model.Multimedia;
-import rest.util.REST_Comment;
-import rest.util.REST_Rate;
+import rest.model.VideoGame;
 
 
 
@@ -101,9 +103,32 @@ public class JSP_Multimedias
     	{
         	description = description.substring(0, MAX) + " ...";
     	}
-    	String link = "multimedia?ID=" + Long.toString( multimedia.getId_multimedia() );
-    	String color = multimedia.getColor();
     	
+    	String link;
+    	
+    	switch( multimedia.getCategory() )
+    	{
+			case 1:
+				Book book = (Book)multimedia;
+				link = "book?ID=" + book.getId_book();
+				break;
+			
+			case 2:
+				Film film = (Film)multimedia;
+				link = "film?ID=" + film.getId_film();
+				break;
+				
+			case 3:
+				VideoGame videoGame = (VideoGame)multimedia;
+				link = "videoGame?ID=" + videoGame.getId_videoGame();
+				break;
+				
+			default:
+				link = "";  
+				break;
+    	}
+    	
+    	String color = multimedia.getColor();
     	
 
     	// The proper JSP code

@@ -1,17 +1,18 @@
 package WebServices.Servlets;
 
 import static rest.util.REST_Book.*;
+import static rest.util.REST_Film.*;
+import static rest.util.REST_VideoGame.*;
+import static rest.util.REST_Multimedia.*;
 import static WebServices.util.Constants.PATH_PAGE_MULTIMEDIA;
-import static WebServices.util.Constants.PATH_PAGE_MULTIMEDIAS;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import rest.model.Book;
+import rest.model.Multimedia;
+import rest.model.User;
 
 
 
@@ -34,10 +35,47 @@ public class Servlet_Multimedia extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-		// Je récupère le 1er livre et je teste des trucs
-		
-		System.out.println("processing...");	
-        request.getRequestDispatcher(PATH_PAGE_MULTIMEDIA).forward(request, response);
+    	System.out.println("YO");
+    	// Getting the URI and checking where we are
+    	String URI = request.getRequestURI();
+    	
+    	// Get the ID of the {@link Multimedia} we want to display
+    	long ID = Long.valueOf( request.getParameter("ID") );
+    	
+    	
+    	Boolean isBook = URI.contains("book");
+    	Boolean isFilm = URI.contains("film");
+    	Boolean isVideoGame = URI.contains("videoGame");
+    	
+    	
+    	Multimedia multimedia = new Multimedia();
+    	if( isBook )
+    	{
+    		multimedia = REST_Books_GET_byID(ID);
+    	}
+    	if( isFilm )
+    	{
+    		multimedia = REST_Films_GET_byID(ID);
+    	}
+    	if( isVideoGame )
+    	{
+    		multimedia = REST_VideoGames_GET_byID(ID);
+    	}
+    	
+    	// The {@link Multimedia} was  found (!= null)
+    	if(multimedia != null)
+    	{
+    	    // We put the {@Multimedia} into the request scope
+            request.setAttribute("multimedia", multimedia);
+            request.getRequestDispatcher(PATH_PAGE_MULTIMEDIA).forward(request, response);
+    		return;
+    	}
+    	// The {@link Multimedia} was not found (= null)
+    	else
+    	{
+            response.sendRedirect("multimedias");
+            return;
+    	}
     }
     
     
@@ -48,16 +86,16 @@ public class Servlet_Multimedia extends HttpServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		System.out.println("GET");
 		processRequest(request, response);
 	}
+	
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		System.out.println("POST");
 		processRequest(request, response);
 	}
 	

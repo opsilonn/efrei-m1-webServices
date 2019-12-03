@@ -9,6 +9,7 @@ import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import WebServices.util.ServiceAuthorization;
+import rest.model.Book;
 import rest.model.Film;
 import rest.model.VideoGame;
 
@@ -41,6 +42,30 @@ public class REST_VideoGame extends REST_Utils
 	    		get();
 
 		return resp.readEntity( new GenericType<ArrayList<VideoGame>>() {} );
+	}	
+	
+	
+	
+	
+	/** Transform a JSON  {@link VideoGame} into an instance of {@link VideoGame}
+	 * 
+	 * @param ID ID of the {@link VideoGame} we search
+	 * @return a JAVA list of {@link VideoGame}
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
+	public static VideoGame REST_VideoGames_GET_byID(long ID)
+			throws JsonParseException, JsonMappingException, IOException
+	{
+		service = REST_GetService();
+		
+		Response resp = ServiceAuthorization.
+				getWebTarget( service.path("rest/v1/videoGames/" + Long.toString(ID)).request() ).
+				accept(MediaType.APPLICATION_JSON).
+	    		get();
+
+		return resp.readEntity( VideoGame.class );
 	}	
 	
 	

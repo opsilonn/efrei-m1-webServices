@@ -1,3 +1,5 @@
+<%@page import="WebServices.util.JSP_Multimedia"%>
+
 <html lang="en">
     <head>
         <!-- Changing the title of the page -->
@@ -15,9 +17,11 @@
                 
                 <br><br><br><br>
                 
-                <h2>Welcome to multimedia !</h2>
-                
-                <br><br><br><br>
+                <%-- Displaying the Error Message if there is one --%>
+       
+				<%
+					JSP_Multimedia.AddFields(out, request); 
+				%>
 
             </div>
 
