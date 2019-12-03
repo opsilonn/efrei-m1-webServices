@@ -98,7 +98,7 @@ public class VideoGameResource
      */
     @GET
     public Response getVideoGames(@QueryParam("start")int start, @QueryParam("end")int end,
-    		@QueryParam("filtre")String filtre, @QueryParam("uploader")long id_uploader, @QueryParam("sort")String trie)throws SQLException
+    		@QueryParam("title")String title, @QueryParam("uploader")long id_uploader, @QueryParam("sort")String trie)throws SQLException
     {
 		this.videoGameService = new VideoGameService();
 
@@ -107,8 +107,8 @@ public class VideoGameResource
 		List<VideoGame> result;
 		
 		
-		if(filtre != null){
-			videoGames = videoGameService.filtre(filtre);
+		if(title != null){
+			videoGames = videoGameService.filtre(title);
 		}else{
 			videoGames = videoGameService.getAllVideoGames();
 		}

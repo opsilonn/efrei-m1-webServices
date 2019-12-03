@@ -29,10 +29,10 @@ public class REST_VideoGame extends REST_Utils
 	{
 		service = REST_GetService();
 		
-		service.path("rest/v1/videoGames");
+		service = service.path("rest/v1/videoGames");
 		
 		if(search != null){
-			service.queryParam("title", search);
+			service = service.queryParam("title", search);
 		}
 		
 		Response resp = ServiceAuthorization.
