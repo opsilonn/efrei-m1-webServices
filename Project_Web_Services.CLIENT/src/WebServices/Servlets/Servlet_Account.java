@@ -3,13 +3,11 @@ package WebServices.Servlets;
 import static WebServices.util.Constants.*;
 import static rest.util.REST_User.*;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import rest.model.Multimedia;
 import rest.model.User;
 
 
@@ -20,8 +18,6 @@ import rest.model.User;
 public class Servlet_Account extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-	private List<Multimedia> multimedias;
-
 	
 	/**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,9 +34,6 @@ public class Servlet_Account extends HttpServlet
     	// There is a user logged in  : display its data
        if(IS_CONNECTED(request))
        {
-	       	// We get the User and the link to its data
-	       	User user = (User)request.getSession().getAttribute("user");
-       	
            request.setAttribute("title", "My Account");
        }
    		// There is no user logged in  : create a new one
@@ -112,6 +105,7 @@ public class Servlet_Account extends HttpServlet
 		// user seeing its data : WANTS TO BE ABLE TO MODIFY THEM
 		else if(request.getSession().getAttribute("modifyUser") == null)
 		{
+			System.out.println("I want to modify ...");
 			// Setting the request value to be able to modify data
             request.getSession().setAttribute("modifyUser", true); 
             
@@ -125,6 +119,7 @@ public class Servlet_Account extends HttpServlet
 		// user modifying its data : WANTS TO APPLY THE CHANGES
 		else
 		{
+			System.out.println("changing ...");
 			// We get all the inputs
 			String inputUsername = request.getParameter(FORM_ACCOUNT_USERNAME);
 			String inputEmail = request.getParameter(FORM_ACCOUNT_EMAIL);
@@ -139,6 +134,7 @@ public class Servlet_Account extends HttpServlet
 			}
 			else
 			{
+				System.out.println("valid !");
 				// GOOD : we remove the Session attribute
 				request.getSession().removeAttribute("modifyUser");
 				
@@ -150,11 +146,9 @@ public class Servlet_Account extends HttpServlet
 				
 				// We modify the database
 				REST_User_PUT(user);
-				
-				// redirect to the Home page : well done !
-	            //request.getRequestDispatcher(PATH_PAGE_MULTIMEDIA).forward(request, response);
-	            //return;
 
+				System.out.println("finish !");
+				
                 // Returning to the home page
 	            response.sendRedirect("multimedias");
 	            return;

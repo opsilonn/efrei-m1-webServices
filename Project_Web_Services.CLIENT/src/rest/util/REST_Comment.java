@@ -1,20 +1,16 @@
 package rest.util;
 
 import java.io.IOException;
-
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-
 import WebServices.util.ServiceAuthorization;
 
-public class REST_Comment extends REST_Utils{
 
 
-	
-	
+public class REST_Comment extends REST_Utils
+{
 	public static int REST_Comments_GET_countByMultimedia(long id_multimedia)
 			throws JsonParseException, JsonMappingException, IOException
 	{
@@ -32,5 +28,4 @@ public class REST_Comment extends REST_Utils{
 
 		return resp.readEntity(Integer.class);
 	}
-	
 }

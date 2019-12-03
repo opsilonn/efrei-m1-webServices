@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
-
 import rest.model.Book;
 import rest.model.Film;
 import rest.model.Multimedia;

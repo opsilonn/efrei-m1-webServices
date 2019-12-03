@@ -8,8 +8,6 @@ import WebServices.util.Constants.EnumMultimedia;
 public class JSP_Navbar
 {
     // DROPDOWNS
-    
-    
 
     /** A method that dynamically adds Dropdown to the navbar
     *
@@ -82,7 +80,7 @@ public class JSP_Navbar
         // If connected : My Profile & Logout
         if( Constants.IS_CONNECTED(r1) )
         {
-	            AddButton(jw, r1, "<b>Add a new article !</b>", "multimedias/0");
+	            AddButton(jw, r1, "<b>Add a new article !</b>", "multimedia?ID=0");
 	            AddButton(jw, r1, "My Profile", "account");
                 AddButton(jw, r1, "Logout", "logout");
         }

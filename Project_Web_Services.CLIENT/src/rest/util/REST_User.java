@@ -9,8 +9,6 @@ import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import WebServices.util.ServiceAuthorization;
-import rest.model.Book;
-import rest.model.Film;
 import rest.model.User;
 
 
@@ -89,11 +87,12 @@ public class REST_User extends REST_Utils
 	 */
 	public static void REST_User_PUT(User newUser)
 	{
+		System.out.println("DOING REST STUFF");
 		// Add it to the database
 		service = REST_GetService();
 		
-		Response resp = ServiceAuthorization.
-				getWebTarget( service.path("rest/v1/users").request() ).
+		ServiceAuthorization.
+				getWebTarget( service.path("rest/v1/users").path( Long.toString(newUser.getId_user()) ).request() ).
 				accept(MediaType.APPLICATION_JSON).
 	    		put(Entity.entity(newUser, MediaType.APPLICATION_JSON), Response.class);
 	}	

@@ -13,6 +13,8 @@ public class CorsFilter implements ContainerResponseFilter {
     @Override
     public void filter(ContainerRequestContext requestContext, 
       ContainerResponseContext responseContext) throws IOException {
+		System.out.println(requestContext.getUriInfo().getAbsolutePath().toString());
+
           responseContext.getHeaders().add(
             "Access-Control-Allow-Origin", "*");
           responseContext.getHeaders().add(
