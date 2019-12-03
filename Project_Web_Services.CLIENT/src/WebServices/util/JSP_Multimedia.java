@@ -124,7 +124,11 @@ public class JSP_Multimedia
     	AddField("text", FORM_MULTIMEDIA_STATUS, "Status", status);
     	AddField("text", FORM_MULTIMEDIA_DATE_STATUS, "Date Status", date_status);
     	AddField("text", FORM_MULTIMEDIA_DATE_RELEASE, "Date Release", date_release);
-    	AddField("text", FORM_MULTIMEDIA_DATE_UPLOAD, "Date Upload", date_upload);
+    	
+    	if( !allowedToModify )
+    	{
+        	AddField("text", FORM_MULTIMEDIA_DATE_UPLOAD, "Date Upload", date_upload);
+    	}
 	}
 	
 	

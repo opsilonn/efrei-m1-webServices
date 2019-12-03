@@ -23,8 +23,6 @@ public class AuthorizationFilter implements ContainerRequestFilter{
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-
-		System.out.println(requestContext.getUriInfo().getAbsolutePath().toURL().toString());
 		
 		if(requestContext.getUriInfo().getAbsolutePath().toURL().toString().equals(Constants.documentation))
 			return;

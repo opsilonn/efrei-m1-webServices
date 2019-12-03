@@ -95,14 +95,14 @@ public class REST_Book extends REST_Utils
 	 * 
 	 * @param newUser {@link Book} to modify
 	 */
-	public static void REST_Book_PUT(Book newBook)
+	public static void REST_Book_PUT(Book book)
 	{
 		// Add it to the database
 		service = REST_GetService();
 		
-		Response resp = ServiceAuthorization.
-				getWebTarget( service.path("rest/v1/books").request() ).
+		ServiceAuthorization.
+				getWebTarget( service.path("rest/v1/books").path( Long.toString( book.getId_book()) ).request() ).
 				accept(MediaType.APPLICATION_JSON).
-	    		put(Entity.entity(newBook, MediaType.APPLICATION_JSON), Response.class);
+	    		put(Entity.entity(book, MediaType.APPLICATION_JSON), Response.class);
 	}	
 }

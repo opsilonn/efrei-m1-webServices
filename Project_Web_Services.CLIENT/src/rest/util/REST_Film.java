@@ -93,14 +93,17 @@ public class REST_Film extends REST_Utils
 	 * 
 	 * @param newUser {@link Film} to modify
 	 */
-	public static void REST_Film_PUT(Film newFilm)
+	public static void REST_Film_PUT(Film film)
 	{
 		// Add it to the database
 		service = REST_GetService();
 		
-		Response resp = ServiceAuthorization.
-				getWebTarget( service.path("rest/v1/films").request() ).
+		ServiceAuthorization.
+				getWebTarget( service.
+						path("rest/v1/films").
+						path( Long.toString(film.getId_film()) ).
+						request() ).
 				accept(MediaType.APPLICATION_JSON).
-	    		put(Entity.entity(newFilm, MediaType.APPLICATION_JSON), Response.class);
+	    		put(Entity.entity(film, MediaType.APPLICATION_JSON), Response.class);
 	}	
 }

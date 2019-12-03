@@ -4,10 +4,7 @@ info:
   The project consists of a multitude of folders, most notably :\n
 * SQL scripts - files used to create and fill the Database (more on that later)\n
 * Project_Web_Services.REST : Back-End side of the project, its main core\n
-* Project_Web_Services.CLIENT : Front-End side of the project, the website if you will\n
-
-Please note that we focused more on having all services available instead of having a proper interface.\n
-This is why BLABLA interface pas super joli, mais 100% fonctionnel"
+* Project_Web_Services.CLIENT : Front-End side of the project, the website if you will\n"
   version: "1.0.0"
   title: "Multimedias store"
   contact:
