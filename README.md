@@ -3,7 +3,7 @@
 ### Where to find the project
 Here is the Github repository :
  ```
-https://github.com/opsilonn/Project_WebServices
+https://github.com/opsilonn/efrei-m1-webServices
  ```
 
 ### The structure of the project
@@ -69,6 +69,6 @@ It was made by the following Efrei Paris students :
 * **DULCHE Eddy** - [his Git repository](https://github.com/DulcheE)
 * **KANN William** - [his Git repository](https://github.com/williamkann)
 
-See also the list of [contributors](https://github.com/opsilonn/Project_WebServices/graphs/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/opsilonn/efrei-m1-webServices/graphs/contributors) who participated in this project.
 
 Note : we are currently in our 4th year (2019-20), in a Software Engineering cursus.
